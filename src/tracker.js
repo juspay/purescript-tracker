@@ -1,12 +1,47 @@
-const trackerJson = JOS.tracker || {};
 const loopedFunction = function(){
     return loopedFunction
 }
-const tracker = new Proxy(trackerJson,{
-    get : function(){
-        return loopedFunction
+const getTracker = function(){
+    var trackerJson = JOS.tracker || {};
+    if (typeof trackerJson.trackEvent != "function"){
+        trackerJson.trackEvent = loopedFunction;
     }
-});
+    if (typeof trackerJson.trackApi != "function"){
+        trackerJson.trackApi = loopedFunction;
+    }
+    if (typeof trackerJson.trackEventInfo != "function"){
+        trackerJson.trackEventInfo = loopedFunction;
+    }
+    if (typeof trackerJson.trackEventDebug != "function"){
+        trackerJson.trackEventDebug = loopedFunction;
+    }
+    if (typeof trackerJson.trackExceptionCritical != "function"){
+        trackerJson.trackExceptionCritical = loopedFunction;
+    }
+    if (typeof trackerJson.trackExceptionWarning != "function"){
+        trackerJson.trackExceptionWarning = loopedFunction;
+    }
+    if (typeof trackerJson.trackExceptionError != "function"){
+        trackerJson.trackExceptionError = loopedFunction;
+    }
+    if (typeof trackerJson.trackMicroAppVerison != "function"){
+        trackerJson.trackMicroAppVerison = loopedFunction;
+    }
+    if (typeof trackerJson.trackScreen != "function"){
+        trackerJson.trackScreen = loopedFunction;
+    }
+    if (typeof trackerJson.trackOverlay != "function"){
+        trackerJson.trackOverlay = loopedFunction;
+    }
+    if (typeof trackerJson.trackUserError != "function"){
+        trackerJson.trackUserError = loopedFunction;
+    }
+    if (typeof trackerJson.trackPageLoad != "function"){
+        trackerJson.trackPageLoad = loopedFunction;
+    }
+    return trackerJson;
+}
+const tracker = getTracker();
 
 exports.trackEvent = tracker.trackEventInfo
 exports.trackApi = tracker.trackApi
