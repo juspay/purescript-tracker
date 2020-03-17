@@ -42,6 +42,7 @@ const getTracker = function(){
     return trackerJson;
 }
 const tracker = getTracker();
+window.trackerModule =  getTracker();
 
 exports.trackEvent = tracker.trackEventInfo
 exports.trackApi = tracker.trackApi

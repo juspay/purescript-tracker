@@ -4,7 +4,6 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class (liftEffect)
-import Effect.Exception (name)
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 
 foreign import trackEvent :: String -> String -> Effect Unit
