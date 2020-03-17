@@ -4,6 +4,7 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class (liftEffect)
+import Effect.Exception (name)
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 
 foreign import trackEvent :: String -> String -> Effect Unit
@@ -20,29 +21,29 @@ foreign import trackUserError :: String -> Effect Unit
 foreign import trackPageLoad :: String -> Int -> Int -> Int -> Effect Unit
 
 trackEventFlow :: String -> String -> Flow Unit
-trackEventFlow a b = doAff $ liftEffect $ trackEvent a b
+trackEventFlow label value = doAff $ liftEffect $ trackEvent label value
 trackApiFlow :: Int -> Int  -> Int -> String -> String -> Flow Unit
-trackApiFlow a b c d e = doAff $ liftEffect $ trackApi a b c d e
+trackApiFlow status start end url response = doAff $ liftEffect $ trackApi status start end url response
 trackEventInfoFlow :: String -> String -> Flow Unit
-trackEventInfoFlow a b = doAff $ liftEffect $ trackEventInfo a b
+trackEventInfoFlow label value = doAff $ liftEffect $ trackEventInfo label value
 trackEventDebugFlow :: String -> String -> Flow Unit
-trackEventDebugFlow a b = doAff $ liftEffect $ trackEventDebug a b
+trackEventDebugFlow label value = doAff $ liftEffect $ trackEventDebug label value
 trackExceptionCriticalFlow :: String -> String -> String -> Flow Unit
-trackExceptionCriticalFlow a b c = doAff $ liftEffect $ trackExceptionCritical a b c
+trackExceptionCriticalFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionCritical exception stacktrace message
 trackExceptionWarningFlow :: String -> String -> String -> Flow Unit
-trackExceptionWarningFlow a b c = doAff $ liftEffect $ trackExceptionWarning a b c
+trackExceptionWarningFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionWarning exception stacktrace message
 trackExceptionErrorFlow :: String -> String -> String -> Flow Unit
-trackExceptionErrorFlow a b c = doAff $ liftEffect $ trackExceptionError a b c
+trackExceptionErrorFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionError exception stacktrace message
 trackMicroAppVerisonFlow :: String -> Flow Unit
-trackMicroAppVerisonFlow a = doAff $ liftEffect $ trackMicroAppVerison a
+trackMicroAppVerisonFlow version = doAff $ liftEffect $ trackMicroAppVerison version
 trackScreenFlow :: String -> Flow Unit
-trackScreenFlow a = doAff $ liftEffect $ trackScreen a
+trackScreenFlow name = doAff $ liftEffect $ trackScreen name
 trackOverlayFlow :: String -> Flow Unit
-trackOverlayFlow a = doAff $ liftEffect $ trackOverlay a
+trackOverlayFlow name = doAff $ liftEffect $ trackOverlay name
 trackUserErrorFlow :: String -> Flow Unit
-trackUserErrorFlow a = doAff $ liftEffect $ trackUserError a
+trackUserErrorFlow error = doAff $ liftEffect $ trackUserError error
 trackPageLoadFlow :: String -> Int -> Int -> Int -> Flow Unit
-trackPageLoadFlow a b c d = doAff $ liftEffect $ trackPageLoad a b c d
+trackPageLoadFlow url start_time end_time status_code = doAff $ liftEffect $ trackPageLoad url start_time end_time status_code
 
 main :: Effect Unit
 main = pure unit
