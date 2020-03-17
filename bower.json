@@ -1,0 +1,15 @@
+{
+  "name": "purescript-tracker",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^4.1.1",
+    "purescript-effect": "^2.0.1"
+  },
+  "devDependencies": {
+  }
+}
