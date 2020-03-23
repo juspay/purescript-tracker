@@ -7,7 +7,7 @@ import Effect.Class (liftEffect)
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 
 foreign import trackEvent :: String -> String -> Effect Unit
-foreign import trackApi :: Int -> Int  -> Int -> String -> String-> Effect Unit
+foreign import trackApi :: Int -> Int  -> Int -> String -> String -> String -> Effect Unit
 foreign import trackEventInfo :: String -> String -> Effect Unit
 foreign import trackEventDebug :: String -> String -> Effect Unit
 foreign import trackExceptionCritical :: String -> String -> String -> Effect Unit
@@ -21,8 +21,8 @@ foreign import trackPageLoad :: String -> Int -> Int -> Int -> Effect Unit
 
 trackEventFlow :: String -> String -> Flow Unit
 trackEventFlow label value = doAff $ liftEffect $ trackEvent label value
-trackApiFlow :: Int -> Int  -> Int -> String -> String -> Flow Unit
-trackApiFlow status start end url response = doAff $ liftEffect $ trackApi status start end url response
+trackApiFlow :: Int -> Int  -> Int -> String -> String -> String -> Flow Unit
+trackApiFlow status start end url response payload = doAff $ liftEffect $ trackApi status start end url response payload
 trackEventInfoFlow :: String -> String -> Flow Unit
 trackEventInfoFlow label value = doAff $ liftEffect $ trackEventInfo label value
 trackEventDebugFlow :: String -> String -> Flow Unit
