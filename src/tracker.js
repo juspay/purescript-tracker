@@ -39,6 +39,33 @@ const getTracker = function(){
     if (typeof trackerJson.trackPageLoad != "function"){
         trackerJson.trackPageLoad = loopedFunction;
     }
+    if (typeof trackerJson.trackLifeCycle != "function"){
+        trackerJson.trackLifeCycle = loopedFunction;
+    }
+    if (typeof trackerJson.trackAction != "function"){
+        trackerJson.trackAction = loopedFunction;
+    }
+    if (typeof trackerJson.trackApiCall != "function"){
+        trackerJson.trackApiCall = loopedFunction;
+    }
+    if (typeof trackerJson.trackException != "function"){
+        trackerJson.trackException = loopedFunction;
+    }
+    if (typeof trackerJson.trackScreenWithLabel != "function"){
+        trackerJson.trackScreenWithLabel = loopedFunction;
+    }
+    if (typeof trackerJson.trackMerchantContext != "function"){
+        trackerJson.trackMerchantContext = loopedFunction;
+    }
+    if (typeof trackerJson.trackHypersdkContext != "function"){
+        trackerJson.trackHypersdkContext = loopedFunction;
+    }
+    if (typeof trackerJson.trackPaymentContext != "function"){
+        trackerJson.trackPaymentContext = loopedFunction;
+    }
+    if (typeof trackerJson.trackUserContext != "function"){
+        trackerJson.trackUserContext = loopedFunction;
+    }
     return trackerJson;
 }
 const tracker = getTracker();
@@ -56,3 +83,12 @@ exports.trackScreen = tracker.trackScreen
 exports.trackOverlay = tracker.trackOverlay
 exports.trackUserError = tracker.trackUserError
 exports.trackPageLoad = tracker.trackPageLoad
+exports.trackLifeCycle = tracker.trackLifeCycle
+exports.trackAction = tracker.trackAction
+exports.trackApiCall = tracker.trackApiCall
+exports.trackException = tracker.trackException
+exports.trackScreenWithLabel = tracker.trackScreenWithLabel
+exports.trackMerchantContext = tracker.trackMerchantContext
+exports.trackHypersdkContext = tracker.trackHypersdkContext
+exports.trackPaymentContext = tracker.trackPaymentContext
+exports.trackUserContext = tracker.trackUserContext
