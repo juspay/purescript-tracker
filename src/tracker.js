@@ -54,18 +54,9 @@ const getTracker = function(){
     if (typeof trackerJson._trackScreenWithLabel != "function"){
         trackerJson._trackScreenWithLabel = loopedFunction;
     }
-    // if (typeof trackerJson.trackMerchantContext != "function"){
-    //     trackerJson.trackMerchantContext = loopedFunction;
-    // }
-    // if (typeof trackerJson.trackHypersdkContext != "function"){
-    //     trackerJson.trackHypersdkContext = loopedFunction;
-    // }
-    // if (typeof trackerJson.trackPaymentContext != "function"){
-    //     trackerJson.trackPaymentContext = loopedFunction;
-    // }
-    // if (typeof trackerJson.trackUserContext != "function"){
-    //     trackerJson.trackUserContext = loopedFunction;
-    // }
+    if (typeof trackerJson._trackContext != "function"){
+        trackerJson._trackContext = loopedFunction;
+    }
     return trackerJson;
 }
 const tracker = getTracker();
@@ -88,7 +79,4 @@ exports._trackAction = tracker._trackAction
 exports._trackApiCall = tracker._trackApiCall
 exports._trackException = tracker._trackException
 exports._trackScreenWithLabel = tracker._trackScreenWithLabel
-// exports.trackMerchantContext = tracker.trackMerchantContext
-// exports.trackHypersdkContext = tracker.trackHypersdkContext
-// exports.trackPaymentContext = tracker.trackPaymentContext
-// exports.trackUserContext = tracker.trackUserContext
+exports._trackContext = tracker._trackContext

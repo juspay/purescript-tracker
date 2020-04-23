@@ -2,7 +2,6 @@ module Types where
 
 import Prelude
 
-import Effect (Effect)
 import Foreign.Class (class Encode, encode)
 import Data.Generic.Rep.Show (genericShow)
 import Data.Generic.Rep (class Generic)
@@ -46,7 +45,7 @@ instance encodeLevel :: Encode Level where
   encode INFO       = encode "INFO"
   encode DEBUG      = encode "DEBUG"
   encode ERROR      = encode "ERROR"
-  encode EXCEPTION = encode "EXCEPTION"
+  encode EXCEPTION  = encode "EXCEPTION"
   encode WARNING    = encode "WARNING"
   encode CRITICAL   = encode "CRTICAL"
 
