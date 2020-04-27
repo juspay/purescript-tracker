@@ -5,18 +5,8 @@ module Tracker
   , trackException, trackExceptionFlow
   , trackScreenWithLabel, trackScreenWithLabelFlow
   , trackContext, trackContextFlow
-  , trackEvent, trackEventFlow
-  , trackApi, trackApiFlow
-  , trackEventInfo, trackEventInfoFlow
-  , trackEventDebug, trackEventDebugFlow
-  , trackExceptionCritical, trackExceptionCriticalFlow
-  , trackExceptionWarning, trackExceptionWarningFlow
-  , trackExceptionError, trackExceptionErrorFlow
-  , trackMicroAppVerison, trackMicroAppVerisonFlow
   , trackScreen, trackScreenFlow
   , trackOverlay, trackOverlayFlow
-  , trackUserError, trackUserErrorFlow
-  , trackPageLoad, trackPageLoadFlow
   ) where
 
 import Effect (Effect)
@@ -27,18 +17,8 @@ import Prelude (Unit, pure, show, unit, ($))
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Types (Level, Subcategory)
 
-foreign import trackEvent :: String -> String -> Effect Unit
-foreign import trackApi :: Int -> Int  -> Int -> String -> String -> String -> Effect Unit
-foreign import trackEventInfo :: String -> String -> Effect Unit
-foreign import trackEventDebug :: String -> String -> Effect Unit
-foreign import trackExceptionCritical :: String -> String -> String -> Effect Unit
-foreign import trackExceptionWarning :: String -> String -> String -> Effect Unit
-foreign import trackExceptionError :: String -> String -> String -> Effect Unit
-foreign import trackMicroAppVerison :: String -> Effect Unit
 foreign import trackScreen :: String -> Effect Unit
 foreign import trackOverlay :: String -> Effect Unit
-foreign import trackUserError :: String -> Effect Unit
-foreign import trackPageLoad :: String -> Int -> Int -> Int -> Effect Unit
 foreign import _trackLifeCycle :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackAction    :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> String -> String  -> Effect Unit
@@ -68,33 +48,10 @@ trackContext sub level label value = _trackContext (show sub) (show level) (show
 
 -- Interfaces for Flow
 
-trackEventFlow :: String -> String -> Flow Unit
-trackEventFlow label value = doAff $ liftEffect $ trackEvent label value
-trackApiFlow :: Int -> Int  -> Int -> String -> String -> String -> Flow Unit
-trackApiFlow status start end url response payload = doAff $ liftEffect $ trackApi status start end url response payload
-trackEventInfoFlow :: String -> String -> Flow Unit
-trackEventInfoFlow label value = doAff $ liftEffect $ trackEventInfo label value
-trackEventDebugFlow :: String -> String -> Flow Unit
-trackEventDebugFlow label value = doAff $ liftEffect $ trackEventDebug label value
-trackExceptionCriticalFlow :: String -> String -> String -> Flow Unit
-trackExceptionCriticalFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionCritical exception stacktrace message
-trackExceptionWarningFlow :: String -> String -> String -> Flow Unit
-trackExceptionWarningFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionWarning exception stacktrace message
-trackExceptionErrorFlow :: String -> String -> String -> Flow Unit
-trackExceptionErrorFlow exception stacktrace message = doAff $ liftEffect $ trackExceptionError exception stacktrace message
-trackMicroAppVerisonFlow :: String -> Flow Unit
-trackMicroAppVerisonFlow version = doAff $ liftEffect $ trackMicroAppVerison version
 trackScreenFlow :: String -> Flow Unit
 trackScreenFlow name = doAff $ liftEffect $ trackScreen name
 trackOverlayFlow :: String -> Flow Unit
 trackOverlayFlow name = doAff $ liftEffect $ trackOverlay name
-trackUserErrorFlow :: String -> Flow Unit
-trackUserErrorFlow error = doAff $ liftEffect $ trackUserError error
-trackPageLoadFlow :: String -> Int -> Int -> Int -> Flow Unit
-trackPageLoadFlow url start_time end_time status_code = doAff $ liftEffect $ trackPageLoad url start_time end_time status_code
-
--- Category-wise Interfaces
-
 trackLifeCycleFlow :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
 trackLifeCycleFlow sub level label value = doAff $ liftEffect $ _trackLifeCycle (show sub) (show level) (show label) value
 
