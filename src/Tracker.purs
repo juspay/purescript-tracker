@@ -31,8 +31,8 @@ foreign import _trackContext   :: String -> String -> String -> Foreign -> Effec
 trackLifeCycle :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
 trackLifeCycle sub level label value = _trackLifeCycle (show sub) (show level) (show label) value
 
-trackAction :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
-trackAction sub level label value = _trackAction (show sub) (show level) (show label) value
+trackAction :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
+trackAction sub level label key value = _trackAction (show sub) (show level) (show label) value
 
 trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> String -> String  -> Effect Unit
 trackApiCall sub level label startTime endTime response payload = _trackApiCall (show sub) (show level) (show label) startTime endTime response payload

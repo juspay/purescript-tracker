@@ -8,6 +8,9 @@ import Prelude (class Show, show, (<<<))
 
 data Label
   = Otp_detected -- | On detection of OTP
+  | BUTTON_CLICKED
+  | OTP_INFO
+  | DETAILS
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show
