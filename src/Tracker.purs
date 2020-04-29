@@ -17,28 +17,29 @@ import Prelude (Unit, pure, show, unit, ($))
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Types (Category, Level, Subcategory)
 
+foreign import getValue :: String -> Foreign -> Foreign
 foreign import trackScreen :: String -> Effect Unit
 foreign import trackOverlay :: String -> Effect Unit
 foreign import _trackLifeCycle :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackAction    :: String -> String -> String -> Foreign -> Effect Unit
-foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> String -> String  -> Effect Unit
-foreign import _trackException :: String -> String -> String -> String -> String -> Effect Unit
+foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> Int -> String -> String -> String  -> Effect Unit
+foreign import _trackException :: String -> String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackScreenWithLabel :: String -> String -> String -> String -> Effect Unit
 foreign import _trackContext   :: String -> String -> String -> Foreign -> Effect Unit
 
 -- Interfaces for Effect
 
 trackLifeCycle :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
-trackLifeCycle sub level label key value = _trackLifeCycle (show sub) (show level) (show label) value
+trackLifeCycle sub level label key value = _trackLifeCycle (show sub) (show level) (show label) (getValue key value)
 
 trackAction :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
-trackAction sub level label key value = _trackAction (show sub) (show level) (show label) value
+trackAction sub level label key value = _trackAction (show sub) (show level) (show label) (getValue key value)
 
-trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> String -> String  -> Effect Unit
-trackApiCall sub level label startTime endTime response payload = _trackApiCall (show sub) (show level) (show label) startTime endTime response payload
+trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String  -> Effect Unit
+trackApiCall sub level label startTime endTime statusC response url payload = _trackApiCall (show sub) (show level) (show label) startTime endTime statusC response url payload
 
 trackException :: Category -> Subcategory -> Level -> Label -> String -> String -> Effect Unit
-trackException category sub level label msg stacktrace = _trackException (show sub) (show level) (show label) msg stacktrace
+trackException category sub level label msg stacktrace = _trackException (show category) (show sub) (show level) (show label) msg stacktrace
 
 trackScreenWithLabel :: Subcategory -> Level -> Label -> String -> Effect Unit
 trackScreenWithLabel sub level label presentation_type = _trackScreenWithLabel (show sub) (show level) (show label) presentation_type
@@ -52,17 +53,18 @@ trackScreenFlow :: String -> Flow Unit
 trackScreenFlow name = doAff $ liftEffect $ trackScreen name
 trackOverlayFlow :: String -> Flow Unit
 trackOverlayFlow name = doAff $ liftEffect $ trackOverlay name
-trackLifeCycleFlow :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
-trackLifeCycleFlow sub level label value = doAff $ liftEffect $ _trackLifeCycle (show sub) (show level) (show label) value
 
-trackActionFlow    :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
-trackActionFlow sub level label value = doAff $ liftEffect $ _trackAction (show sub) (show level) (show label) value
+trackLifeCycleFlow :: Subcategory -> Level -> Label -> String -> Foreign -> Flow Unit
+trackLifeCycleFlow sub level label key value = doAff $ liftEffect $ _trackLifeCycle (show sub) (show level) (show label) (getValue key value)
 
-trackApiCallFlow   :: Subcategory -> Level -> Label -> Int -> Int -> String -> String  -> Flow Unit
-trackApiCallFlow sub level label startTime endTime response payload = doAff $ liftEffect $ _trackApiCall (show sub) (show level) (show label) startTime endTime response payload
+trackActionFlow    :: Subcategory -> Level -> Label -> String -> Foreign -> Flow Unit
+trackActionFlow sub level label key value = doAff $ liftEffect $ _trackAction (show sub) (show level) (show label) (getValue key value)
 
-trackExceptionFlow :: Subcategory -> Level -> Label -> String -> String -> Flow Unit
-trackExceptionFlow sub level label msg stacktrace = doAff $ liftEffect $ _trackException (show sub) (show level) (show label) msg stacktrace
+trackApiCallFlow :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String  -> Flow Unit
+trackApiCallFlow sub level label startTime endTime statusC response url payload = doAff $ liftEffect $ _trackApiCall (show sub) (show level) (show label) startTime endTime statusC response url payload
+
+trackExceptionFlow :: Category -> Subcategory -> Level -> Label -> String -> String -> Flow Unit
+trackExceptionFlow category sub level label msg stacktrace = doAff $ liftEffect $ _trackException (show category) (show sub) (show level) (show label) msg stacktrace
 
 trackScreenWithLabelFlow :: Subcategory -> Level -> Label -> String -> Flow Unit
 trackScreenWithLabelFlow sub level label presentation_type = doAff $ liftEffect $ _trackScreenWithLabel (show sub) (show level) (show label) presentation_type

@@ -6,6 +6,14 @@ import Data.String.Common (toLower)
 import Foreign.Class (class Encode, encode)
 import Prelude (class Show, show, (<<<))
 
+data Category
+  = LIFECYCLE
+  | ACTION
+  | API_CALL
+  | EXCEPTION
+  | SCREEN
+  | CONTEXT
+
 data Subcategory
   = Android  | Ios | Web | Hypersdk | Microapp | User
   | System   | Network | Sdk | Screen | Device
@@ -20,6 +28,13 @@ data Level
   | Exception
 
 -- Instances
+
+instance encodeCategory :: Encode Category where
+  encode = encode <<< toLower <<< show
+
+derive instance category :: Generic Category _
+instance showCategory :: Show Category where
+  show = genericShow
 
 instance encodeSubcategory :: Encode Subcategory where
   encode = encode <<< toLower <<< show

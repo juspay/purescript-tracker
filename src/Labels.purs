@@ -7,8 +7,7 @@ import Foreign.Class (class Encode, encode)
 import Prelude (class Show, show, (<<<))
 
 data Label
-  = Otp_detected -- | On detection of OTP
-  | BUTTON_CLICKED
+  = BUTTON_CLICKED
   | OTP_INFO
   | DETAILS
   | DECODE_ERROR
