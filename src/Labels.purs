@@ -11,6 +11,14 @@ data Label
   | BUTTON_CLICKED
   | OTP_INFO
   | DETAILS
+  | DECODE_ERROR
+  | ON_ACTIVITY_LIFE_CYCLE_EVENT
+  | CONFIG_FETCH
+  | NETWORK
+  | UPI_APPS
+  | STATUS
+  | PROCESS_RESPONSE
+  | PRESTO_EXCEPTION
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show

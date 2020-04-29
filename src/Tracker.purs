@@ -15,7 +15,7 @@ import Foreign (Foreign)
 import Labels (Label)
 import Prelude (Unit, pure, show, unit, ($))
 import Presto.Core.Types.Language.Flow (Flow, doAff)
-import Types (Level, Subcategory)
+import Types (Category, Level, Subcategory)
 
 foreign import trackScreen :: String -> Effect Unit
 foreign import trackOverlay :: String -> Effect Unit
@@ -28,8 +28,8 @@ foreign import _trackContext   :: String -> String -> String -> Foreign -> Effec
 
 -- Interfaces for Effect
 
-trackLifeCycle :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
-trackLifeCycle sub level label value = _trackLifeCycle (show sub) (show level) (show label) value
+trackLifeCycle :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
+trackLifeCycle sub level label key value = _trackLifeCycle (show sub) (show level) (show label) value
 
 trackAction :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
 trackAction sub level label key value = _trackAction (show sub) (show level) (show label) value
@@ -37,8 +37,8 @@ trackAction sub level label key value = _trackAction (show sub) (show level) (sh
 trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> String -> String  -> Effect Unit
 trackApiCall sub level label startTime endTime response payload = _trackApiCall (show sub) (show level) (show label) startTime endTime response payload
 
-trackException :: Subcategory -> Level -> Label -> String -> String -> Effect Unit
-trackException sub level label msg stacktrace = _trackException (show sub) (show level) (show label) msg stacktrace
+trackException :: Category -> Subcategory -> Level -> Label -> String -> String -> Effect Unit
+trackException category sub level label msg stacktrace = _trackException (show sub) (show level) (show label) msg stacktrace
 
 trackScreenWithLabel :: Subcategory -> Level -> Label -> String -> Effect Unit
 trackScreenWithLabel sub level label presentation_type = _trackScreenWithLabel (show sub) (show level) (show label) presentation_type
