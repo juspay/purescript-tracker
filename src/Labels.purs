@@ -16,7 +16,7 @@ data Label
   | NETWORK
   | UPI_APPS
   | STATUS
-  | PROCESS_RESPONSE
+  | PROCESS
   | PRESTO_EXCEPTION
 
 instance encodeLabel :: Encode Label where
