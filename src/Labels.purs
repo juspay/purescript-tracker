@@ -33,6 +33,10 @@ data Label
   | MOBILE_NUMBER_ENTERED
   | SCREEN_RENDERED
   | API_APPS
+  | MINIMIZE_MAXIMIZE
+  | ON_RESUME
+  | ON_PAUSE
+  | ON_STOP
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show
