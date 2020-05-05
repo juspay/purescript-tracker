@@ -1,4 +1,4 @@
-module Labels where
+module Tracker.Labels where
 
 import Data.Generic.Rep.Show (genericShow)
 import Data.Generic.Rep (class Generic)
@@ -37,6 +37,8 @@ data Label
   | ON_RESUME
   | ON_PAUSE
   | ON_STOP
+  | UPCOMING_SCREEN
+  | ON_CLICK
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show

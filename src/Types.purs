@@ -1,4 +1,4 @@
-module Types where
+module Tracker.Types where
 
 import Data.Generic.Rep.Show (genericShow)
 import Data.Generic.Rep (class Generic)

@@ -3,12 +3,6 @@ const loopedFunction = function(){
 }
 const getTracker = function(){
     var trackerJson = JOS.tracker || {};
-    if (typeof trackerJson.trackScreen != "function"){
-        trackerJson.trackScreen = loopedFunction;
-    }
-    if (typeof trackerJson.trackOverlay != "function"){
-        trackerJson.trackOverlay = loopedFunction;
-    }
     if (typeof trackerJson._trackLifeCycle != "function"){
         trackerJson._trackLifeCycle = loopedFunction;
     }
@@ -37,8 +31,6 @@ exports.getValue = function(key, value) {
     return keyValue;
 }
 
-exports.trackScreen = tracker.trackScreen
-exports.trackOverlay = tracker.trackOverlay
 exports._trackLifeCycle = tracker._trackLifeCycle
 exports._trackAction = tracker._trackAction
 exports._trackApiCall = tracker._trackApiCall
