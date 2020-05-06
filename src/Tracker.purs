@@ -5,14 +5,18 @@ module Tracker
   , trackException, trackExceptionFlow
   , trackScreen, trackScreenFlow
   , trackContext, trackContextFlow
+  , maskCvv, maskVpa, maskCardNumber
   ) where
 
+import Data.Array (last)
+import Data.Maybe (fromMaybe)
+import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign)
-import Tracker.Labels (Label)
-import Prelude (Unit, pure, show, unit, (<<<))
+import Prelude (Unit, pure, show, unit, (<<<), (<>), ($), (-))
 import Presto.Core.Types.Language.Flow (Flow, doAff)
+import Tracker.Labels (Label)
 import Tracker.Types (Category, Level, Subcategory)
 
 foreign import getValue :: String -> Foreign -> Foreign
@@ -51,6 +55,7 @@ trackContext :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
 trackContext sub level label = _trackContext (show sub) (show level) (show label)
 
 -- Interfaces for Flow
+-- | Take same args as their Effect interface
 
 trackLifeCycleFlow :: Subcategory -> Level -> Label -> String -> Foreign -> Flow Unit
 trackLifeCycleFlow sub level label key = effectToFlow <<< trackLifeCycle sub level label key
@@ -70,8 +75,25 @@ trackScreenFlow sub level label pt = effectToFlow <<< trackScreen sub level labe
 trackContextFlow :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
 trackContextFlow sub level label = effectToFlow <<< trackContext sub level label
 
+-- Masking Functions
+
+maskCardNumber :: String -> String
+maskCardNumber cn = take 6 cn <> getMask (length cn - 6)
+
+maskCvv :: String -> String
+maskCvv = getMask <<< length
+
+maskVpa :: String -> String
+maskVpa vpa = "@" <> fromMaybe "" (last $ split (Pattern "@") vpa)
+
+-- Util Functions
+
 effectToFlow :: Effect Unit -> Flow Unit
 effectToFlow = doAff <<< liftEffect
+
+getMask :: Int -> String
+getMask 0 = ""
+getMask n = "X" <> getMask (n - 1)
 
 main :: Effect Unit
 main = pure unit
