@@ -39,6 +39,7 @@ data Label
   | ON_STOP
   | UPCOMING_SCREEN
   | ON_CLICK
+  | EVAL
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show
