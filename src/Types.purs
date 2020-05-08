@@ -17,7 +17,7 @@ data Category
 data Subcategory
   = Android  | Ios | Web | Hypersdk | Microapp | User
   | System   | Network | Sdk | Screen | Device
-  | Merchant | Payment | Miscellaneous
+  | Merchant | Payment | Management | Miscellaneous
 
 data Level
   = Info

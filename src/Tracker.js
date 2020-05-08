@@ -26,9 +26,12 @@ const getTracker = function(){
 const tracker = getTracker();
 window.trackerModule =  getTracker();
 
-exports.getValue = function(key, value) {
-    var keyValue = {key: value};
-    return keyValue;
+exports.getValue = function(key){
+    return function(value){
+        var obj={};
+        obj[key]=value;
+        return obj;
+    }
 }
 
 exports._trackLifeCycle = tracker._trackLifeCycle
