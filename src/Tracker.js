@@ -21,6 +21,15 @@ const getTracker = function(){
     if (typeof trackerJson._trackContext != "function"){
         trackerJson._trackContext = loopedFunction;
     }
+    if (typeof trackerJson._trackActionEvent != "function"){
+        trackerJson._trackContext = loopedFunction;
+    }
+    if (typeof trackerJson._trackContextEvent != "function"){
+        trackerJson._trackContext = loopedFunction;
+    }
+    if (typeof trackerJson._trackScreenEvent != "function"){
+        trackerJson._trackContext = loopedFunction;
+    }
     return trackerJson;
 }
 const tracker = getTracker();
@@ -40,3 +49,6 @@ exports._trackApiCall = tracker._trackApiCall
 exports._trackException = tracker._trackException
 exports._trackScreenWithLabel = tracker._trackScreenWithLabel
 exports._trackContext = tracker._trackContext
+exports._trackActionEvent = tracker._trackActionEvent
+exports._trackContextEvent = tracker._trackContextEvent
+exports._trackScreenEvent = tracker._trackScreenEvent

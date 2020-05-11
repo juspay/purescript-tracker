@@ -5,6 +5,9 @@ module Tracker
   , trackException, trackExceptionFlow
   , trackScreen, trackScreenFlow
   , trackContext, trackContextFlow
+  , trackActionEvent, trackActionEventFlow
+  , trackContextEvent, trackContextEventFlow
+  , trackScreenEvent
   , maskCvv, maskVpa, maskCardNumber
   ) where
 
@@ -26,6 +29,9 @@ foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> In
 foreign import _trackException :: String -> String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackScreenWithLabel :: String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackContext   :: String -> String -> String -> Foreign -> Effect Unit
+foreign import _trackActionEvent  :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
+foreign import _trackContextEvent :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
+foreign import _trackScreenEvent :: String -> String -> String -> String -> String -> String -> String -> Effect Unit
 
 -- Interfaces for Effect
 
@@ -74,6 +80,32 @@ trackScreenFlow sub level label pt = effectToFlow <<< trackScreen sub level labe
 
 trackContextFlow :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
 trackContextFlow sub level label = effectToFlow <<< trackContext sub level label
+
+-- Functions for Old Format Logs
+
+-- | trackActionEvent args:  subcategory, level, label, key, value, oldLabel, oldValue
+-- | Old Format: [Type: Event], label: OldLabel, value: OldValue
+-- | New Format: [Category: Action], subcategory, level, label, key, value
+trackActionEvent :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Effect Unit
+trackActionEvent sub level label key value= _trackActionEvent (show sub) (show level) (show label) (getValue key value)
+
+trackActionEventFlow :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Flow Unit
+trackActionEventFlow sub level label key value oldLabel = effectToFlow <<< trackActionEvent sub level label key value oldLabel
+
+-- | trackContextEvent args: subcategory, level, label, value, oldLabel, oldValue
+-- | Old Format: [Type: Event], label: OldLabel, value: OldValue
+-- | New Format: [Category: Context], subcategory, level, label, value
+trackContextEvent :: Subcategory -> Level -> Label -> Foreign -> String -> String -> Effect Unit
+trackContextEvent sub level label = _trackContextEvent (show sub) (show level) (show label)
+
+trackContextEventFlow :: Subcategory -> Level -> Label -> Foreign -> String -> String -> Flow Unit
+trackContextEventFlow sub level label value oldLabel = effectToFlow <<< trackContextEvent sub level label value oldLabel
+
+-- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name, oldLabel, oldValue
+-- | Old Format: [Type: Event], label: OldLabel, value: OldValue
+-- | New Format: [Category: Screen], subcategory, level, label, presentation_type, name
+trackScreenEvent :: Subcategory -> Level -> Label -> String -> String -> String -> String -> Effect Unit
+trackScreenEvent sub level label = _trackScreenEvent (show sub) (show level) (show label)
 
 -- Masking Functions
 
