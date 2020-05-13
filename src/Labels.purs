@@ -49,8 +49,8 @@ data Label
   | PAYMENT_METHOD
 
 instance encodeLabel :: Encode Label where
-  encode = encode <<< toLower <<< show
+  encode = encode <<< show
 
 derive instance label :: Generic Label _
 instance showLabel :: Show Label where
-  show = genericShow
+  show = toLower <<< genericShow
