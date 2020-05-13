@@ -42,6 +42,11 @@ data Label
   | UPCOMING_SCREEN
   | ON_CLICK
   | EVAL
+  | FIELD_FOCUSSED
+  | FIELD_CANCELLED
+  | PAYMENT_METHOD_QUICKPAY
+  | CHECKBOX_CLICKED
+  | PAYMENT_METHOD
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< toLower <<< show
