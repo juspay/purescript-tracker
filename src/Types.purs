@@ -30,22 +30,22 @@ data Level
 -- Instances
 
 instance encodeCategory :: Encode Category where
-  encode = encode <<< toLower <<< show
+  encode = encode <<< show
 
 derive instance category :: Generic Category _
 instance showCategory :: Show Category where
-  show = genericShow
+  show = toLower <<< genericShow
 
 instance encodeSubcategory :: Encode Subcategory where
-  encode = encode <<< toLower <<< show
+  encode = encode <<< show
 
 derive instance subcategory :: Generic Subcategory _
 instance showSubcategory :: Show Subcategory where
-  show = genericShow
+  show = toLower <<< genericShow
 
 instance encodeLevel :: Encode Level where
-  encode = encode <<< toLower <<< show
+  encode = encode <<< show
 
 derive instance level :: Generic Level _
 instance showLevel :: Show Level where
-  show = genericShow
+  show = toLower <<< genericShow
