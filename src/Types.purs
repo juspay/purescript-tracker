@@ -10,7 +10,6 @@ data Category
   = LIFECYCLE
   | ACTION
   | API_CALL
-  | EXCEPTION
   | SCREEN
   | CONTEXT
 
