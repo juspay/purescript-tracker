@@ -47,6 +47,8 @@ data Label
   | PAYMENT_METHOD_QUICKPAY
   | CHECKBOX_CLICKED
   | PAYMENT_METHOD
+  | NB_SEARCH_FOCUSED 
+  | NB_SEARCH_CANCELLED
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
