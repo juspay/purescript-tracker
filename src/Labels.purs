@@ -50,6 +50,9 @@ data Label
   | NB_SEARCH_FOCUSED 
   | NB_SEARCH_CANCELLED
   | PAYMENT_SOURCE_RESPONSE
+  | CVV_CHANGED 
+  | EXPIRY_DATE_CHANGED 
+  | CARD_NUMBER_CHANGED 
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
