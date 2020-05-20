@@ -49,6 +49,7 @@ data Label
   | PAYMENT_METHOD
   | NB_SEARCH_FOCUSED 
   | NB_SEARCH_CANCELLED
+  | PAYMENT_SOURCE_RESPONSE
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
