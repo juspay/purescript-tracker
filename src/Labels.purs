@@ -53,7 +53,7 @@ data Label
   | CVV_CHANGED 
   | EXPIRY_DATE_CHANGED 
   | CARD_NUMBER_CHANGED 
-
+  | ORDER_STATUS
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
