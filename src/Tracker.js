@@ -22,13 +22,13 @@ const getTracker = function(){
         trackerJson._trackContext = loopedFunction;
     }
     if (typeof trackerJson._trackActionEvent != "function"){
-        trackerJson._trackContext = loopedFunction;
+        trackerJson._trackActionEvent = loopedFunction;
     }
     if (typeof trackerJson._trackContextEvent != "function"){
-        trackerJson._trackContext = loopedFunction;
+        trackerJson._trackContextEvent = loopedFunction;
     }
     if (typeof trackerJson._trackScreenEvent != "function"){
-        trackerJson._trackContext = loopedFunction;
+        trackerJson._trackScreenEvent = loopedFunction;
     }
     if (typeof trackerJson._trackLifeCycleEvent != "function"){
         trackerJson._trackLifeCycleEvent = loopedFunction;

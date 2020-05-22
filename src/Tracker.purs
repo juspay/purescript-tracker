@@ -7,6 +7,8 @@ module Tracker
   , trackContext, trackContextFlow
   , trackActionEvent, trackActionEventFlow
   , trackContextEvent, trackContextEventFlow
+  , trackLifeCycleEvent, trackLifeCycleEventFlow
+  , trackExceptionEvent , trackExceptionEventFlow
   , trackScreenEvent
   , maskCvv, maskVpa, maskCardNumber
   ) where
