@@ -30,6 +30,12 @@ const getTracker = function(){
     if (typeof trackerJson._trackScreenEvent != "function"){
         trackerJson._trackContext = loopedFunction;
     }
+    if (typeof trackerJson._trackLifeCycleEvent != "function"){
+        trackerJson._trackLifeCycleEvent = loopedFunction;
+    }
+    if (typeof trackerJson._trackExceptionEvent != "function"){
+        trackerJson._trackExceptionEvent = loopedFunction;
+    }
     return trackerJson;
 }
 const tracker = getTracker();
@@ -52,3 +58,5 @@ exports._trackContext = tracker._trackContext
 exports._trackActionEvent = tracker._trackActionEvent
 exports._trackContextEvent = tracker._trackContextEvent
 exports._trackScreenEvent = tracker._trackScreenEvent
+exports._trackLifeCycleEvent = tracker._trackContext
+exports._trackExceptionEvent = tracker._trackExceptionEvent
