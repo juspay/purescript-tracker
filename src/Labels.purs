@@ -54,6 +54,7 @@ data Label
   | EXPIRY_DATE_CHANGED 
   | CARD_NUMBER_CHANGED 
   | ORDER_STATUS
+  | USER_ERROR 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
