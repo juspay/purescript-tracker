@@ -55,6 +55,7 @@ data Label
   | CARD_NUMBER_CHANGED 
   | ORDER_STATUS
   | USER_ERROR 
+  | USER_WARNING
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
