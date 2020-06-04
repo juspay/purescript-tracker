@@ -56,6 +56,8 @@ data Label
   | ORDER_STATUS
   | USER_ERROR 
   | USER_WARNING
+  | PAYMENT_DETAILS
+  
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
