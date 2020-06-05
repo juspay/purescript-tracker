@@ -13,13 +13,14 @@ module Tracker
   , maskCvv, maskVpa, maskCardNumber
   ) where
 
-import Data.Array (last)
+import Data.Array (last, length) as A
+import Data.Foldable (foldl)
 import Data.Maybe (fromMaybe)
 import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign)
-import Prelude (Unit, pure, show, unit, (<<<), (<>), ($), (-))
+import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Tracker.Labels (Label)
 import Tracker.Types (Category, Level, Subcategory)
@@ -132,13 +133,17 @@ trackExceptionEventFlow category sub level label msg st = effectToFlow <<< track
 -- Masking Functions
 
 maskCardNumber :: String -> String
-maskCardNumber cn = take 6 cn <> getMask (length cn - 6)
+maskCardNumber cn = take 6 cn_ <> getMask (length cn_ - 6)
+    where cn_ = foldl (<>) "" $ split (Pattern " ") cn
 
 maskCvv :: String -> String
 maskCvv = getMask <<< length
 
 maskVpa :: String -> String
-maskVpa vpa = "@" <> fromMaybe "" (last $ split (Pattern "@") vpa)
+maskVpa vpa = let splitArr = split (Pattern "@") vpa
+    in if (A.length splitArr) == 1
+        then getMask $ length vpa
+    else ("@" <> (fromMaybe "" $ A.last splitArr))
 
 -- Util Functions
 
