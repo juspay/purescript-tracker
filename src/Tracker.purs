@@ -10,7 +10,9 @@ module Tracker
   , trackLifeCycleEvent, trackLifeCycleEventFlow
   , trackExceptionEvent , trackExceptionEventFlow
   , trackScreenEvent
-  , maskCvv, maskVpa, maskCardNumber
+  , trackInitiateStart, trackInitiateEnd
+  , trackProcessStart, trackProcessEnd
+  , maskCvv, maskVpa, maskCardNumber, mask
   ) where
 
 import Data.Array (last, length) as A
@@ -22,8 +24,8 @@ import Effect.Class (liftEffect)
 import Foreign (Foreign)
 import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff)
-import Tracker.Labels (Label)
-import Tracker.Types (Category, Level, Subcategory)
+import Tracker.Labels (Label (..))
+import Tracker.Types (Category, Level, Subcategory (..))
 
 foreign import getValue :: String -> Foreign -> Foreign
 foreign import _trackLifeCycle :: String -> String -> String -> Foreign -> Effect Unit
@@ -64,6 +66,22 @@ trackScreen sub level label = _trackScreenWithLabel (show sub) (show level) (sho
 -- | trackContext [Category: Context], args: subcategory, level, label, value
 trackContext :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
 trackContext sub level label = _trackContext (show sub) (show level) (show label)
+
+-- | trackInitiateStart, args: level, value
+trackInitiateStart :: Level -> Foreign -> Effect Unit
+trackInitiateStart level = trackAction User level INITIATE "started"
+
+-- | trackInitiateEnd, args: level, value
+trackInitiateEnd :: Level -> Foreign -> Effect Unit
+trackInitiateEnd level = trackAction User level INITIATE "ended"
+
+-- | trackProcessStart, args: level, value
+trackProcessStart :: Level -> Foreign -> Effect Unit
+trackProcessStart level = trackAction User level PROCESS "started"
+
+-- | trackProcessEnd, args: level, value
+trackProcessEnd :: Level -> Foreign -> Effect Unit
+trackProcessEnd level = trackAction User level PROCESS "ended"
 
 -- Interfaces for Flow
 -- | Take same args as their Effect interface
@@ -145,6 +163,8 @@ maskVpa vpa = let splitArr = split (Pattern "@") vpa
         then getMask $ length vpa
     else ("@" <> (fromMaybe "" $ A.last splitArr))
 
+mask :: String -> String
+mask = getMask <<< length
 -- Util Functions
 
 effectToFlow :: Effect Unit -> Flow Unit
