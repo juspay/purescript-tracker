@@ -49,6 +49,15 @@ exports.getValue = function(key){
     }
 }
 
+exports.addKeyValue = function(obj){
+    return function(key){
+        return function(value){
+            obj[key]=value;
+            return obj;
+        }
+    }
+}
+
 exports._trackLifeCycle = tracker._trackLifeCycle
 exports._trackAction = tracker._trackAction
 exports._trackApiCall = tracker._trackApiCall

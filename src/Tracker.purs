@@ -12,6 +12,7 @@ module Tracker
   , trackScreenEvent
   , trackInitiateStart, trackInitiateEnd
   , trackProcessStart, trackProcessEnd
+  , trackLoaderShow, trackLoaderHide
   , maskCvv, maskVpa, maskCardNumber, mask
   ) where
 
@@ -25,9 +26,10 @@ import Foreign (Foreign)
 import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Tracker.Labels (Label (..))
-import Tracker.Types (Category, Level, Subcategory (..))
+import Tracker.Types (Category, Level(..), Subcategory (..))
 
 foreign import getValue :: String -> Foreign -> Foreign
+foreign import addKeyValue :: Foreign -> String -> String -> Foreign
 foreign import _trackLifeCycle :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackAction    :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
@@ -82,6 +84,12 @@ trackProcessStart level = trackAction User level PROCESS "started"
 -- | trackProcessEnd, args: level, value
 trackProcessEnd :: Level -> Foreign -> Effect Unit
 trackProcessEnd level = trackAction User level PROCESS "ended"
+
+trackLoaderShow :: Foreign -> Effect Unit
+trackLoaderShow value = _trackAction (show System) (show Info) (show LOADER) (addKeyValue value "loader" "show")
+
+trackLoaderHide :: Foreign -> Effect Unit
+trackLoaderHide value = _trackAction (show System) (show Info) (show LOADER) (addKeyValue value "loader" "hide")
 
 -- Interfaces for Flow
 -- | Take same args as their Effect interface

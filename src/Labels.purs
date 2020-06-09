@@ -59,6 +59,8 @@ data Label
   | USER_ERROR 
   | USER_WARNING
   | PAYMENT_DETAILS
+  | NETWORK_CALL
+  | LOADER
   
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
