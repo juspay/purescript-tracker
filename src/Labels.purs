@@ -61,6 +61,14 @@ data Label
   | PAYMENT_DETAILS
   | NETWORK_CALL
   | LOADER
+  | MOBILE_NUMBER_FOCUSSED 
+  | MOBILE_NUMBER_CHANGED
+  | UPI_ID_CHANGED
+  | DIALOG_RENDERED
+  | BANK_SELECTED
+  | OTP_FOCUSSED 
+  | OTP_CHANGED
+  | PAYLOAD_ERROR
   
 instance encodeLabel :: Encode Label where
   encode = encode <<< show

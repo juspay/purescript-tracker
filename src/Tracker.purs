@@ -33,14 +33,14 @@ foreign import addKeyValue :: Foreign -> String -> String -> Foreign
 foreign import _trackLifeCycle :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackAction    :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
-foreign import _trackException :: String -> String -> String -> String -> String -> String -> Effect Unit
+foreign import _trackException :: String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackScreenWithLabel :: String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackContext   :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackActionEvent  :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
 foreign import _trackContextEvent :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
 foreign import _trackScreenEvent :: String -> String -> String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackLifeCycleEvent :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
-foreign import _trackExceptionEvent :: String -> String -> String -> String -> String -> String -> String -> Effect Unit
+foreign import _trackExceptionEvent :: String -> String -> String -> String -> String -> String -> Effect Unit
 
 -- Interfaces for Effect
 
@@ -57,9 +57,9 @@ trackAction sub level label key value = _trackAction (show sub) (show level) (sh
 trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
 trackApiCall sub level label = _trackApiCall (show sub) (show level) (show label)
 
--- | trackException, args: category, subcategory, level, label, message, stacktrace
-trackException :: Category -> Subcategory -> Level -> Label -> String -> String -> Effect Unit
-trackException category sub level label = _trackException (show category) (show sub) (show level) (show label)
+-- | trackException, args: category, subcategory, label, message, stacktrace
+trackException :: Category -> Subcategory -> Label -> String -> String -> Effect Unit
+trackException category sub label = _trackException (show category) (show sub) (show label)
 
 -- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name
 trackScreen :: Subcategory -> Level -> Label -> String -> String -> Effect Unit
@@ -103,8 +103,8 @@ trackActionFlow sub level label key = effectToFlow <<< trackAction sub level lab
 trackApiCallFlow :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow Unit
 trackApiCallFlow sub level label startTime endTime statusC response url payload = effectToFlow <<< trackApiCall sub level label startTime endTime statusC response url payload
 
-trackExceptionFlow :: Category -> Subcategory -> Level -> Label -> String -> String -> Flow Unit
-trackExceptionFlow category sub level label msg = effectToFlow <<< trackException category sub level label msg
+trackExceptionFlow :: Category -> Subcategory -> Label -> String -> String -> Flow Unit
+trackExceptionFlow category sub label msg = effectToFlow <<< trackException category sub label msg
 
 trackScreenFlow :: Subcategory -> Level -> Label -> String -> String -> Flow Unit
 trackScreenFlow sub level label pt = effectToFlow <<< trackScreen sub level label pt
@@ -147,14 +147,14 @@ trackContextEventFlow sub level label value oldLabel = effectToFlow <<< trackCon
 trackScreenEvent :: Subcategory -> Level -> Label -> String -> String -> String -> String -> Effect Unit
 trackScreenEvent sub level label = _trackScreenEvent (show sub) (show level) (show label)
 
--- | trackExceptionEvent args:  category, subcategory, level, label, message, stacktrace, oldLabel
+-- | trackExceptionEvent args:  category, subcategory, label, message, stacktrace, oldLabel
 -- | Old Format: [Type: Event], label: OldLabel, message, stacktrace
--- | New Format: category, subcategory, level, label, message, stacktrace
-trackExceptionEvent :: Category -> Subcategory -> Level -> Label -> String -> String -> String -> Effect Unit
-trackExceptionEvent category sub level label = _trackExceptionEvent (show category) (show sub) (show level) (show label)
+-- | New Format: category, subcategory, label, message, stacktrace
+trackExceptionEvent :: Category -> Subcategory -> Label -> String -> String -> String -> Effect Unit
+trackExceptionEvent category sub label = _trackExceptionEvent (show category) (show sub) (show label)
 
-trackExceptionEventFlow :: Category -> Subcategory -> Level -> Label -> String -> String -> String -> Flow Unit
-trackExceptionEventFlow category sub level label msg st = effectToFlow <<< trackExceptionEvent category sub level label msg st
+trackExceptionEventFlow :: Category -> Subcategory -> Label -> String -> String -> String -> Flow Unit
+trackExceptionEventFlow category sub label msg st = effectToFlow <<< trackExceptionEvent category sub label msg st
 
 -- Masking Functions
 
