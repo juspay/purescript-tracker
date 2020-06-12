@@ -12,11 +12,12 @@ data API_CALL' = API_CALL
 data SCREEN' = SCREEN
 data CONTEXT' = CONTEXT
 
+-- Add instances for new subcategory accordingly
 data Lifecycle = Android | Ios | Web | Hypersdk | Microapp
 data Action = User | System
-data ApiCall = Network | Sdk | AC_Microapp | Management
+data ApiCall = Network | Sdk | Microapp_AC | Management
 data Screen = Screen
-data Context = Device | Merchant | C_Hypersdk | C_Network | Payment | C_User
+data Context = Device | Merchant | Hypersdk_C | Network_C | Payment | User_C
 
 class Category a b where
   showCategory :: a -> b -> String
@@ -65,7 +66,7 @@ instance encodeApiCall :: Encode ApiCall where
 
 derive instance apiCall :: Generic ApiCall _
 instance showApi_Call :: Show ApiCall where
-  show AC_Microapp = "microapp"
+  show Microapp_AC = "microapp"
   show x = toLower $ genericShow x
 
 instance encodeScreen :: Encode Screen where
@@ -80,9 +81,9 @@ instance encodeContext :: Encode Context where
 
 derive instance context :: Generic Context _
 instance showContext :: Show Context where
-  show C_Hypersdk = "hypersdk"
-  show C_Network = "network"
-  show C_User = "user"
+  show Hypersdk_C = "hypersdk"
+  show Network_C = "network"
+  show User_C = "user"
   show x = toLower $ genericShow x
 
 derive instance level :: Generic Level _
