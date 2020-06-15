@@ -2,7 +2,7 @@ const loopedFunction = function(){
     return loopedFunction
 }
 const getTracker = function(){
-    var trackerJson = JOS.tracker || {};
+    var trackerJson = window.JOS && window.JOS.tracker || {};
     if (typeof trackerJson.trackEvent != "function"){
         trackerJson.trackEvent = loopedFunction;
     }
