@@ -69,6 +69,7 @@ data Label
   | OTP_FOCUSSED 
   | OTP_CHANGED
   | PAYLOAD_ERROR
+  | CURRENT_SCREEN
   
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
