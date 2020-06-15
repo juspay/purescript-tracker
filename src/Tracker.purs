@@ -26,7 +26,8 @@ import Foreign (Foreign)
 import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Tracker.Labels (Label (..))
-import Tracker.Types (Category, Level(..), Subcategory (..))
+import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle, Screen, showCategory)
+import Tracker.Types (class Category) as T
 
 foreign import getValue :: String -> Foreign -> Foreign
 foreign import addKeyValue :: Foreign -> String -> String -> Foreign
@@ -45,28 +46,28 @@ foreign import _trackExceptionEvent :: String -> String -> String -> String -> S
 -- Interfaces for Effect
 
 -- | trackLifeCycle [Category: Lifecycle], args: subcategory, level, label, key, value
-trackLifeCycle :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
+trackLifeCycle :: Lifecycle -> Level -> Label -> String -> Foreign -> Effect Unit
 trackLifeCycle sub level label key value = _trackLifeCycle (show sub) (show level) (show label) (getValue key value)
 
 -- | trackAction [Category: Action], args:  subcategory, level, label, key, value
-trackAction :: Subcategory -> Level -> Label -> String -> Foreign -> Effect Unit
+trackAction :: Action -> Level -> Label -> String -> Foreign -> Effect Unit
 trackAction sub level label key value = _trackAction (show sub) (show level) (show label) (getValue key value)
 
 -- | trackApiCall [Category: Api_call]
 -- | args:  subcategory, level, label, start_time, end_time, status_code, response, url, payload, method
-trackApiCall :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
+trackApiCall :: ApiCall -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
 trackApiCall sub level label = _trackApiCall (show sub) (show level) (show label)
 
 -- | trackException, args: category, subcategory, label, message, stacktrace
-trackException :: Category -> Subcategory -> Label -> String -> String -> Effect Unit
-trackException category sub label = _trackException (show category) (show sub) (show label)
+trackException :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> Effect Unit
+trackException category sub label = _trackException (showCategory category sub) (show sub) (show label)
 
 -- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name
-trackScreen :: Subcategory -> Level -> Label -> String -> String -> Effect Unit
+trackScreen :: Screen -> Level -> Label -> String -> String -> Effect Unit
 trackScreen sub level label = _trackScreenWithLabel (show sub) (show level) (show label)
 
 -- | trackContext [Category: Context], args: subcategory, level, label, value
-trackContext :: Subcategory -> Level -> Label -> Foreign -> Effect Unit
+trackContext :: Context -> Level -> Label -> Foreign -> Effect Unit
 trackContext sub level label = _trackContext (show sub) (show level) (show label)
 
 -- | trackInitiateStart, args: level, value
@@ -86,30 +87,30 @@ trackProcessEnd :: Level -> Foreign -> Effect Unit
 trackProcessEnd level = trackAction User level PROCESS "ended"
 
 trackLoaderShow :: Foreign -> Effect Unit
-trackLoaderShow value = _trackAction (show System) (show Info) (show LOADER) (addKeyValue value "loader" "show")
+trackLoaderShow value = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue value "loader" "show")
 
 trackLoaderHide :: Foreign -> Effect Unit
-trackLoaderHide value = _trackAction (show System) (show Info) (show LOADER) (addKeyValue value "loader" "hide")
+trackLoaderHide value = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue value "loader" "hide")
 
 -- Interfaces for Flow
 -- | Take same args as their Effect interface
 
-trackLifeCycleFlow :: Subcategory -> Level -> Label -> String -> Foreign -> Flow Unit
+trackLifeCycleFlow :: Lifecycle -> Level -> Label -> String -> Foreign -> Flow Unit
 trackLifeCycleFlow sub level label key = effectToFlow <<< trackLifeCycle sub level label key
 
-trackActionFlow    :: Subcategory -> Level -> Label -> String -> Foreign -> Flow Unit
+trackActionFlow    :: Action -> Level -> Label -> String -> Foreign -> Flow Unit
 trackActionFlow sub level label key = effectToFlow <<< trackAction sub level label key
 
-trackApiCallFlow :: Subcategory -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow Unit
+trackApiCallFlow :: ApiCall -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow Unit
 trackApiCallFlow sub level label startTime endTime statusC response url payload = effectToFlow <<< trackApiCall sub level label startTime endTime statusC response url payload
 
-trackExceptionFlow :: Category -> Subcategory -> Label -> String -> String -> Flow Unit
+trackExceptionFlow :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> Flow Unit
 trackExceptionFlow category sub label msg = effectToFlow <<< trackException category sub label msg
 
-trackScreenFlow :: Subcategory -> Level -> Label -> String -> String -> Flow Unit
+trackScreenFlow :: Screen -> Level -> Label -> String -> String -> Flow Unit
 trackScreenFlow sub level label pt = effectToFlow <<< trackScreen sub level label pt
 
-trackContextFlow :: Subcategory -> Level -> Label -> Foreign -> Flow Unit
+trackContextFlow :: Context -> Level -> Label -> Foreign -> Flow Unit
 trackContextFlow sub level label = effectToFlow <<< trackContext sub level label
 
 -- Functions for Old Format Logs
@@ -117,43 +118,43 @@ trackContextFlow sub level label = effectToFlow <<< trackContext sub level label
 -- | trackLifeCycleEvent args:  subcategory, level, label, key, value, oldLabel, oldValue
 -- | Old Format: [Type: Event], label: OldLabel, value: OldValue
 -- | New Format: [Category: Lifecycle], subcategory, level, label, key, value
-trackLifeCycleEvent :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Effect Unit
+trackLifeCycleEvent :: Lifecycle -> Level -> Label -> String -> Foreign -> String -> String -> Effect Unit
 trackLifeCycleEvent sub level label key value = _trackLifeCycleEvent (show sub) (show level) (show label) (getValue key value)
 
-trackLifeCycleEventFlow :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Flow Unit
+trackLifeCycleEventFlow :: Lifecycle -> Level -> Label -> String -> Foreign -> String -> String -> Flow Unit
 trackLifeCycleEventFlow sub level label key value oldLabel = effectToFlow <<< trackLifeCycleEvent sub level label key value oldLabel
 
 -- | trackActionEvent args:  subcategory, level, label, key, value, oldLabel, oldValue
 -- | Old Format: [Type: Event], label: OldLabel, value: OldValue
 -- | New Format: [Category: Action], subcategory, level, label, key, value
-trackActionEvent :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Effect Unit
+trackActionEvent :: Action -> Level -> Label -> String -> Foreign -> String -> String -> Effect Unit
 trackActionEvent sub level label key value= _trackActionEvent (show sub) (show level) (show label) (getValue key value)
 
-trackActionEventFlow :: Subcategory -> Level -> Label -> String -> Foreign -> String -> String -> Flow Unit
+trackActionEventFlow ::  Action -> Level -> Label -> String -> Foreign -> String -> String -> Flow Unit
 trackActionEventFlow sub level label key value oldLabel = effectToFlow <<< trackActionEvent sub level label key value oldLabel
 
 -- | trackContextEvent args: subcategory, level, label, value, oldLabel, oldValue
 -- | Old Format: [Type: Event], label: OldLabel, value: OldValue
 -- | New Format: [Category: Context], subcategory, level, label, value
-trackContextEvent :: Subcategory -> Level -> Label -> Foreign -> String -> String -> Effect Unit
+trackContextEvent :: Context -> Level -> Label -> Foreign -> String -> String -> Effect Unit
 trackContextEvent sub level label = _trackContextEvent (show sub) (show level) (show label)
 
-trackContextEventFlow :: Subcategory -> Level -> Label -> Foreign -> String -> String -> Flow Unit
+trackContextEventFlow :: Context -> Level -> Label -> Foreign -> String -> String -> Flow Unit
 trackContextEventFlow sub level label value oldLabel = effectToFlow <<< trackContextEvent sub level label value oldLabel
 
 -- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name, oldLabel, oldValue
 -- | Old Format: [Type: Event], label: OldLabel, value: OldValue
 -- | New Format: [Category: Screen], subcategory, level, label, presentation_type, name
-trackScreenEvent :: Subcategory -> Level -> Label -> String -> String -> String -> String -> Effect Unit
+trackScreenEvent :: Screen -> Level -> Label -> String -> String -> String -> String -> Effect Unit
 trackScreenEvent sub level label = _trackScreenEvent (show sub) (show level) (show label)
 
 -- | trackExceptionEvent args:  category, subcategory, label, message, stacktrace, oldLabel
 -- | Old Format: [Type: Event], label: OldLabel, message, stacktrace
 -- | New Format: category, subcategory, label, message, stacktrace
-trackExceptionEvent :: Category -> Subcategory -> Label -> String -> String -> String -> Effect Unit
-trackExceptionEvent category sub label = _trackExceptionEvent (show category) (show sub) (show label)
+trackExceptionEvent :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> String -> Effect Unit
+trackExceptionEvent category sub label = _trackExceptionEvent (showCategory category sub) (show sub) (show label)
 
-trackExceptionEventFlow :: Category -> Subcategory -> Label -> String -> String -> String -> Flow Unit
+trackExceptionEventFlow :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> String -> Flow Unit
 trackExceptionEventFlow category sub label msg st = effectToFlow <<< trackExceptionEvent category sub label msg st
 
 -- Masking Functions
@@ -173,6 +174,7 @@ maskVpa vpa = let splitArr = split (Pattern "@") vpa
 
 mask :: String -> String
 mask = getMask <<< length
+
 -- Util Functions
 
 effectToFlow :: Effect Unit -> Flow Unit
