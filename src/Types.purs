@@ -4,7 +4,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
 import Data.String.Common (toLower)
 import Foreign.Class (class Encode, encode)
-import Prelude
+import Prelude ((<<<), show, class Show, ($))
 
 data LIFECYCLE' = LIFECYCLE
 data ACTION' = ACTION
