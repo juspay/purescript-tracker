@@ -70,6 +70,8 @@ data Label
   | OTP_CHANGED
   | PAYLOAD_ERROR
   | CURRENT_SCREEN
+  | VIES_FLOW
+  | VIES_DETAILS
   
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
