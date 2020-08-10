@@ -4,6 +4,7 @@ module Tracker
   , trackApiCall, trackApiCallFlow
   , trackException, trackExceptionFlow
   , trackScreen, trackScreenFlow
+  , trackScreenPrev
   , trackContext, trackContextFlow
   , trackActionEvent, trackActionEventFlow
   , trackContextEvent, trackContextEventFlow
