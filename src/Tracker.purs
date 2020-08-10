@@ -36,6 +36,7 @@ foreign import _trackAction    :: String -> String -> String -> Foreign -> Effec
 foreign import _trackApiCall   :: String -> String -> String -> Int -> Int -> Int -> String -> String -> String -> String -> Effect Unit
 foreign import _trackException :: String -> String -> String -> String -> String -> Effect Unit
 foreign import _trackScreenWithLabel :: String -> String -> String -> String -> String -> Effect Unit
+foreign import _trackScreenWithPrev :: String -> String -> String -> String -> String ->String -> Effect Unit
 foreign import _trackContext   :: String -> String -> String -> Foreign -> Effect Unit
 foreign import _trackActionEvent  :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
 foreign import _trackContextEvent :: String -> String -> String -> Foreign -> String -> String -> Effect Unit
@@ -65,6 +66,10 @@ trackException category sub label = _trackException (showCategory category sub) 
 -- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name
 trackScreen :: Screen -> Level -> Label -> String -> String -> Effect Unit
 trackScreen sub level label = _trackScreenWithLabel (show sub) (show level) (show label)
+
+-- | trackScreen [Category: Screen], args: subcategory, level, label, presentation_type, name, old_screen
+trackScreenPrev :: Screen -> Level -> Label -> String -> String -> String ->Effect Unit
+trackScreenPrev sub level label = _trackScreenWithPrev (show sub) (show level) (show label)
 
 -- | trackContext [Category: Context], args: subcategory, level, label, value
 trackContext :: Context -> Level -> Label -> Foreign -> Effect Unit

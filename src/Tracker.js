@@ -18,6 +18,9 @@ const getTracker = function(){
     if (typeof trackerJson._trackScreenWithLabel != "function"){
         trackerJson._trackScreenWithLabel = loopedFunction;
     }
+    if (typeof trackerJson._trackScreenWithPrev != "function"){
+        trackerJson._trackScreenWithPrev = loopedFunction;
+    }
     if (typeof trackerJson._trackContext != "function"){
         trackerJson._trackContext = loopedFunction;
     }
@@ -63,6 +66,7 @@ exports._trackAction = tracker._trackAction
 exports._trackApiCall = tracker._trackApiCall
 exports._trackException = tracker._trackException
 exports._trackScreenWithLabel = tracker._trackScreenWithLabel
+exports._trackScreenWithPrev = tracker._trackScreenWithPrev
 exports._trackContext = tracker._trackContext
 exports._trackActionEvent = tracker._trackActionEvent
 exports._trackContextEvent = tracker._trackContextEvent
