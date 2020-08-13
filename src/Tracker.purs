@@ -72,19 +72,19 @@ trackContext sub level label = _trackContext (show sub) (show level) (show label
 
 -- | trackInitiateStart, args: level, value
 trackInitiateStart :: Level -> Foreign -> Effect Unit
-trackInitiateStart level = trackAction User level INITIATE "started"
+trackInitiateStart level = trackLifeCycle User level INITIATE "started"
 
 -- | trackInitiateEnd, args: level, value
 trackInitiateEnd :: Level -> Foreign -> Effect Unit
-trackInitiateEnd level = trackAction User level INITIATE "ended"
+trackInitiateEnd level = trackLifeCycle User level INITIATE "ended"
 
 -- | trackProcessStart, args: level, value
 trackProcessStart :: Level -> Foreign -> Effect Unit
-trackProcessStart level = trackAction User level PROCESS "started"
+trackProcessStart level = trackLifeCycle User level PROCESS "started"
 
 -- | trackProcessEnd, args: level, value
 trackProcessEnd :: Level -> Foreign -> Effect Unit
-trackProcessEnd level = trackAction User level PROCESS "ended"
+trackProcessEnd level = trackLifeCycle User level PROCESS "ended"
 
 trackLoaderShow :: Foreign -> Effect Unit
 trackLoaderShow value = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue value "loader" "show")
