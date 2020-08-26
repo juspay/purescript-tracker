@@ -17,7 +17,7 @@ data Lifecycle = Android | Ios | Web | Hypersdk | Microapp
 data Action = User | System
 data ApiCall = Network | Sdk | Microapp_AC | Management
 data Screen = Screen
-data Context = Device | Merchant | Hypersdk_C | Network_C | Payment | User_C
+data Context = Device | Merchant | Hypersdk_C | Network_C | Payment | User_C  | Page
 
 class Category a b where
   showCategory :: a -> b -> String

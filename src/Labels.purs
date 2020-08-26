@@ -78,6 +78,11 @@ data Label
   | PRERENDERED_SCREEN
   | VIES_FLOW
   | VIES_DETAILS
+  | DEVICE_NAME
+  | BROWSER_NAME
+  | PAGE_RENDER_END
+  | PAGE_RENDER_START
+  | PAGE_EXIT
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
