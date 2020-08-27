@@ -27,7 +27,7 @@ import Foreign (Foreign)
 import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff)
 import Tracker.Labels (Label (..))
-import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle, Screen, showCategory)
+import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle(..), Screen, showCategory)
 import Tracker.Types (class Category) as T
 
 foreign import getValue :: String -> Foreign -> Foreign
@@ -78,19 +78,19 @@ trackContext sub level label = _trackContext (show sub) (show level) (show label
 
 -- | trackInitiateStart, args: level, value
 trackInitiateStart :: Level -> Foreign -> Effect Unit
-trackInitiateStart level = trackLifeCycle User level INITIATE "started"
+trackInitiateStart level = trackLifeCycle Microapp level INITIATE "started"
 
 -- | trackInitiateEnd, args: level, value
 trackInitiateEnd :: Level -> Foreign -> Effect Unit
-trackInitiateEnd level = trackLifeCycle User level INITIATE "ended"
+trackInitiateEnd level = trackLifeCycle Microapp level INITIATE "ended"
 
 -- | trackProcessStart, args: level, value
 trackProcessStart :: Level -> Foreign -> Effect Unit
-trackProcessStart level = trackLifeCycle User level PROCESS "started"
+trackProcessStart level = trackLifeCycle Microapp level PROCESS "started"
 
 -- | trackProcessEnd, args: level, value
 trackProcessEnd :: Level -> Foreign -> Effect Unit
-trackProcessEnd level = trackLifeCycle User level PROCESS "ended"
+trackProcessEnd level = trackLifeCycle Microapp level PROCESS "ended"
 
 trackLoaderShow :: Foreign -> Effect Unit
 trackLoaderShow value = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue value "loader" "show")
