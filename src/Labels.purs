@@ -85,6 +85,13 @@ data Label
   | PAGE_EXIT
   | ON_EVENT
   | PAYMENT_SOURCE
+  | JOS_LOADER_INIT
+  | JOS_EVAL_START
+  | JOS_INIT_EVENT
+  | JOS_HYPER_APP_START
+  | JOS_HYPER_SDK_EVAL_START
+  | JOS_HYPER_SDK_MAIN
+  | JOS_HYPER_SDK_CUSTOM_LOADER
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
