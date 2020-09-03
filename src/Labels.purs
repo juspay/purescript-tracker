@@ -117,6 +117,11 @@ data Label
   | MICROAPP
   | DEREGISTERED_ACCOUNT
   | LINKED_ACCOUNTS
+  | BACKPRESS
+  | OVERLAY_CLICK
+  | ISSUE_SELECTED
+  | CATEGORY_SELECTED
+  | QUESTION_SELECTED
   | FULL_PAGE_GODEL
   | GODEL_ON_PAGE_STARTED
   | GODEL_ON_PAGE_FINISHED
@@ -232,7 +237,11 @@ instance showLabel :: Show Label where
     SHOW_GOOGLE_PAY -> "show_google_pay"
     GENERIC_INTENT_CLICK -> "generic_intent_click"
     THIRD_PARTY_SDK -> "third_party_sdk"
-    MICROAPP -> "microapp"
+    BACKPRESS -> "BACKPRESS"
+    OVERLAY_CLICK -> "OVERLAY_CLICK"
+    ISSUE_SELECTED -> "ISSUE_SELECTED"
+    CATEGORY_SELECTED -> "CATEGORY_SELECTED"
+    QUESTION_SELECTED -> "QUESTION_SELECTED"
     FULL_PAGE_GODEL -> "full_page_godel"
     END_OF_SCREEN -> "end_of_screen"
     END_OF_SESSION -> "end_of_session"
@@ -262,6 +271,3 @@ instance showLabel :: Show Label where
     DELETE_VPA_ACCOUNT -> "DELETE_VPA_ACCOUNT"
     DEREGISTERED_ACCOUNT -> "DEREGISTERED_ACCOUNT"
     LINKED_ACCOUNTS -> "LINKED_ACCOUNTS"
-    FULL_PAGE_GODEL -> "full_page_godel"
-    END_OF_SCREEN -> "end_of_screen"
-    END_OF_SESSION -> "end_of_session"
