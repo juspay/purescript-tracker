@@ -83,6 +83,7 @@ data Label
   | PAGE_RENDER_END
   | PAGE_RENDER_START
   | PAGE_EXIT
+  | ON_EVENT
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
