@@ -187,8 +187,10 @@ effectToFlow :: Effect Unit -> Flow Unit
 effectToFlow = doAff <<< liftEffect
 
 getMask :: Int -> String
-getMask 0 = ""
-getMask n = "X" <> getMask (n - 1)
+getMask len =
+    if len <= 0
+        then ""
+        else "X" <> (getMask $ len - 1)
 
 main :: Effect Unit
 main = pure unit
