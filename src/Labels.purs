@@ -93,6 +93,7 @@ data Label
   | JOS_HYPER_SDK_MAIN
   | JOS_HYPER_SDK_CUSTOM_LOADER
   | PAYMENT_PAGE_RENDERED
+  | CLIENT_IDENTIFIER
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
