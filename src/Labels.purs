@@ -1,8 +1,5 @@
 module Tracker.Labels where
 
--- import Data.Generic.Rep.Show (genericShow)
--- import Data.Generic.Rep (class Generic)
-import Data.String.Common (toLower)
 import Foreign.Class (class Encode, encode)
 import Prelude (class Show, show, (<<<))
 
@@ -98,9 +95,7 @@ data Label
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
--- derive instance label :: Generic Label _
 instance showLabel :: Show Label where
-  -- show = toLower <<< genericShow
   show = case _ of
     BUTTON_CLICKED -> "button_clicked"
     OTP_INFO -> "otp_info"
@@ -187,3 +182,5 @@ instance showLabel :: Show Label where
     JOS_HYPER_SDK_CUSTOM_LOADER -> "jos_hyper_sdk_custom_loader"
     PAYMENT_PAGE_RENDERED -> "payment_page_rendered"
     CLIENT_IDENTIFIER -> "client_identifier"
+    ON_EVENT -> "on_event"
+    PAYMENT_SOURCE -> "payment_source"
