@@ -13,7 +13,7 @@ data SCREEN' = SCREEN
 data CONTEXT' = CONTEXT
 
 -- Add instances for new subcategory accordingly
-data Lifecycle = Android | Ios | Web | Hypersdk | Microapp
+data Lifecycle = Android | Ios | Web | Hypersdk | Microapp | WebJos
 data Action = User | System
 data ApiCall = Network | Sdk | Microapp_AC | Management
 data Screen = Screen
