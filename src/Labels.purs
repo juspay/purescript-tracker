@@ -189,3 +189,8 @@ instance showLabel :: Show Label where
     CLIENT_IDENTIFIER -> "client_identifier"
     ON_EVENT -> "on_event"
     PAYMENT_SOURCE -> "payment_source"
+    MORE_APPS_CLICK -> "more_apps_click"
+    SHOW_GENERIC -> "show_generic"
+    SHOW_PHONE_PE -> "show_phone_pe"
+    SHOW_GOOGLE_PAY -> "show_google_pay"
+    GENERIC_INTENT_CLICK -> "generic_intent_click"
