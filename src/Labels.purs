@@ -91,6 +91,11 @@ data Label
   | JOS_HYPER_SDK_CUSTOM_LOADER
   | PAYMENT_PAGE_RENDERED
   | CLIENT_IDENTIFIER
+  | MORE_APPS_CLICK
+  | SHOW_GENERIC
+  | SHOW_PHONE_PE
+  | SHOW_GOOGLE_PAY
+  | GENERIC_INTENT_CLICK
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
