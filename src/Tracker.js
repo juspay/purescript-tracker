@@ -46,7 +46,7 @@ window.trackerModule =  getTracker();
 
 exports.getValue = function(key){
     return function(value){
-        if (value) {
+        if (value != undefined && value != null) {
             var obj={};
             obj[key]=value;
             return obj;
