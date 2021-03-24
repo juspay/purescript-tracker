@@ -96,6 +96,7 @@ data Label
   | SHOW_PHONE_PE
   | SHOW_GOOGLE_PAY
   | GENERIC_INTENT_CLICK
+  | THIRD_PARTY_SDK
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -194,3 +195,4 @@ instance showLabel :: Show Label where
     SHOW_PHONE_PE -> "show_phone_pe"
     SHOW_GOOGLE_PAY -> "show_google_pay"
     GENERIC_INTENT_CLICK -> "generic_intent_click"
+    THIRD_PARTY_SDK -> "third_party_sdk"
