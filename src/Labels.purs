@@ -97,6 +97,7 @@ data Label
   | SHOW_GOOGLE_PAY
   | GENERIC_INTENT_CLICK
   | THIRD_PARTY_SDK
+  | MICROAPP
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -196,3 +197,4 @@ instance showLabel :: Show Label where
     SHOW_GOOGLE_PAY -> "show_google_pay"
     GENERIC_INTENT_CLICK -> "generic_intent_click"
     THIRD_PARTY_SDK -> "third_party_sdk"
+    MICROAPP -> "microapp"
