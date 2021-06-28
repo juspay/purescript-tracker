@@ -19,6 +19,7 @@ module Tracker
   , trackInitiateStartV2, trackInitiateEndV2
   , trackProcessStartV2, trackProcessEndV2
   , trackLoaderShowFlow , trackLoaderHideFlow
+  , trackScreenEnd, trackScreenEndFlow
   ) where
 
 import Prelude
@@ -51,6 +52,7 @@ foreign import _trackContextEvent :: String -> String -> String -> Foreign -> St
 foreign import _trackScreenEvent :: String -> String -> String -> String -> String -> String -> String -> Object.Object Foreign -> Effect Unit
 foreign import _trackLifeCycleEvent :: String -> String -> String -> Foreign -> String -> String -> Object.Object Foreign -> Effect Unit
 foreign import _trackExceptionEvent :: String -> String -> String -> String -> String -> String -> Object.Object Foreign -> Effect Unit
+foreign import _trackScreenEnd :: String -> Object.Object Foreign -> Effect Unit
 
 -- Interfaces for Effect
 
@@ -236,6 +238,15 @@ trackExceptionEventFlow category sub label msg st oldLabel = do
     json <- getLogFields
     effectToFlow $ trackExceptionEvent category sub label msg st oldLabel json
 
+
+trackScreenEnd :: String -> Object.Object Foreign -> Effect Unit
+trackScreenEnd screen_name json = _trackScreenEnd screen_name json
+
+trackScreenEndFlow :: String -> Flow Unit
+trackScreenEndFlow screen_name = do
+    json <- getLogFields
+    effectToFlow $ trackScreenEnd screen_name json
+    
 -- Masking Functions
 
 maskCardNumber :: String -> String
