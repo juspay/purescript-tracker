@@ -100,6 +100,8 @@ data Label
   | THIRD_PARTY_SDK
   | MICROAPP
   | FULL_PAGE_GODEL
+  | GODEL_ON_PAGE_STARTED
+  | GODEL_ON_PAGE_FINISHED
   | END_OF_SCREEN
   | END_OF_SESSION
   
@@ -108,6 +110,8 @@ instance encodeLabel :: Encode Label where
 
 instance showLabel :: Show Label where
   show = case _ of
+    GODEL_ON_PAGE_STARTED -> "godel_on_page_started"
+    GODEL_ON_PAGE_FINISHED -> "godel_on_page_finished"
     BUTTON_CLICKED -> "button_clicked"
     OTP_INFO -> "otp_info"
     SMS_INFO -> "sms_info"
