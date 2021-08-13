@@ -104,7 +104,14 @@ data Label
   | GODEL_ON_PAGE_FINISHED
   | END_OF_SCREEN
   | END_OF_SESSION
-  
+  | PAYMENT_STATUS_POPUP_OPEN
+  | STATUS_SCREEN_OPEN_ORDER_STATUS
+  | STATUS_SCREEN_EXIT_ORDER_STATUS
+  | RETRY_PAYMENT_METHOD_TYPE
+  | RETRY_PAYMENT_METHOD
+  | RETRY_POLLING_DURATION
+  | TIME_SPENT_STATUS_SCREEN
+
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
@@ -210,3 +217,10 @@ instance showLabel :: Show Label where
     FULL_PAGE_GODEL -> "full_page_godel"
     END_OF_SCREEN -> "end_of_screen"
     END_OF_SESSION -> "end_of_session"
+    PAYMENT_STATUS_POPUP_OPEN -> "payment_status_popup_open"
+    STATUS_SCREEN_OPEN_ORDER_STATUS -> "status_screen_open_order_status"
+    STATUS_SCREEN_EXIT_ORDER_STATUS -> "status_screen_exit_order_status"
+    RETRY_PAYMENT_METHOD_TYPE -> "retry_payment_method_type"
+    RETRY_PAYMENT_METHOD -> "retry_payment_method"
+    RETRY_POLLING_DURATION -> "retry_polling_duration"
+    TIME_SPENT_STATUS_SCREEN -> "time_spent_status_screen"
