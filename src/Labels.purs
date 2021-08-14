@@ -98,6 +98,7 @@ data Label
   | GENERIC_INTENT_CLICK
   | THIRD_PARTY_SDK
   | MICROAPP
+  | FULL_PAGE_GODEL
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -198,3 +199,4 @@ instance showLabel :: Show Label where
     GENERIC_INTENT_CLICK -> "generic_intent_click"
     THIRD_PARTY_SDK -> "third_party_sdk"
     MICROAPP -> "microapp"
+    FULL_PAGE_GODEL -> "full_page_godel"
