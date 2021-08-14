@@ -20,6 +20,8 @@ module Tracker
   , trackLoaderShowFlow , trackLoaderHideFlow
   ) where
 
+import Prelude
+
 import Data.Array (last, length) as A
 import Data.Foldable (foldl)
 import Data.Maybe (fromMaybe)
@@ -27,11 +29,10 @@ import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign)
-import Foreign.Object (empty)
+import Foreign.Class (encode)
 import Foreign.Object as Object
-import Prelude
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
-import Tracker.Labels (Label (..))
+import Tracker.Labels (Label(..))
 import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle(..), Screen, showCategory)
 import Tracker.Types (class Category) as T
 
@@ -59,6 +60,9 @@ trackLifeCycle sub level label key value json = _trackLifeCycle (show sub) (show
 -- | trackAction [Category: Action], args:  subcategory, level, label, key, value
 trackAction :: Action -> Level -> Label -> String -> Foreign -> Object.Object Foreign -> Effect Unit
 trackAction sub level label key value json= _trackAction (show sub) (show level) (show label) (getValue key value) json
+
+trackActionObject :: Action -> Level -> Label -> Object.Object Foreign -> Object.Object Foreign -> Effect Unit
+trackActionObject sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
 
 -- | trackApiCall [Category: Api_call]
 -- | args:  subcategory, level, label, start_time, end_time, status_code, response, url, payload, method
