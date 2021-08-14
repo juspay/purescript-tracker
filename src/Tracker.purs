@@ -7,6 +7,7 @@ module Tracker
   , trackScreenPrev, trackScreenPrevFlow
   , trackContext, trackContextFlow
   , trackActionEvent, trackActionEventFlow
+  , trackActionObject
   , trackContextEvent, trackContextEventFlow
   , trackLifeCycleEvent, trackLifeCycleEventFlow
   , trackExceptionEvent , trackExceptionEventFlow
