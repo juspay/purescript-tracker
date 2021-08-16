@@ -7,7 +7,7 @@ module Tracker
   , trackScreenPrev, trackScreenPrevFlow
   , trackContext, trackContextFlow
   , trackActionEvent, trackActionEventFlow
-  , trackActionObject
+  , trackActionObject, trackActionObjectFlow
   , trackContextEvent, trackContextEventFlow
   , trackLifeCycleEvent, trackLifeCycleEventFlow
   , trackExceptionEvent , trackExceptionEventFlow
@@ -146,6 +146,11 @@ trackActionFlow    :: Action -> Level -> Label -> String -> Foreign -> Flow Unit
 trackActionFlow sub level label key val = do
     json <- getLogFields
     effectToFlow $ trackAction sub level label key val json
+
+trackActionObjectFlow :: Action -> Level -> Label -> Object.Object Foreign -> Flow Unit
+trackActionObjectFlow sub level label val = do
+    json <- getLogFields
+    effectToFlow $ trackActionObject sub level label val json
 
 trackApiCallFlow :: ApiCall -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow Unit
 trackApiCallFlow sub level label startTime endTime statusC response url payload val = do
