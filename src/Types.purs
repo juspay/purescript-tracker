@@ -40,6 +40,7 @@ data Values
   | Config_Fetch ConfigFetch
   | Context_Logs Context
   | Cred_Pay CredPay
+  | Custom_Tab_Payments CustomTabPayments 
   | Cvv_Changed CvvChanged
   | Default_Option DefaultOption
   | Device_Type String
@@ -297,6 +298,9 @@ type DialogBox = {
 data AppLifeCycleValues =  Status AppStatus | Version AppVersion | Present AppPresent | SDK_Status SDKStatus | Token_SDK_Present TokenSDKPresent | Non_Token_SDK_Present NonTokenSDKPresent 
 data CredPayValues = Source_Eligibilty SourceEligibilty | User_Id_Update UserIdUpdate | User_Context UserContext | Flow_Status FlowStatus | Flow_Response FlowResponse 
 
+newtype CustomTabPayments = CustomTabPayments {
+  "cct" :: Foreign
+}
 newtype AppLifeCycle = AppLifeCycle {
   appName :: String,
   value :: AppLifeCycleValues
