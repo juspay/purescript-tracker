@@ -56,14 +56,11 @@ foreign import _trackExceptionEvent :: String -> String -> String -> String -> S
 
 -- | trackLifeCycle [Category: Lifecycle], args: subcategory, level, label, key, value
 trackLifeCycle :: Lifecycle -> Level -> Label -> Values -> Object.Object Foreign -> Effect Unit
-trackLifeCycle sub level label value json = _trackLifeCycle (show sub) (show level) (show label) ( unsafeToForeign value) json
+trackLifeCycle sub level label value json = _trackLifeCycle (show sub) (show level) (show label) ( encode value) json
 
 -- | trackAction [Category: Action], args:  subcategory, level, label, key, value
 trackAction :: Action -> Level -> Label -> Values -> Object.Object Foreign -> Effect Unit
-trackAction sub level label value json= _trackAction (show sub) (show level) (show label) (unsafeToForeign value) json
-
-trackAction2 :: Action -> Level -> Label -> String -> Foreign -> Object.Object Foreign -> Effect Unit
-trackAction2 sub level label key value json= _trackAction (show sub) (show level) (show label) (getValue key value) json
+trackAction sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
 
 trackActionObject :: Action -> Level -> Label -> Object.Object Foreign -> Object.Object Foreign -> Effect Unit
 trackActionObject sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
@@ -87,7 +84,7 @@ trackScreenPrev sub level label presentation_type name old_screen json = _trackS
 
 -- | trackContext [Category: Context], args: subcategory, level, label, value
 trackContext :: Context -> Level -> Label -> Values -> Object.Object Foreign -> Effect Unit
-trackContext sub level label value json = _trackContext (show sub) (show level) (show label) (unsafeToForeign value) json
+trackContext sub level label value json = _trackContext (show sub) (show level) (show label) (encode value) json
 
 -- | trackInitiateStart, args: level, value
 trackInitiateStart :: Level -> Values -> Object.Object Foreign -> Effect Unit
@@ -121,10 +118,10 @@ trackProcessEndV2 :: Level -> Values -> Flow Unit
 trackProcessEndV2 level val = trackLifeCycleFlow Microapp level PROCESS val
 
 trackLoaderShow :: Values -> Object.Object Foreign -> Effect Unit
-trackLoaderShow value json = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue (unsafeToForeign value) "loader" "show") json
+trackLoaderShow value json = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue (encode value) "loader" "show") json
 
 trackLoaderHide :: Values -> Object.Object Foreign -> Effect Unit
-trackLoaderHide value json = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue (unsafeToForeign value) "loader" "hide") json
+trackLoaderHide value json = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue (encode value) "loader" "hide") json
 
 trackLoaderShowFlow :: Values -> Flow Unit
 trackLoaderShowFlow value = do
@@ -186,7 +183,7 @@ trackContextFlow sub level label val = do
 -- | Old Format: [Type: Event], label: OldLabel, value: OldValue
 -- | New Format: [Category: Lifecycle], subcategory, level, label, key, value
 trackLifeCycleEvent :: Lifecycle -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
-trackLifeCycleEvent sub level label value oldLabel oldValue json = _trackLifeCycleEvent (show sub) (show level) (show label) (unsafeToForeign value) oldLabel oldValue json
+trackLifeCycleEvent sub level label value oldLabel oldValue json = _trackLifeCycleEvent (show sub) (show level) (show label) (encode value) oldLabel oldValue json
 
 trackLifeCycleEventFlow :: Lifecycle -> Level -> Label -> Values -> String -> String -> Flow Unit
 trackLifeCycleEventFlow sub level label value oldLabel oldValue = do
@@ -198,7 +195,7 @@ trackLifeCycleEventFlow sub level label value oldLabel oldValue = do
 -- | New Format: [Category: Action], subcategory, level, label, key, value
 
 trackActionEvent :: Action -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
-trackActionEvent sub level label value oldLabel oldValue json = _trackActionEvent (show sub) (show level) (show label) ( unsafeToForeign value) oldLabel oldValue json
+trackActionEvent sub level label value oldLabel oldValue json = _trackActionEvent (show sub) (show level) (show label) ( encode value) oldLabel oldValue json
 
 trackActionEventFlow ::  Action -> Level -> Label -> Values -> String -> String -> Flow Unit
 trackActionEventFlow sub level label value oldLabel oldValue = do
@@ -210,7 +207,7 @@ trackActionEventFlow sub level label value oldLabel oldValue = do
 -- | New Format: [Category: Context], subcategory, level, label, value
 
 trackContextEvent :: Context -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
-trackContextEvent sub level label value oldLabel oldValue json = _trackContextEvent (show sub) (show level) (show label) (unsafeToForeign value) oldLabel oldValue json
+trackContextEvent sub level label value oldLabel oldValue json = _trackContextEvent (show sub) (show level) (show label) (encode value) oldLabel oldValue json
 
 trackContextEventFlow :: Context -> Level -> Label -> Values -> String -> String -> Flow Unit
 trackContextEventFlow sub level label value oldLabel oldValue = do

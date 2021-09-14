@@ -7,6 +7,7 @@ import Data.String.Common (toLower)
 import Foreign (Foreign)
 import Foreign.Class (class Encode, encode)
 import Prelude ((<<<), show, class Show, ($))
+import Presto.Core.Utils.Encoding (defaultDecode, defaultEncode)
 
 data LIFECYCLE' = LIFECYCLE
 data ACTION' = ACTION
@@ -38,7 +39,6 @@ data Values
   | Card_Number_Changed CardNumberChanged
   | Checkbox_Details CheckboxDetails
   | Config_Fetch ConfigFetch
-  | Context_Logs Context
   | Cred_Pay CredPay
   | Custom_Tab_Payments CustomTabPayments 
   | Cvv_Changed CvvChanged
@@ -161,7 +161,7 @@ newtype AppFilter = AppFilter {
   "app_filters" :: AppFilterList
 }
 
-newtype AppFilterList = AppFilterList {
+type AppFilterList = {
   filter_type :: String,
   list :: Array String
 }
@@ -491,3 +491,149 @@ instance showContext :: Show Context where
 derive instance level :: Generic Level _
 instance showLevel :: Show Level where
   show = toLower <<< genericShow
+
+
+
+derive instance genericBankSelected :: Generic BankSelected _
+derive instance genericBeforeFiltering :: Generic BeforeFiltering _
+derive instance genericButtonClick :: Generic ButtonClick _
+derive instance genericPaymentMethod :: Generic PaymentMethod _
+derive instance genericAfterFiltering :: Generic AfterFiltering _
+derive instance genericApiVariant :: Generic ApiVariant _
+derive instance genericAppResponse :: Generic AppResponse _
+derive instance genericAppFilter :: Generic AppFilter _
+derive instance genericAppLifeCycle :: Generic AppLifeCycle _
+derive instance genericAuthStatus :: Generic AuthStatus _
+derive instance genericCardDetails :: Generic CardDetails _
+derive instance genericCardNumberChanged :: Generic CardNumberChanged _
+derive instance genericCheckboxDetails :: Generic CheckboxDetails _
+derive instance genericConfigFetch :: Generic ConfigFetch _
+derive instance genericCredPay :: Generic CredPay _
+derive instance genericCustomTabPayments :: Generic CustomTabPayments _
+derive instance genericCvvChanged :: Generic CvvChanged _
+derive instance genericDefaultOption :: Generic DefaultOption _
+derive instance genericDialogRendered :: Generic DialogRendered _
+derive instance genericDisablePopup :: Generic DisablePopup _
+derive instance genericExitResponse :: Generic ExitResponse _
+derive instance genericExpiryDateChanged :: Generic ExpiryDateChanged _
+derive instance genericFieldFocussed :: Generic FieldFocussed _
+derive instance genericLatencyValue :: Generic LatencyValue _
+derive instance genericMicroAppStatus :: Generic MicroAppStatus _
+derive instance genericMobileNumberChanged :: Generic MobileNumberChanged _
+derive instance genericNbSearch :: Generic NbSearch _
+derive instance genericNoValue :: Generic NoValue _
+derive instance genericOTPDetected :: Generic OTPDetected _
+derive instance genericOTPPopulated :: Generic OTPPopulated _
+derive instance genericOTPAutoSubmit :: Generic OTPAutoSubmit _
+derive instance genericOTPChanged :: Generic OTPChanged _
+derive instance genericOTPStatus :: Generic OTPStatus _
+derive instance genericOTPSubmit :: Generic OTPSubmit _
+derive instance genericOTPLength :: Generic OTPLength _
+derive instance genericOutageMessage :: Generic OutageMessage _
+derive instance genericPaymentAttempt :: Generic PaymentAttempt _
+derive instance genericPaymentInfo :: Generic PaymentInfo _
+derive instance genericPaymentSourceResponse :: Generic PaymentSourceResponse _
+derive instance genericPaymentStatus :: Generic PaymentStatus _
+derive instance genericPigName :: Generic PigName _
+derive instance genericPolling :: Generic Polling _
+derive instance genericPollStatus :: Generic PollStatus _
+derive instance genericPriorityApps :: Generic PriorityApps _
+derive instance genericScreenRendered :: Generic ScreenRendered _
+derive instance genericStartedType :: Generic StartedType _
+derive instance genericSmsCount :: Generic SmsCount _
+derive instance genericSmsReceived :: Generic SmsReceived _
+derive instance genericUPIApps :: Generic UPIApps _
+derive instance genericUsedToPay :: Generic UsedToPay _
+derive instance genericVpaChanged :: Generic VpaChanged _
+derive instance genericVpaSave :: Generic VpaSave _
+derive instance genericVpaSelected :: Generic VpaSelected _
+derive instance genericWalletSelected :: Generic WalletSelected _
+derive instance genericWarningMessage :: Generic WarningMessage _
+
+
+
+derive instance genericValues :: Generic Values _
+instance encodeValues :: Encode Values where
+  encode (Bank_Selected a) = defaultEncode a 
+  encode (Before_Filter a) = defaultEncode a
+  encode (Browser_Type a) = encode a
+  encode (Button_Click a) = defaultEncode a
+  encode (Payment_Details a) = a
+  encode (Payment_Method a) = defaultEncode a
+  encode (After_Filter a) = defaultEncode a
+  encode (Api_Variant a) = defaultEncode a
+  encode (App_Response a) = defaultEncode a
+  encode (App_Filter a) = defaultEncode a
+  encode (App_Life_Cycle a) = defaultEncode a
+  encode (Auth a) = defaultEncode a
+  encode (Card_Details a) = defaultEncode a
+  encode (Card_Number_Changed a) = defaultEncode a
+  encode (Checkbox_Details a) = defaultEncode a
+  encode (Config_Fetch a) = defaultEncode a
+  encode (Cred_Pay a) = defaultEncode a
+  encode (Custom_Tab_Payments a) = defaultEncode a 
+  encode (Cvv_Changed a) = defaultEncode a
+  encode (Default_Option a) = defaultEncode a
+  encode (Device_Type a) = encode a
+  encode (Dialog_Rendered a) = defaultEncode a
+  encode (Disable_Popup a) = defaultEncode a
+  encode (Exit a) = defaultEncode a
+  encode (Expiry_Date_Changed a) = defaultEncode a
+  encode (Field_Focussed a) = defaultEncode a
+  encode (Latency a) = defaultEncode a
+  encode (Microapp_Status a) = defaultEncode a
+  encode (Mobile_Number_Changed a) = defaultEncode a
+  encode (Nb_Search a) = defaultEncode a
+  encode (Network_Connection a) = encode a
+  encode (No_Value a) = defaultEncode a
+  encode (OTP_Detected a) = defaultEncode a
+  encode (OTP_Populated a) = defaultEncode a
+  encode (OTP_Auto_Submit a) = defaultEncode a
+  encode (OTP_CHANGED a) = defaultEncode a
+  encode (OTP_Status a) = defaultEncode a
+  encode (OTP_Submit a) = defaultEncode a
+  encode (OTP_Length a) = defaultEncode a
+  encode (Outage a) = defaultEncode a
+  encode (Payment_Attempt a) = defaultEncode a
+  encode (Payment_Info a) = defaultEncode a
+  encode (Payment_Source_Response a) = defaultEncode a
+  encode (Payment_Status a) = defaultEncode a
+  encode (Pig_Name a) = defaultEncode a
+  encode (Poll a) = defaultEncode a
+  encode (Poll_Status a) = defaultEncode a
+  encode (Priority_Apps a) = defaultEncode a
+  encode (Screen_Rendered a) = defaultEncode a
+  encode (Started a) = defaultEncode a
+  encode (Sms_Count a) = defaultEncode a
+  encode (Sms_Received a) = defaultEncode a
+  encode (UPI_Apps a) = defaultEncode a
+  encode (Used_To_Pay a) = defaultEncode a
+  encode (Unknown a) = a
+  encode (Vpa_Changed a) = defaultEncode a
+  encode (Vpa_Save a) = defaultEncode a
+  encode (Vpa_Selected a) = defaultEncode a
+  encode (Wallet_Selected a) = defaultEncode a
+  encode (Warning_Message a) = defaultEncode a
+
+
+derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
+instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
+
+
+
+derive instance genericCheckboxTypes :: Generic CheckboxTypes _
+instance encodeCheckBoxTypes :: Encode CheckboxTypes where encode = defaultEncode
+
+
+
+derive instance genericCredPayValues :: Generic CredPayValues _
+instance encodeCredPayValues :: Encode CredPayValues where encode = defaultEncode
+
+
+derive instance genericPollTypes :: Generic PollTypes _
+instance encodePollTypes :: Encode PollTypes where
+  encode (St a) = encode a
+  encode (In a) = encode a
+
+derive instance genericUPIApp :: Generic UPIApp _
+instance encodeUPIApp :: Encode UPIApp where encode = defaultEncode
