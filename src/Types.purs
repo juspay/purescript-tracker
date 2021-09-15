@@ -46,7 +46,7 @@ data Values
   | Device_Type String
   | Dialog_Rendered DialogRendered
   | Disable_Popup DisablePopup
-  | Exit ExitResponse
+  | Ended EndedType
   | Expiry_Date_Changed ExpiryDateChanged
   | Field_Focussed FieldFocussed
   | Latency LatencyValue
@@ -180,23 +180,28 @@ newtype UsedToPay = UsedToPay {
 ------------------------ HYPERPAY TYPES START ----------------
 data CheckboxTypes = Checkbox_Info CheckboxInfo | Checkbox_State CheckboxState
 
-newtype StartedType
-  = StartedType
-    { requestId :: String
-    , payload :: Foreign
-    , service :: String
-    , lifeCycleId :: Maybe String
-    }
+newtype StartedType = StartedType {
+  "started" :: StartedRequest
+}
 
-newtype ExitResponse =
-  ExitResponse
-    { requestId :: String
-    , payload :: Foreign
-    , service :: String
-    , error :: Boolean
-    , errorMessage :: String
-    , errorCode  :: String
-    }
+newtype EndedType = EndedType {
+  "ended" :: EndedResponse
+}
+
+type StartedRequest = 
+  { requestId :: String
+  , payload :: Foreign
+  , service :: String
+  }
+
+type EndedResponse =
+  { requestId :: String
+  , payload :: Foreign
+  , service :: String
+  , error :: Boolean
+  , errorMessage :: String
+  , errorCode  :: String
+  }
 newtype DefaultOption = DefaultOption {
   action :: String,
   perform_action :: Boolean,
@@ -514,7 +519,7 @@ derive instance genericCvvChanged :: Generic CvvChanged _
 derive instance genericDefaultOption :: Generic DefaultOption _
 derive instance genericDialogRendered :: Generic DialogRendered _
 derive instance genericDisablePopup :: Generic DisablePopup _
-derive instance genericExitResponse :: Generic ExitResponse _
+derive instance genericEndedType :: Generic EndedType _
 derive instance genericExpiryDateChanged :: Generic ExpiryDateChanged _
 derive instance genericFieldFocussed :: Generic FieldFocussed _
 derive instance genericLatencyValue :: Generic LatencyValue _
@@ -577,7 +582,7 @@ instance encodeValues :: Encode Values where
   encode (Device_Type a) = encode a
   encode (Dialog_Rendered a) = defaultEncode a
   encode (Disable_Popup a) = defaultEncode a
-  encode (Exit a) = defaultEncode a
+  encode (Ended a) = defaultEncode a
   encode (Expiry_Date_Changed a) = defaultEncode a
   encode (Field_Focussed a) = defaultEncode a
   encode (Latency a) = defaultEncode a
