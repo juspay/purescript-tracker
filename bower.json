@@ -8,8 +8,13 @@
   ],
   "dependencies": {
     "purescript-prelude": "^4.1.1",
-    "purescript-presto": "git@bitbucket.org:juspay/purescript-presto.git#fg10"
+    "purescript-presto": "git@bitbucket.org:juspay/purescript-presto.git#PICAF-5359-build-successful",
+    "purescript-effect": "^2.0.1"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "resolutions": {
+    "purescript-record": "^2.0.0",
+    "purescript-foreign-object": "^2.0.0",
+    "purescript-typelevel-prelude": ">= 4.0.0 < 6.0.0"
   }
 }

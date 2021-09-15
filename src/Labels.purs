@@ -100,7 +100,9 @@ data Label
   | THIRD_PARTY_SDK
   | MICROAPP
   | FULL_PAGE_GODEL
-
+  | END_OF_SCREEN
+  | END_OF_SESSION
+  
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
@@ -202,3 +204,5 @@ instance showLabel :: Show Label where
     THIRD_PARTY_SDK -> "third_party_sdk"
     MICROAPP -> "microapp"
     FULL_PAGE_GODEL -> "full_page_godel"
+    END_OF_SCREEN -> "end_of_screen"
+    END_OF_SESSION -> "end_of_session"
