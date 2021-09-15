@@ -30,7 +30,7 @@ import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign)
-import Foreign.Class (encode)
+import Foreign.Class 
 import Foreign.Object as Object
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Tracker.Labels (Label(..))
@@ -62,7 +62,7 @@ trackLifeCycle sub level label key value json = _trackLifeCycle (show sub) (show
 trackAction :: Action -> Level -> Label -> String -> Foreign -> Object.Object Foreign -> Effect Unit
 trackAction sub level label key value json= _trackAction (show sub) (show level) (show label) (getValue key value) json
 
-trackActionObject :: Action -> Level -> Label -> Object.Object Foreign -> Object.Object Foreign -> Effect Unit
+trackActionObject :: forall a. Encode a => Action -> Level -> Label -> Object.Object a -> Object.Object Foreign -> Effect Unit
 trackActionObject sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
 
 -- | trackApiCall [Category: Api_call]
