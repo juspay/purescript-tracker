@@ -68,6 +68,7 @@ data Label
   | PAYLOAD_ERROR
   | CURRENT_SCREEN
   | WALLET_SELECTED
+  | LINK_WALLET
   | STORED_CARD_SELECTED
   | STORED_VPA_SELECTED
   | CARD_SELECTED
@@ -169,6 +170,7 @@ instance showLabel :: Show Label where
     PAYLOAD_ERROR -> "payload_error"
     CURRENT_SCREEN -> "current_screen"
     WALLET_SELECTED -> "wallet_selected"
+    LINK_WALLET -> "link_wallet"
     STORED_CARD_SELECTED -> "stored_card_selected"
     STORED_VPA_SELECTED -> "stored_vpa_selected"
     CARD_SELECTED -> "card_selected"

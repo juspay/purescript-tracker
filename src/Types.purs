@@ -49,7 +49,9 @@ data Values
   | Ended EndedType
   | Expiry_Date_Changed ExpiryDateChanged
   | Field_Focussed FieldFocussed
+  | Input_Validation InputValidation
   | Latency LatencyValue
+  | Link_Wallet_Status LinkWalletStatus
   | Microapp_Status MicroAppStatus
   | Mobile_Number_Changed MobileNumberChanged
   | Nb_Search NbSearch
@@ -179,6 +181,15 @@ newtype UsedToPay = UsedToPay {
 
 ------------------------ HYPERPAY TYPES START ----------------
 data CheckboxTypes = Checkbox_Info CheckboxInfo | Checkbox_State CheckboxState
+
+newtype InputValidation = InputValidation {
+  field_validation :: String,
+  is_valid :: Boolean
+}
+
+newtype LinkWalletStatus = LinkWalletStatus {
+  "wallet_linked" :: Boolean
+}
 
 newtype StartedType = StartedType {
   "started" :: StartedRequest
@@ -522,7 +533,9 @@ derive instance genericDisablePopup :: Generic DisablePopup _
 derive instance genericEndedType :: Generic EndedType _
 derive instance genericExpiryDateChanged :: Generic ExpiryDateChanged _
 derive instance genericFieldFocussed :: Generic FieldFocussed _
+derive instance genericInputValidation :: Generic InputValidation _
 derive instance genericLatencyValue :: Generic LatencyValue _
+derive instance genericLinkWalletStatus :: Generic LinkWalletStatus _
 derive instance genericMicroAppStatus :: Generic MicroAppStatus _
 derive instance genericMobileNumberChanged :: Generic MobileNumberChanged _
 derive instance genericNbSearch :: Generic NbSearch _
@@ -585,7 +598,9 @@ instance encodeValues :: Encode Values where
   encode (Ended a) = defaultEncode a
   encode (Expiry_Date_Changed a) = defaultEncode a
   encode (Field_Focussed a) = defaultEncode a
+  encode (Input_Validation a) = defaultEncode a
   encode (Latency a) = defaultEncode a
+  encode (Link_Wallet_Status a) = defaultEncode a
   encode (Microapp_Status a) = defaultEncode a
   encode (Mobile_Number_Changed a) = defaultEncode a
   encode (Nb_Search a) = defaultEncode a
