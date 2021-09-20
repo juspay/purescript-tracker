@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "purescript-prelude": "^4.1.1",
-    "purescript-presto": "git@bitbucket.org:juspay/purescript-presto.git#PICAF-5359-build-successful",
+    "purescript-presto": "git@bitbucket.org:juspay/purescript-presto.git#master",
     "purescript-effect": "^2.0.1"
   },
   "devDependencies": {},
