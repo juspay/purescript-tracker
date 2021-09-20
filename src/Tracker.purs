@@ -242,7 +242,7 @@ trackExceptionEventFlow category sub label msg st oldLabel = do
 trackScreenEnd :: String -> Object.Object Foreign -> Effect Unit
 trackScreenEnd screen_name json = _trackScreenEnd screen_name json
 
-trackScreenEndFlow :: String -> Flow Unit
+trackScreenEndFlow :: forall a. String -> Flow a Unit
 trackScreenEndFlow screen_name = do
     json <- getLogFields
     effectToFlow $ trackScreenEnd screen_name json
