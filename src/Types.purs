@@ -85,6 +85,7 @@ data Values
   | Vpa_Selected VpaSelected
   | Wallet_Selected WalletSelected
   | Warning_Message WarningMessage
+  | Emi_Eligibility EmiEligibility
 
 
 ---------------------- DOTP TYPES START -----------------------
@@ -285,6 +286,10 @@ newtype FieldFocussed = FieldFocussed {
 newtype WalletSelected = WalletSelected {
   walletType :: String,
   walletName :: Maybe String
+}
+
+newtype EmiEligibility = EmiEligibility {
+  eligibility :: Boolean
 }
 
 
@@ -566,6 +571,7 @@ derive instance genericVpaChanged :: Generic VpaChanged _
 derive instance genericVpaSave :: Generic VpaSave _
 derive instance genericVpaSelected :: Generic VpaSelected _
 derive instance genericWalletSelected :: Generic WalletSelected _
+derive instance genericEmiEligibility :: Generic EmiEligibility _
 derive instance genericWarningMessage :: Generic WarningMessage _
 
 
@@ -634,6 +640,7 @@ instance encodeValues :: Encode Values where
   encode (Vpa_Selected a) = defaultEncode a
   encode (Wallet_Selected a) = defaultEncode a
   encode (Warning_Message a) = defaultEncode a
+  encode (Emi_Eligibility a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _

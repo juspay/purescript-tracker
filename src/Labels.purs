@@ -134,6 +134,7 @@ data Label
   | RETRY_PAYMENT_METHOD
   | RETRY_POLLING_DURATION
   | TIME_SPENT_STATUS_SCREEN
+  | EMI_ELIGIBILITY
 
   
 instance encodeLabel :: Encode Label where
@@ -271,3 +272,4 @@ instance showLabel :: Show Label where
     DELETE_VPA_ACCOUNT -> "DELETE_VPA_ACCOUNT"
     DEREGISTERED_ACCOUNT -> "DEREGISTERED_ACCOUNT"
     LINKED_ACCOUNTS -> "LINKED_ACCOUNTS"
+    EMI_ELIGIBILITY -> "emi_eligibility"
