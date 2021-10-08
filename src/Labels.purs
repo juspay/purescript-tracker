@@ -135,6 +135,7 @@ data Label
   | RETRY_POLLING_DURATION
   | TIME_SPENT_STATUS_SCREEN
   | EMI_ELIGIBILITY
+  | CRED_PAY
 
   
 instance encodeLabel :: Encode Label where
@@ -273,3 +274,4 @@ instance showLabel :: Show Label where
     DEREGISTERED_ACCOUNT -> "DEREGISTERED_ACCOUNT"
     LINKED_ACCOUNTS -> "LINKED_ACCOUNTS"
     EMI_ELIGIBILITY -> "emi_eligibility"
+    CRED_PAY -> "cred_pay"
