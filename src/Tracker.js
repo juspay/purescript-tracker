@@ -81,3 +81,4 @@ exports._trackContextEvent = newInterface ? tracker.__trackContextEvent : tracke
 exports._trackScreenEvent = newInterface ? tracker.__trackScreenEvent : tracker._trackScreenEvent ;
 exports._trackLifeCycleEvent = newInterface ? tracker.__trackContext : tracker._trackContext ;
 exports._trackExceptionEvent = newInterface ? tracker.__trackExceptionEvent : tracker._trackExceptionEvent ;
+exports._trackScreenEnd = newInterface ? tracker.__trackScreenEnd : tracker._trackScreenEnd ;

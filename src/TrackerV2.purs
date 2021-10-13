@@ -30,7 +30,7 @@ import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign, unsafeToForeign)
-import Foreign.Class (encode)
+import Foreign.Class (class Encode, encode)
 import Foreign.Object as Object
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Tracker.Labels (Label (..))
@@ -62,7 +62,7 @@ trackLifeCycle sub level label value json = _trackLifeCycle (show sub) (show lev
 trackAction :: Action -> Level -> Label -> Values -> Object.Object Foreign -> Effect Unit
 trackAction sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
 
-trackActionObject :: Action -> Level -> Label -> Object.Object Foreign -> Object.Object Foreign -> Effect Unit
+trackActionObject :: forall a. Encode a => Action -> Level -> Label -> Object.Object a -> Object.Object Foreign -> Effect Unit
 trackActionObject sub level label value json= _trackAction (show sub) (show level) (show label) (encode value) json
 
 -- | trackApiCall [Category: Api_call]
@@ -102,19 +102,19 @@ trackProcessStart level val json = trackLifeCycle Microapp level PROCESS val jso
 trackProcessEnd :: Level -> Values -> Object.Object Foreign -> Effect Unit
 trackProcessEnd level val json = trackLifeCycle Microapp level PROCESS val json
 
-trackInitiateStartV2 :: Level -> Values -> Flow Unit
+trackInitiateStartV2 :: forall a. Level -> Values -> Flow a Unit
 trackInitiateStartV2 level val = trackLifeCycleFlow Microapp level INITIATE val
 
 -- | trackInitiateEnd, args: level, value
-trackInitiateEndV2 :: Level -> Values -> Flow Unit
+trackInitiateEndV2 :: forall a. Level -> Values -> Flow a Unit
 trackInitiateEndV2 level val = trackLifeCycleFlow Microapp level INITIATE val
 
 -- | trackProcessStart, args: level, value
-trackProcessStartV2 :: Level -> Values -> Flow Unit
+trackProcessStartV2 :: forall a. Level -> Values -> Flow a Unit
 trackProcessStartV2 level val = trackLifeCycleFlow Microapp level PROCESS val
 
 -- | trackProcessEnd, args: level, value
-trackProcessEndV2 :: Level -> Values -> Flow Unit
+trackProcessEndV2 :: forall a. Level -> Values -> Flow a Unit
 trackProcessEndV2 level val = trackLifeCycleFlow Microapp level PROCESS val
 
 trackLoaderShow :: Values -> Object.Object Foreign -> Effect Unit
@@ -123,12 +123,12 @@ trackLoaderShow value json = _trackAction (show (System)) (show Info) (show LOAD
 trackLoaderHide :: Values -> Object.Object Foreign -> Effect Unit
 trackLoaderHide value json = _trackAction (show (System)) (show Info) (show LOADER) (addKeyValue (encode value) "loader" "hide") json
 
-trackLoaderShowFlow :: Values -> Flow Unit
+trackLoaderShowFlow :: forall a. Values -> Flow a Unit
 trackLoaderShowFlow value = do
     json <- getLogFields
     effectToFlow $ trackLoaderShow value json
 
-trackLoaderHideFlow :: Values -> Flow Unit
+trackLoaderHideFlow :: forall a. Values -> Flow a Unit
 trackLoaderHideFlow value = do
     json <- getLogFields
     effectToFlow $ trackLoaderHide value json
@@ -137,42 +137,42 @@ trackLoaderHideFlow value = do
 -- Interfaces for Flow
 -- | Take same args as their Effect interface
 
-trackLifeCycleFlow :: Lifecycle -> Level -> Label -> Values -> Flow Unit
+trackLifeCycleFlow :: forall a. Lifecycle -> Level -> Label -> Values -> Flow a Unit
 trackLifeCycleFlow sub level label val = do
     json <- getLogFields
     effectToFlow $ trackLifeCycle sub level label val json
 
-trackActionFlow    :: Action -> Level -> Label -> Values -> Flow Unit
+trackActionFlow    :: forall a. Action -> Level -> Label -> Values -> Flow a Unit
 trackActionFlow sub level label val = do
     json <- getLogFields
     effectToFlow $ trackAction sub level label val json
 
-trackActionObjectFlow :: Action -> Level -> Label -> Object.Object Foreign -> Flow Unit
+trackActionObjectFlow :: forall a. Action -> Level -> Label -> Object.Object Foreign -> Flow a Unit
 trackActionObjectFlow sub level label val = do
     json <- getLogFields
     effectToFlow $ trackActionObject sub level label val json
 
-trackApiCallFlow :: ApiCall -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow Unit
+trackApiCallFlow :: forall a. ApiCall -> Level -> Label -> Int -> Int -> Int -> String -> String -> String -> String -> Flow a Unit
 trackApiCallFlow sub level label startTime endTime statusC response url payload val = do
     json <- getLogFields
     effectToFlow $ trackApiCall sub level label startTime endTime statusC response url payload val json
 
-trackExceptionFlow :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> Flow Unit
+trackExceptionFlow :: forall a b c. Show b => T.Category a b => a -> b -> Label -> String -> String -> Flow c Unit
 trackExceptionFlow category sub label msg val = do
     json <- getLogFields
     effectToFlow $ trackException category sub label msg val json
 
-trackScreenFlow :: Screen -> Level -> Label -> String -> String -> Flow Unit
+trackScreenFlow :: forall a. Screen -> Level -> Label -> String -> String -> Flow a Unit
 trackScreenFlow sub level label pt val = do
     json <- getLogFields
     effectToFlow $ trackScreen sub level label pt val json
 
-trackScreenPrevFlow :: Screen -> Level -> Label -> String -> String -> String -> Flow Unit
+trackScreenPrevFlow :: forall a. Screen -> Level -> Label -> String -> String -> String -> Flow a Unit
 trackScreenPrevFlow sub level label presentation_type name old_screen = do
     json <- getLogFields
     effectToFlow $ trackScreenPrev sub level label presentation_type name old_screen json
 
-trackContextFlow :: Context -> Level -> Label -> Values -> Flow Unit
+trackContextFlow :: forall a. Context -> Level -> Label -> Values -> Flow a Unit
 trackContextFlow sub level label val = do
     json <- getLogFields
     effectToFlow $ trackContext sub level label val json
@@ -185,7 +185,7 @@ trackContextFlow sub level label val = do
 trackLifeCycleEvent :: Lifecycle -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
 trackLifeCycleEvent sub level label value oldLabel oldValue json = _trackLifeCycleEvent (show sub) (show level) (show label) (encode value) oldLabel oldValue json
 
-trackLifeCycleEventFlow :: Lifecycle -> Level -> Label -> Values -> String -> String -> Flow Unit
+trackLifeCycleEventFlow :: forall a. Lifecycle -> Level -> Label -> Values -> String -> String -> Flow a Unit
 trackLifeCycleEventFlow sub level label value oldLabel oldValue = do
     json <- getLogFields
     effectToFlow $ trackLifeCycleEvent sub level label value oldLabel oldValue json
@@ -197,7 +197,7 @@ trackLifeCycleEventFlow sub level label value oldLabel oldValue = do
 trackActionEvent :: Action -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
 trackActionEvent sub level label value oldLabel oldValue json = _trackActionEvent (show sub) (show level) (show label) ( encode value) oldLabel oldValue json
 
-trackActionEventFlow ::  Action -> Level -> Label -> Values -> String -> String -> Flow Unit
+trackActionEventFlow :: forall a. Action -> Level -> Label -> Values -> String -> String -> Flow a Unit
 trackActionEventFlow sub level label value oldLabel oldValue = do
     json <- getLogFields 
     effectToFlow $ trackActionEvent sub level label value oldLabel oldValue json
@@ -209,7 +209,7 @@ trackActionEventFlow sub level label value oldLabel oldValue = do
 trackContextEvent :: Context -> Level -> Label -> Values -> String -> String -> Object.Object Foreign -> Effect Unit
 trackContextEvent sub level label value oldLabel oldValue json = _trackContextEvent (show sub) (show level) (show label) (encode value) oldLabel oldValue json
 
-trackContextEventFlow :: Context -> Level -> Label -> Values -> String -> String -> Flow Unit
+trackContextEventFlow :: forall a. Context -> Level -> Label -> Values -> String -> String -> Flow a Unit
 trackContextEventFlow sub level label value oldLabel oldValue = do
     json <- getLogFields
     effectToFlow $ trackContextEvent sub level label value oldLabel oldValue json
@@ -220,7 +220,7 @@ trackContextEventFlow sub level label value oldLabel oldValue = do
 trackScreenEvent :: Screen -> Level -> Label -> String -> String -> String -> String -> Object.Object Foreign -> Effect Unit
 trackScreenEvent sub level label presentation_type name oldLabel oldValue json = _trackScreenEvent (show sub) (show level) (show label) presentation_type name oldLabel oldValue json
 
-trackScreenEventFlow :: Screen -> Level -> Label -> String -> String -> String -> String -> Flow Unit
+trackScreenEventFlow :: forall a. Screen -> Level -> Label -> String -> String -> String -> String -> Flow a Unit
 trackScreenEventFlow sub level label presentation_type name oldLabel oldValue = do
     json <- getLogFields
     effectToFlow $ trackScreenEvent sub level label presentation_type name oldLabel oldValue json
@@ -231,7 +231,7 @@ trackScreenEventFlow sub level label presentation_type name oldLabel oldValue = 
 trackExceptionEvent :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> String -> Object.Object Foreign -> Effect Unit
 trackExceptionEvent category sub label message stacktrace oldLabel json = _trackExceptionEvent (showCategory category sub) (show sub) (show label) message stacktrace oldLabel json
 
-trackExceptionEventFlow :: forall a b. Show b => T.Category a b => a -> b -> Label -> String -> String -> String -> Flow Unit
+trackExceptionEventFlow :: forall a b c. Show b => T.Category a b => a -> b -> Label -> String -> String -> String -> Flow c Unit
 trackExceptionEventFlow category sub label msg st oldLabel = do
     json <- getLogFields
     effectToFlow $ trackExceptionEvent category sub label msg st oldLabel json
@@ -256,7 +256,7 @@ mask = getMask <<< length
 
 -- Util Functions
 
-effectToFlow :: Effect Unit -> Flow Unit
+effectToFlow :: forall a. Effect Unit -> Flow a Unit
 effectToFlow = doAff <<< liftEffect
 
 getMask :: Int -> String

@@ -144,6 +144,8 @@ data Values
   | New_Pay_Start NewPayStart
   | Txns_ Txns
   | Submit_Pares_Foreign SubmitParesForeign
+  | Emi_Eligibility EmiEligibility
+
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -343,6 +345,10 @@ newtype FieldFocussed = FieldFocussed {
 newtype WalletSelected = WalletSelected {
   walletType :: String,
   walletName :: Maybe String
+}
+
+newtype EmiEligibility = EmiEligibility {
+  eligibility :: Boolean
 }
 
 
@@ -880,6 +886,7 @@ derive instance genericVpaChanged :: Generic VpaChanged _
 derive instance genericVpaSave :: Generic VpaSave _
 derive instance genericVpaSelected :: Generic VpaSelected _
 derive instance genericWalletSelected :: Generic WalletSelected _
+derive instance genericEmiEligibility :: Generic EmiEligibility _
 derive instance genericWarningMessage :: Generic WarningMessage _
 derive instance genericTitleName :: Generic TitleName _
 derive instance genericSafetynetInInitiate :: Generic SafetynetInInitiate _
@@ -1065,6 +1072,8 @@ instance encodeValues :: Encode Values where
   encode (Txns_ a) = defaultEncode a
   encode (Submit_Pares_Foreign a) = defaultEncode a
  
+  encode (Emi_Eligibility a) = defaultEncode a
+
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
 instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
