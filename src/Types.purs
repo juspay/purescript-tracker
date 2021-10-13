@@ -85,7 +85,65 @@ data Values
   | Vpa_Selected VpaSelected
   | Wallet_Selected WalletSelected
   | Warning_Message WarningMessage
-
+  | Title TitleName
+  | Safetynet_In_Initiate SafetynetInInitiate
+  | Safetynet_In_Initiate_Present SafetynetInInitiatePresent
+  | Safetynet_Flow_Safetynet_Used SafetynetFlowSafetynetUsed
+  | Safetynet_Resp_Time SafetynetRespTime
+  | Safetynet_Resp_Time_Diff SafetynetRespTimeDiff
+  | Vies_Error_Response ViesErrorResponse
+  | Core_Initiate_Pay CoreInitiatePay
+  | Initiate_Pay InitiatePay
+  | Re_Enroll ReEnroll
+  | Init_Enrollment InitEnrollment
+  | Init_Enrollment_Flow InitEnrollmentFlow
+  | Signed_Device_Data SignedDeviceData
+  | Vies_Flow ViesFlow
+  | Is_Token_Retained IsTokenRetained
+  | On_Boarding OnBoarding
+  | Vies_Error ViesError
+  | Direct_Debit DirectDebit
+  | Step_Up StepUp
+  | Auto_Retry AutoRetry
+  | Exit_SDK ExitSDK
+  | Purge_Card PurgeCard
+  | Core_Update_Enroll CoreUpdateEnroll
+  | Update_Auth_Code UpdateAuthCode
+  | Update_Id_Token UpdateIdToken
+  | Update_Id_Token_Flow UpdateIdTokenFlow
+  | Safetynet_Request SafetynetRequest
+  | Safetynet_Request_Flow SafetynetRequestFlow
+  | Find_Or_Register_Card_Account FindOrRegisterCardAccount
+  | Find_Or_Register_Card_Account_Eligibility FindOrRegisterCardAccountEligibility
+  | Create_Card_Account CreateCardAccount
+  | Create_Key_Pair CreateKeyPair
+  | Register_Device_Key RegisterDeviceKey
+  | Auth_Code_Flow AuthCodeFlow
+  | Validate_Device ValidateDevice
+  | Submit_Pares SubmitPares
+  | Submit_Pares_Flow SubmitParesFlow
+  | Core_Device_Validation CoreDeviceValidation
+  | Decrypt_Auth_Code DecryptAuthCode
+  | Sync_Status SyncStatus
+  | Chrome_Version ChromeVersion
+  | Core_De_Enroll_Card CoreDeEnrollCard
+  | De_Enroll_Card DeEnrollCard 
+  | Eligiiblity_Check_Flow EligibilityCheckFlow
+  | Save_Card_Bank SaveCardBank
+  | Update_Shared_Prefs UpdateSharedPrefs
+  | Customer_Id CustomerId
+  | Issuer_Name IssuerName
+  | Initiate_Pay_Flow InitiatePayFlow
+  | Should_Auto_Retry_On ShouldAutoRetryOn
+  | Auto_Retry_Code AutoRetryCode
+  | Auto_Retry_Reason AutoRetryReason
+  | Encryption_Algo EncryptionAlgo
+  | Auth_Code_Response AuthCodeResponse
+  | Auth_Code AuthCode
+  | Pay_Start PayStart
+  | New_Pay_Start NewPayStart
+  | Txns_ Txns
+  | Submit_Pares_Foreign SubmitParesForeign
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -387,6 +445,262 @@ type AppPresent = {
 
 ------------------------ EC TYPES END ------------------------
 
+------------------------ VIES TYPES START --------------------
+
+newtype TitleName = TitleName {
+  "title" :: String
+}
+
+newtype SafetynetInInitiate = SafetynetInInitiate {
+  "safetynet_in_initiate" :: String
+}
+
+newtype SafetynetInInitiatePresent = SafetynetInInitiatePresent {
+  "safetynet_in_initiate" :: Boolean
+}
+
+newtype SafetynetFlowSafetynetUsed = SafetynetFlowSafetynetUsed {
+  "safetynet_flow_safetynet_used" :: Maybe String
+}
+
+newtype SafetynetRespTime = SafetynetRespTime {
+  "safetynet_resp_time" :: Number
+}
+
+newtype SafetynetRespTimeDiff = SafetynetRespTimeDiff {
+  "safetynet_resp_time_diff" :: Int
+}
+
+newtype ViesErrorResponse = ViesErrorResponse {
+  "vies_error_response" :: String
+}
+
+newtype CoreInitiatePay = CoreInitiatePay {
+  "core_initiate_pay" :: String
+}
+
+newtype InitiatePay = InitiatePay {
+  "initiate_pay" :: String
+}
+
+newtype ReEnroll = ReEnroll {
+  "re_enroll" :: String
+}
+
+newtype InitEnrollment = InitEnrollment {
+  "init_enrollment" :: String
+}
+
+type FlowLog = { 
+  success :: Boolean
+  , status :: String
+  }
+
+newtype InitEnrollmentFlow = InitEnrollmentFlow {
+  "init_enrollment_flow" :: FlowLog
+}
+
+type GenericLog = {
+  value :: String,
+  error :: Boolean
+}
+
+newtype SignedDeviceData = SignedDeviceData {
+  "signed_device_data" :: GenericLog
+}
+
+newtype ViesFlow = ViesFlow {
+  "vies_flow" :: String
+}
+
+newtype IsTokenRetained = IsTokenRetained {
+  "is_token_retained" :: Boolean
+}
+
+newtype OnBoarding = OnBoarding {
+  "onboarding" :: String
+}
+
+newtype ViesError = ViesError {
+  "error" :: String
+}
+
+newtype DirectDebit = DirectDebit {
+  "direct_debit" :: String
+}
+
+newtype StepUp = StepUp {
+  "stepup" :: String
+}
+
+newtype AutoRetry = AutoRetry {
+  "auto_retry" :: String
+}
+
+newtype ExitSDK = ExitSDK {
+  "exit_sdk" :: String
+}
+
+newtype PurgeCard = PurgeCard {
+  "purge_card" :: String
+}
+
+newtype CoreUpdateEnroll = CoreUpdateEnroll {
+  "core_update_enroll" :: String
+}
+
+newtype UpdateAuthCode = UpdateAuthCode {
+  "updateAuthCode" :: String
+}
+
+newtype UpdateIdToken = UpdateIdToken {
+  "update_id_token" :: String
+}
+
+newtype UpdateIdTokenFlow = UpdateIdTokenFlow {
+  "update_id_token_flow" :: FlowLog
+}
+
+newtype SafetynetRequest = SafetynetRequest {
+  "safetynet_request" :: String
+}
+
+newtype SafetynetRequestFlow = SafetynetRequestFlow {
+  "safetynet_request_flow" :: FlowLog
+}
+
+newtype FindOrRegisterCardAccount = FindOrRegisterCardAccount {
+  "find_or_register_card_account" :: String
+}
+
+newtype FindOrRegisterCardAccountEligibility = FindOrRegisterCardAccountEligibility {
+  "find_or_register_card_account:eligibility" :: String
+}
+
+newtype CreateCardAccount = CreateCardAccount {
+  "create_card_account" :: String
+}
+
+newtype CreateKeyPair = CreateKeyPair {
+  "create_key_pair" :: String
+}
+
+newtype RegisterDeviceKey = RegisterDeviceKey {
+  "register_device_key" :: String
+}
+
+newtype AuthCodeFlow = AuthCodeFlow {
+  "auth_code_flow" :: FlowLog
+}
+
+newtype ValidateDevice = ValidateDevice {
+  "validateDevice" :: String
+}
+
+newtype SubmitPares = SubmitPares {
+  "submit_pares" :: String
+}
+
+newtype SubmitParesFlow = SubmitParesFlow {
+  "submit_pares_flow" :: FlowLog
+}
+
+newtype CoreDeviceValidation = CoreDeviceValidation {
+  "core_device_validation" :: String
+}
+
+newtype DecryptAuthCode = DecryptAuthCode {
+  "decrypt_auth_code" :: String
+}
+
+newtype SyncStatus = SyncStatus {
+  "sync_status" :: String
+}
+
+newtype ChromeVersion = ChromeVersion {
+  "chrome_version" :: String
+}
+
+newtype CoreDeEnrollCard = CoreDeEnrollCard {
+  "core_de_enroll_card" :: String
+}
+
+newtype DeEnrollCard = DeEnrollCard {
+  "de_enroll_card" :: String
+}
+
+type EligiLog = { 
+    success :: Boolean
+  , status :: String
+  , local :: Boolean
+  }
+
+newtype EligibilityCheckFlow = EligibilityCheckFlow {
+  "eligibility_check_flow" :: EligiLog
+}
+
+newtype SaveCardBank = SaveCardBank {
+  "saveCardBank" :: String
+}
+
+newtype UpdateSharedPrefs = UpdateSharedPrefs {
+  "update_shared_prefs" :: String
+}
+
+newtype CustomerId = CustomerId {
+  "customer_id" :: String
+}
+
+newtype IssuerName = IssuerName {
+  "issuerName" :: String
+}
+
+newtype InitiatePayFlow = InitiatePayFlow {
+  "initiate_pay_flow" :: FlowLog
+}
+
+newtype ShouldAutoRetryOn = ShouldAutoRetryOn {
+  "should_auto_retry_on" :: String
+}
+
+newtype AutoRetryCode = AutoRetryCode {
+  "auto_retry_code" :: String
+}
+
+newtype AutoRetryReason = AutoRetryReason {
+  "auto_retry_reason" :: String
+}
+
+newtype EncryptionAlgo = EncryptionAlgo {
+  "encryption_algo" :: String
+}
+
+newtype AuthCodeResponse = AuthCodeResponse {
+  "auth_code_response" :: Foreign
+}
+
+newtype AuthCode = AuthCode {
+  "auth_code" :: String
+}
+
+newtype PayStart = PayStart {
+  "pay/start" :: String
+}
+
+newtype NewPayStart = NewPayStart {
+  "new pay/start" :: String
+}
+
+newtype Txns = Txns {
+  "txns" :: String
+}
+
+newtype SubmitParesForeign = SubmitParesForeign {
+  "submit_pares" :: Foreign
+}
+
+------------------------ VIES TYPES END ----------------------
+
 ------------------------ COMMON TYPES START ------------------
 newtype NoValue
   = NoValue
@@ -567,8 +881,65 @@ derive instance genericVpaSave :: Generic VpaSave _
 derive instance genericVpaSelected :: Generic VpaSelected _
 derive instance genericWalletSelected :: Generic WalletSelected _
 derive instance genericWarningMessage :: Generic WarningMessage _
-
-
+derive instance genericTitleName :: Generic TitleName _
+derive instance genericSafetynetInInitiate :: Generic SafetynetInInitiate _
+derive instance genericSafetynetInInitiatePresent :: Generic SafetynetInInitiatePresent _
+derive instance generidSafetynetFlowSafetynetUsed :: Generic SafetynetFlowSafetynetUsed _
+derive instance genericSafetynetRespTime :: Generic SafetynetRespTime _
+derive instance genericSafetynetRespTimeDiff :: Generic SafetynetRespTimeDiff _
+derive instance genericViesErrorResponse :: Generic ViesErrorResponse _
+derive instance genericCoreInitiatePay :: Generic CoreInitiatePay _
+derive instance genericInitiatePay :: Generic InitiatePay _
+derive instance genericReEnroll :: Generic ReEnroll _
+derive instance genericInitEnrollment :: Generic InitEnrollment _
+derive instance genericInitEnrollmentFlow :: Generic InitEnrollmentFlow _
+derive instance gnericSignedDeviceData :: Generic SignedDeviceData _
+derive instance genericViesFlow :: Generic ViesFlow _
+derive instance genericIsTokenRetained :: Generic IsTokenRetained _
+derive instance genericOnBoarding :: Generic OnBoarding _
+derive instance genericViesError :: Generic ViesError _
+derive instance genericDirectDebit :: Generic DirectDebit _
+derive instance genericStepUp :: Generic StepUp _
+derive instance genericAutoRetry :: Generic AutoRetry _
+derive instance genericExitSDK :: Generic ExitSDK _
+derive instance genericPurgeCard :: Generic PurgeCard _
+derive instance genericCoreUpdateEnroll :: Generic CoreUpdateEnroll _
+derive instance genericUpdateAuthCode :: Generic UpdateAuthCode _
+derive instance genericUpdateIdToken :: Generic UpdateIdToken _
+derive instance genericUpdateIdTokenFlow :: Generic UpdateIdTokenFlow _
+derive instance genericSafetynetRequest :: Generic SafetynetRequest _
+derive instance genericSafetynetRequestFlow :: Generic SafetynetRequestFlow _
+derive instance genericFindOrRegisterCardAccount :: Generic FindOrRegisterCardAccount _
+derive instance genericFindOrRegisterCardAccountEligibility :: Generic FindOrRegisterCardAccountEligibility _
+derive instance genericCreateCardAccount :: Generic CreateCardAccount _
+derive instance genericCreateKeyPair :: Generic CreateKeyPair _
+derive instance genericRegisterDeviceKey :: Generic RegisterDeviceKey _
+derive instance genericAuthCodeFlow :: Generic AuthCodeFlow _
+derive instance genericValidateDevice :: Generic ValidateDevice _
+derive instance genericSubmitPares :: Generic SubmitPares _
+derive instance genericSubmitParesFlow :: Generic SubmitParesFlow _
+derive instance genericCoreDeviceValidation :: Generic CoreDeviceValidation _
+derive instance genericDecryptAuthCode :: Generic DecryptAuthCode _
+derive instance genericSyncStatus :: Generic SyncStatus _
+derive instance genericChromeVersion :: Generic ChromeVersion _
+derive instance genericCoreDeEnrollCard :: Generic CoreDeEnrollCard _
+derive instance genericDeEnrollCard :: Generic DeEnrollCard _
+derive instance genericEligibilityCheckFlow :: Generic EligibilityCheckFlow _
+derive instance genericSaveCardBank :: Generic SaveCardBank _
+derive instance genericUpdateSharedPrefs :: Generic UpdateSharedPrefs _
+derive instance genericCustomerId :: Generic CustomerId _
+derive instance genericIssuerName :: Generic IssuerName _
+derive instance genericInitiatePayFlow :: Generic InitiatePayFlow _
+derive instance genericShouldAutoRetryOn :: Generic ShouldAutoRetryOn _
+derive instance genericAutoRetryCode :: Generic AutoRetryCode _
+derive instance genericAutoRetryReason :: Generic AutoRetryReason _
+derive instance genericEncryptionAlgo :: Generic EncryptionAlgo _
+derive instance genericAuthCodeResponse :: Generic AuthCodeResponse _
+derive instance genericAuthCode :: Generic AuthCode _
+derive instance genericPayStart :: Generic PayStart _
+derive instance genericNewPayStart :: Generic NewPayStart _
+derive instance genericTxns :: Generic Txns _
+derive instance genericSubmitParesForeign :: Generic SubmitParesForeign _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
@@ -634,7 +1005,66 @@ instance encodeValues :: Encode Values where
   encode (Vpa_Selected a) = defaultEncode a
   encode (Wallet_Selected a) = defaultEncode a
   encode (Warning_Message a) = defaultEncode a
-
+  encode (Title a) = defaultEncode a
+  encode (Safetynet_In_Initiate a) = defaultEncode a
+  encode (Safetynet_In_Initiate_Present a) = defaultEncode a
+  encode (Safetynet_Flow_Safetynet_Used a) = defaultEncode a
+  encode (Safetynet_Resp_Time a) = defaultEncode a
+  encode (Safetynet_Resp_Time_Diff a) = defaultEncode a
+  encode (Vies_Error_Response a) = defaultEncode a 
+  encode (Core_Initiate_Pay a) = defaultEncode a
+  encode (Initiate_Pay a) = defaultEncode a
+  encode (Re_Enroll a) = defaultEncode a
+  encode (Init_Enrollment a) = defaultEncode a
+  encode (Init_Enrollment_Flow a) = defaultEncode a
+  encode (Signed_Device_Data a) = defaultEncode a
+  encode (Vies_Flow a) = defaultEncode a
+  encode (Is_Token_Retained a) = defaultEncode a
+  encode (On_Boarding a) = defaultEncode a
+  encode (Vies_Error a) = defaultEncode a
+  encode (Direct_Debit a) = defaultEncode a
+  encode (Step_Up a) = defaultEncode a
+  encode (Auto_Retry a) = defaultEncode a
+  encode (Exit_SDK a) = defaultEncode a
+  encode (Purge_Card a) = defaultEncode a
+  encode (Core_Update_Enroll a) = defaultEncode a
+  encode (Update_Auth_Code a) = defaultEncode a
+  encode (Update_Id_Token a) = defaultEncode a
+  encode (Update_Id_Token_Flow a) = defaultEncode a
+  encode (Safetynet_Request a) = defaultEncode a
+  encode (Safetynet_Request_Flow a) = defaultEncode a
+  encode (Find_Or_Register_Card_Account a) = defaultEncode a
+  encode (Find_Or_Register_Card_Account_Eligibility a) = defaultEncode a
+  encode (Create_Card_Account a) = defaultEncode a
+  encode (Create_Key_Pair a) = defaultEncode a
+  encode (Register_Device_Key a) = defaultEncode a
+  encode (Auth_Code_Flow a) = defaultEncode a
+  encode (Validate_Device a) = defaultEncode a
+  encode (Submit_Pares a) = defaultEncode a
+  encode (Submit_Pares_Flow a) = defaultEncode a 
+  encode (Core_Device_Validation a) = defaultEncode a
+  encode (Decrypt_Auth_Code a) = defaultEncode a
+  encode (Sync_Status a) = defaultEncode a
+  encode (Chrome_Version a) = defaultEncode a
+  encode (Core_De_Enroll_Card a) = defaultEncode a
+  encode (De_Enroll_Card a) = defaultEncode a
+  encode (Eligiiblity_Check_Flow a) = defaultEncode a
+  encode (Save_Card_Bank a) = defaultEncode a
+  encode (Update_Shared_Prefs a) = defaultEncode a
+  encode (Customer_Id a) = defaultEncode a
+  encode (Issuer_Name a) = defaultEncode a
+  encode (Initiate_Pay_Flow a) = defaultEncode a
+  encode (Should_Auto_Retry_On a) = defaultEncode a
+  encode (Auto_Retry_Code a) = defaultEncode a
+  encode (Auto_Retry_Reason a) = defaultEncode a
+  encode (Encryption_Algo a) = defaultEncode a
+  encode (Auth_Code_Response a) = defaultEncode a
+  encode (Auth_Code a) = defaultEncode a
+  encode (Pay_Start a) = defaultEncode a
+  encode (New_Pay_Start a) = defaultEncode a
+  encode (Txns_ a) = defaultEncode a
+  encode (Submit_Pares_Foreign a) = defaultEncode a
+ 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
 instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
