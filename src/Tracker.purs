@@ -22,8 +22,7 @@ module Tracker
   , trackScreenEnd, trackScreenEndFlow
   ) where
 
-import Prelude
-
+import Prelude (class Show, Unit, bind, pure, show, unit, ($), (-), (<<<), (<=), (<>), (==))
 import Data.Array (last, length) as A
 import Data.Foldable (foldl)
 import Data.Maybe (fromMaybe)
@@ -31,7 +30,7 @@ import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Foreign (Foreign)
-import Foreign.Class 
+import Foreign.Class (class Encode, encode)
 import Foreign.Object as Object
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Tracker.Labels (Label(..))

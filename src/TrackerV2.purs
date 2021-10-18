@@ -29,12 +29,12 @@ import Data.Maybe (fromMaybe)
 import Data.String (length, split, take, Pattern(..))
 import Effect (Effect)
 import Effect.Class (liftEffect)
-import Foreign (Foreign, unsafeToForeign)
+import Foreign (Foreign)
 import Foreign.Class (class Encode, encode)
 import Foreign.Object as Object
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Tracker.Labels (Label (..))
-import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle(..), Screen, showCategory, Values(..))
+import Tracker.Types (Action(..), ApiCall, Context, Level(..), Lifecycle(..), Screen, showCategory, Values)
 import Tracker.Types (class Category) as T
 
 foreign import getValue :: String -> Foreign -> Foreign

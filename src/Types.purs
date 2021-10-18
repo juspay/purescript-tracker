@@ -2,12 +2,12 @@ module Tracker.Types where
 
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe)
 import Data.String.Common (toLower)
 import Foreign (Foreign)
 import Foreign.Class (class Encode, encode)
 import Prelude ((<<<), show, class Show, ($))
-import Presto.Core.Utils.Encoding (defaultDecode, defaultEncode)
+import Presto.Core.Utils.Encoding (defaultEncode)
 
 data LIFECYCLE' = LIFECYCLE
 data ACTION' = ACTION
