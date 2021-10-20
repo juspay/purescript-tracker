@@ -22,7 +22,7 @@ module Tracker
   , trackScreenEnd, trackScreenEndFlow
   ) where
 
-import Prelude (class Show, Unit, bind, pure, show, unit, ($), (-), (<<<), (<=), (<>), (==))
+import Prelude
 import Data.Array (last, length) as A
 import Data.Foldable (foldl)
 import Data.Maybe (fromMaybe)

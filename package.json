@@ -1,0 +1,24 @@
+{
+  "name": "purescript-tracker",
+  "version": "1.0.0",
+  "description": "Library to interface types for JOS.tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/juspay/purescript-tracker.git"
+  },
+  "keywords": [
+    "tracker",
+    "library"
+  ],
+  "author": "George James",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/juspay/purescript-tracker#readme",
+  "devDependencies": {
+    "pulp": "^15.0.0",
+    "purescript": "^0.13.8"
+  }
+}
