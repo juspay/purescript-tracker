@@ -344,7 +344,8 @@ newtype FieldFocussed = FieldFocussed {
 
 newtype WalletSelected = WalletSelected {
   walletType :: String,
-  walletName :: Maybe String
+  walletName :: Maybe String,
+  mandateSupport :: Maybe Boolean
 }
 
 newtype EmiEligibility = EmiEligibility {
@@ -357,7 +358,8 @@ newtype EmiEligibility = EmiEligibility {
 type CardInfo = {
   "card_type" :: String,
   "card_brand" :: String,
-  "bank_name" :: String
+  "bank_name" :: String,
+  "mandateSupport" :: Maybe Boolean
 }
 type CheckboxState = {
   checkbox_name :: String,
@@ -715,7 +717,8 @@ newtype NoValue
 newtype BankSelected
   = BankSelected
     {
-      "bank_name" :: String
+      "bank_name" :: String,
+      "mandateSupport" :: Maybe Boolean
     }
 newtype UPIApp =
   UPIApp
