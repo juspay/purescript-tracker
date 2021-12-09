@@ -83,7 +83,8 @@ data Values
   | Vpa_Changed VpaChanged
   | Vpa_Save VpaSave
   | Vpa_Selected VpaSelected
-  | Wallet_Selected WalletSelected
+  | Linked_Wallet_Selected LinkedWalletSelected
+  | Unlinked_Wallet_Selected UnlinkedWalletSelected
   | Warning_Message WarningMessage
   | Title TitleName
   | Safetynet_In_Initiate SafetynetInInitiate
@@ -342,9 +343,13 @@ newtype FieldFocussed = FieldFocussed {
   status :: String
 }
 
-newtype WalletSelected = WalletSelected {
-  walletType :: String,
-  walletName :: Maybe String,
+newtype UnlinkedWalletSelected = UnlinkedWalletSelected {
+  unlinked_wallet :: Maybe String,
+  mandateSupport :: Maybe Boolean
+}
+
+newtype LinkedWalletSelected = LinkedWalletSelected {
+  linked_wallet :: Maybe String,
   mandateSupport :: Maybe Boolean
 }
 
@@ -890,7 +895,8 @@ derive instance genericUsedToPay :: Generic UsedToPay _
 derive instance genericVpaChanged :: Generic VpaChanged _
 derive instance genericVpaSave :: Generic VpaSave _
 derive instance genericVpaSelected :: Generic VpaSelected _
-derive instance genericWalletSelected :: Generic WalletSelected _
+derive instance genericLinkedWalletSelected :: Generic LinkedWalletSelected _
+derive instance genericUnlinkedWalletSelected :: Generic UnlinkedWalletSelected _
 derive instance genericMethodEligibility :: Generic MethodEligibility _
 derive instance genericWarningMessage :: Generic WarningMessage _
 derive instance genericTitleName :: Generic TitleName _
@@ -1015,7 +1021,8 @@ instance encodeValues :: Encode Values where
   encode (Vpa_Changed a) = defaultEncode a
   encode (Vpa_Save a) = defaultEncode a
   encode (Vpa_Selected a) = defaultEncode a
-  encode (Wallet_Selected a) = defaultEncode a
+  encode (Linked_Wallet_Selected a) = defaultEncode a
+  encode (Unlinked_Wallet_Selected a) = defaultEncode a
   encode (Warning_Message a) = defaultEncode a
   encode (Title a) = defaultEncode a
   encode (Safetynet_In_Initiate a) = defaultEncode a
