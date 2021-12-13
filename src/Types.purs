@@ -146,7 +146,7 @@ data Values
   | Txns_ Txns
   | Submit_Pares_Foreign SubmitParesForeign
   | Method_Eligibility MethodEligibility
-
+  | Wallet_Selected WalletSelected
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -356,7 +356,12 @@ newtype LinkedWalletSelected = LinkedWalletSelected {
 newtype MethodEligibility = MethodEligibility {
   method_name :: String,
   eligibility :: Boolean
+}
 
+newtype WalletSelected = WalletSelected {
+  walletType :: String,
+  walletName :: Maybe String,
+  mandateSupport :: Maybe Boolean
 }
 
 
@@ -897,6 +902,7 @@ derive instance genericVpaSave :: Generic VpaSave _
 derive instance genericVpaSelected :: Generic VpaSelected _
 derive instance genericLinkedWalletSelected :: Generic LinkedWalletSelected _
 derive instance genericUnlinkedWalletSelected :: Generic UnlinkedWalletSelected _
+derive instance genericWalletSelected :: Generic WalletSelected _
 derive instance genericMethodEligibility :: Generic MethodEligibility _
 derive instance genericWarningMessage :: Generic WarningMessage _
 derive instance genericTitleName :: Generic TitleName _
@@ -1084,6 +1090,7 @@ instance encodeValues :: Encode Values where
   encode (Txns_ a) = defaultEncode a
   encode (Submit_Pares_Foreign a) = defaultEncode a
   encode (Method_Eligibility a) = defaultEncode a
+  encode (Wallet_Selected a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
