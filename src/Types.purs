@@ -147,6 +147,7 @@ data Values
   | Submit_Pares_Foreign SubmitParesForeign
   | Method_Eligibility MethodEligibility
   | Wallet_Selected WalletSelected
+  | SavedCardButtonClick SavedCardInfo
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -356,6 +357,15 @@ newtype LinkedWalletSelected = LinkedWalletSelected {
 newtype MethodEligibility = MethodEligibility {
   method_name :: String,
   eligibility :: Boolean
+}
+
+newtype SavedCardInfo = SavedCardInfo {
+  card_fingerprint :: {
+      fingerprint :: String
+    , card_type   :: String
+    , card_brand  :: String
+    , bank_name   :: String
+  }
 }
 
 newtype WalletSelected = WalletSelected {
@@ -964,6 +974,7 @@ derive instance genericPayStart :: Generic PayStart _
 derive instance genericNewPayStart :: Generic NewPayStart _
 derive instance genericTxns :: Generic Txns _
 derive instance genericSubmitParesForeign :: Generic SubmitParesForeign _
+derive instance genericSavedCardInfo :: Generic SavedCardInfo _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
@@ -1091,6 +1102,7 @@ instance encodeValues :: Encode Values where
   encode (Submit_Pares_Foreign a) = defaultEncode a
   encode (Method_Eligibility a) = defaultEncode a
   encode (Wallet_Selected a) = defaultEncode a
+  encode (SavedCardButtonClick a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
