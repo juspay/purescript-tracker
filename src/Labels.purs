@@ -136,6 +136,7 @@ data Label
   | TIME_SPENT_STATUS_SCREEN
   | METHOD_ELIGIBILITY
   | CRED_PAY
+  | PAYMENT_PAGE_READY
 
   
 instance encodeLabel :: Encode Label where
@@ -275,3 +276,4 @@ instance showLabel :: Show Label where
     LINKED_ACCOUNTS -> "LINKED_ACCOUNTS"
     METHOD_ELIGIBILITY -> "method_eligibility"
     CRED_PAY -> "cred_pay"
+    PAYMENT_PAGE_READY -> "payment_page_ready"
