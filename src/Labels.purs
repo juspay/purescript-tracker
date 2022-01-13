@@ -139,7 +139,6 @@ data Label
   | PAYMENT_PAGE_READY
   | CARD_FINGERPRINT
 
-
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
 
