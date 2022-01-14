@@ -368,8 +368,8 @@ newtype SavedCardInfo = SavedCardInfo {
   card_fingerprint :: {
       fingerprint :: String
     , card_type   :: String
-    , card_brand  :: Maybe String
-    , bank_name   :: Maybe String
+    , card_brand  :: String
+    , bank_name   :: String
   }
 }
 
