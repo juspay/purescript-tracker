@@ -361,7 +361,12 @@ newtype MethodEligibility = MethodEligibility {
 }
 
 newtype CardFingerPrintInfo = CardFingerPrintInfo {
-  card_fingerprint :: String
+  card_fingerprint :: {
+      fingerprint :: String
+    , card_type   :: String
+    , card_brand  :: String
+    , bank_name   :: String
+  }
 }
 
 newtype SavedCardInfo = SavedCardInfo {
