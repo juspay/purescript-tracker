@@ -138,6 +138,7 @@ data Label
   | CRED_PAY
   | PAYMENT_PAGE_READY
   | CARD_FINGERPRINT
+  | USER_STATUS
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -278,3 +279,4 @@ instance showLabel :: Show Label where
     CRED_PAY -> "cred_pay"
     PAYMENT_PAGE_READY -> "payment_page_ready"
     CARD_FINGERPRINT -> "card_fingerprint"
+    USER_STATUS -> "user_status"
