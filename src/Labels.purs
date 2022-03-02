@@ -139,6 +139,7 @@ data Label
   | PAYMENT_PAGE_READY
   | CARD_FINGERPRINT
   | USER_STATUS
+  | GATEWAY_REFERENCE_ID_CHECK
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -280,3 +281,4 @@ instance showLabel :: Show Label where
     PAYMENT_PAGE_READY -> "payment_page_ready"
     CARD_FINGERPRINT -> "card_fingerprint"
     USER_STATUS -> "user_status"
+    GATEWAY_REFERENCE_ID_CHECK -> "gateway_reference_id_check"
