@@ -367,6 +367,7 @@ newtype CardFingerPrintInfo = CardFingerPrintInfo {
     , card_type   :: String
     , card_brand  :: String
     , bank_name   :: String
+    , card_bin    :: String
   }
 }
 
