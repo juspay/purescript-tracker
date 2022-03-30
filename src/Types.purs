@@ -68,6 +68,7 @@ data Values
   | Payment_Attempt PaymentAttempt
   | Payment_Info PaymentInfo
   | Payment_Source_Response PaymentSourceResponse
+  | Retry_Suggestion RetrySuggestion
   | Payment_Status PaymentStatus
   | Pig_Name PigName
   | Poll Polling
@@ -323,6 +324,9 @@ newtype ApiVariant = ApiVariant {
 newtype PaymentSourceResponse = PaymentSourceResponse {
   name :: String,
   resp :: Foreign
+}
+newtype RetrySuggestion = RetrySuggestion {
+  response :: Foreign
 }
 newtype CardDetails = CardDetails {
   "card_details" :: CardInfo
@@ -950,6 +954,7 @@ derive instance genericOutageMessage :: Generic OutageMessage _
 derive instance genericPaymentAttempt :: Generic PaymentAttempt _
 derive instance genericPaymentInfo :: Generic PaymentInfo _
 derive instance genericPaymentSourceResponse :: Generic PaymentSourceResponse _
+derive instance genericRetrySuggestion :: Generic RetrySuggestion _
 derive instance genericPaymentStatus :: Generic PaymentStatus _
 derive instance genericPigName :: Generic PigName _
 derive instance genericPolling :: Generic Polling _
@@ -1083,6 +1088,7 @@ instance encodeValues :: Encode Values where
   encode (Payment_Attempt a) = defaultEncode a
   encode (Payment_Info a) = defaultEncode a
   encode (Payment_Source_Response a) = defaultEncode a
+  encode (Retry_Suggestion a) = defaultEncode a 
   encode (Payment_Status a) = defaultEncode a
   encode (Pig_Name a) = defaultEncode a
   encode (Poll a) = defaultEncode a
