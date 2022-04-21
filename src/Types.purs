@@ -73,6 +73,7 @@ data Values
   | Poll Polling
   | Poll_Status PollStatus
   | Priority_Apps PriorityApps
+  | Quick_Pay_Info QuickPayInfo
   | Screen_Rendered ScreenRendered
   | Started StartedType
   | Sms_Count SmsCount
@@ -406,6 +407,12 @@ type CheckboxInfo = {
 
 type DialogBox = {
   "dialog_box" :: String
+}
+
+
+newtype QuickPayInfo = QuickPayInfo { 
+  method_name :: String, 
+  payment_source :: PaymentSourceResponse
 }
 
 ----------------------- HYPERPAY TYPES END --------------------
@@ -993,6 +1000,7 @@ derive instance genericSubmitParesForeign :: Generic SubmitParesForeign _
 derive instance genericCardFingerPrintInfo :: Generic CardFingerPrintInfo _
 derive instance genericSavedCardInfo :: Generic SavedCardInfo _
 derive instance genericGatewayRefIdError :: Generic GatewayRefIdError _
+derive instance genericQuickPayInfo :: Generic QuickPayInfo _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
@@ -1046,6 +1054,7 @@ instance encodeValues :: Encode Values where
   encode (Poll a) = defaultEncode a
   encode (Poll_Status a) = defaultEncode a
   encode (Priority_Apps a) = defaultEncode a
+  encode (Quick_Pay_Info a) = defaultEncode a
   encode (Screen_Rendered a) = defaultEncode a
   encode (Started a) = defaultEncode a
   encode (Sms_Count a) = defaultEncode a
@@ -1146,3 +1155,5 @@ instance encodePollTypes :: Encode PollTypes where
 
 derive instance genericUPIApp :: Generic UPIApp _
 instance encodeUPIApp :: Encode UPIApp where encode = defaultEncode
+
+instance encodePaymentSourceResponse :: Encode PaymentSourceResponse where encode = defaultEncode
