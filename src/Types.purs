@@ -146,6 +146,7 @@ data Values
   | New_Pay_Start NewPayStart
   | Txns_ Txns
   | Submit_Pares_Foreign SubmitParesForeign
+  | Eligibility_Resp Eligibility
   | Method_Eligibility MethodEligibility
   | Wallet_Selected WalletSelected
   | Card_FingerPrint CardFingerPrintInfo
@@ -361,6 +362,24 @@ newtype MethodEligibility = MethodEligibility {
   method_name :: String,
   eligibility :: Boolean
 }
+
+newtype Eligibility = Eligibility 
+  { customerId :: String
+  , response :: Array PaymentMethodsEligibility
+  }
+
+newtype PaymentMethodsEligibility =
+  PaymentMethodsEligibility
+    { status :: String
+    , paymentMethodType :: String
+    , paymentMethod :: String
+    , isEligible :: Boolean
+    , description :: String
+    , balance :: Maybe Number
+    , gateway_error_message :: Maybe String
+    , dueDate :: Maybe String
+    , gatewayErrorMessage :: Maybe String
+    }
 
 newtype CardFingerPrintInfo = CardFingerPrintInfo {
   card_fingerprint :: {
@@ -937,6 +956,8 @@ derive instance genericLinkedWalletSelected :: Generic LinkedWalletSelected _
 derive instance genericUnlinkedWalletSelected :: Generic UnlinkedWalletSelected _
 derive instance genericWalletSelected :: Generic WalletSelected _
 derive instance genericMethodEligibility :: Generic MethodEligibility _
+derive instance genericEligibility :: Generic Eligibility _
+derive instance genericPaymentMethodsEligibility :: Generic PaymentMethodsEligibility _
 derive instance genericWarningMessage :: Generic WarningMessage _
 derive instance genericTitleName :: Generic TitleName _
 derive instance genericSafetynetInInitiate :: Generic SafetynetInInitiate _
@@ -1128,6 +1149,7 @@ instance encodeValues :: Encode Values where
   encode (Txns_ a) = defaultEncode a
   encode (Submit_Pares_Foreign a) = defaultEncode a
   encode (Method_Eligibility a) = defaultEncode a
+  encode (Eligibility_Resp a) = defaultEncode a
   encode (Wallet_Selected a) = defaultEncode a
   encode (Card_FingerPrint a) = defaultEncode a
   encode (SavedCardButtonClick a) = defaultEncode a
@@ -1137,6 +1159,7 @@ instance encodeValues :: Encode Values where
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
 instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
 
+instance encodePaymentMethodsEligibility :: Encode PaymentMethodsEligibility where encode = defaultEncode
 
 
 derive instance genericCheckboxTypes :: Generic CheckboxTypes _

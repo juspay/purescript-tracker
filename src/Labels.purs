@@ -135,6 +135,7 @@ data Label
   | RETRY_POLLING_DURATION
   | TIME_SPENT_STATUS_SCREEN
   | METHOD_ELIGIBILITY
+  | ELIGIBILITY
   | CRED_PAY
   | PAYMENT_PAGE_READY
   | CARD_FINGERPRINT
@@ -277,6 +278,7 @@ instance showLabel :: Show Label where
     DEREGISTERED_ACCOUNT -> "DEREGISTERED_ACCOUNT"
     LINKED_ACCOUNTS -> "LINKED_ACCOUNTS"
     METHOD_ELIGIBILITY -> "method_eligibility"
+    ELIGIBILITY -> "eligibility"
     CRED_PAY -> "cred_pay"
     PAYMENT_PAGE_READY -> "payment_page_ready"
     CARD_FINGERPRINT -> "card_fingerprint"
