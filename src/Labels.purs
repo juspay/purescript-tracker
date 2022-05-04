@@ -142,6 +142,7 @@ data Label
   | USER_STATUS
   | GATEWAY_REFERENCE_ID_CHECK
   | CHANGE_UPI_PIN
+  | TXN_DETAIL
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -286,3 +287,4 @@ instance showLabel :: Show Label where
     USER_STATUS -> "user_status"
     GATEWAY_REFERENCE_ID_CHECK -> "gateway_reference_id_check"
     CHANGE_UPI_PIN -> "CHANGE_UPI_PIN"
+    TXN_DETAIL -> "txn_detail"

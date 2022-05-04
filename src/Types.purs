@@ -152,6 +152,7 @@ data Values
   | Card_FingerPrint CardFingerPrintInfo
   | SavedCardButtonClick SavedCardInfo
   | Gateway_Reference_Id_Check GatewayRefIdError
+  | Txn_Details Foreign
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -1154,6 +1155,7 @@ instance encodeValues :: Encode Values where
   encode (Card_FingerPrint a) = defaultEncode a
   encode (SavedCardButtonClick a) = defaultEncode a
   encode (Gateway_Reference_Id_Check a) = defaultEncode a
+  encode (Txn_Details a) = a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
