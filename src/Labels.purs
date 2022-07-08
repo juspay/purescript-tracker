@@ -154,6 +154,7 @@ data Label
   | ONBOARDING_LINK_ACCOUNTS
   | ONBOARDING_SET_UPI_PIN
   | MANAGEMENT_FLOW
+  | PAYMENT_FILTER
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -310,3 +311,4 @@ instance showLabel :: Show Label where
     ONBOARDING_LINK_ACCOUNTS -> "ONBOARDING_LINK_ACCOUNTS"
     ONBOARDING_SET_UPI_PIN -> "ONBOARDING_SET_UPI_PIN"
     MANAGEMENT_FLOW -> "MANAGEMENT_FLOW"
+    PAYMENT_FILTER -> "PAYMENT_FILTER"
