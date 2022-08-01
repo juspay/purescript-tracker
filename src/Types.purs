@@ -326,7 +326,17 @@ newtype PaymentSourceResponse = PaymentSourceResponse {
   resp :: Foreign
 }
 newtype RetrySuggestion = RetrySuggestion {
-  response :: Foreign
+    response :: Array RetrySuggestionList
+}
+
+newtype RetrySuggestionList = RetrySuggestionList {
+      priority :: Int
+    , paymentMethodType :: String
+    , paymentMethod :: String
+    , isEligible :: Boolean
+    , description :: String
+    , balance :: Maybe Number
+    , isLinked :: Boolean
 }
 newtype CardDetails = CardDetails {
   "card_details" :: CardInfo
@@ -955,6 +965,7 @@ derive instance genericPaymentAttempt :: Generic PaymentAttempt _
 derive instance genericPaymentInfo :: Generic PaymentInfo _
 derive instance genericPaymentSourceResponse :: Generic PaymentSourceResponse _
 derive instance genericRetrySuggestion :: Generic RetrySuggestion _
+derive instance genericRetrySuggestionList :: Generic RetrySuggestionList _
 derive instance genericPaymentStatus :: Generic PaymentStatus _
 derive instance genericPigName :: Generic PigName _
 derive instance genericPolling :: Generic Polling _
@@ -1182,6 +1193,7 @@ derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
 instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
 
 instance encodePaymentMethodsEligibility :: Encode PaymentMethodsEligibility where encode = defaultEncode
+instance encodeRetrySuggestionList :: Encode RetrySuggestionList where encode = defaultEncode
 
 
 derive instance genericCheckboxTypes :: Generic CheckboxTypes _
