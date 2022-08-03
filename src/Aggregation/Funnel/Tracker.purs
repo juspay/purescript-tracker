@@ -22,7 +22,7 @@ foreign import getStageLevel :: String -> String -> Effect Int
 foreign import getVariation :: String -> Effect String
 foreign import getExperimentId :: String -> Effect String
 
-foreign import trackAnalytics :: Types.FunnelLogs -> Object.Object Foreign -> Effect Unit
+foreign import trackAnalytics :: Types.FunnelLogs -> Object.Object Foreign -> String -> Effect Unit
 
 
 effectToFlow :: forall a. Effect Unit -> Flow a Unit
@@ -55,7 +55,7 @@ putLog name stage json = do
     journey <- saveJourney name stage
     let logValue = getFunnelLogValue name journey stageLevel expId variation
     if not null journey && not null variation && not null expId && stageLevel /= -1 then
-        trackAnalytics logValue json
+        trackAnalytics logValue json stage
         else pure unit
 
 
@@ -68,5 +68,5 @@ putLogFlow name stage = do
     json <- getLogFields
     let logValue = getFunnelLogValue name journey stageLevel expId variation
     if not null journey && not null variation && not null expId && stageLevel /= -1 then
-        effectToFlow $ trackAnalytics logValue json
+        effectToFlow $ trackAnalytics logValue json stage
         else pure unit
