@@ -154,6 +154,7 @@ data Values
   | Gateway_Reference_Id_Check GatewayRefIdError
   | Txn_Details Foreign
   | Payment_Filter String
+  | Funnel_Logs FunnelLogs
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -400,6 +401,15 @@ newtype SavedCardInfo = SavedCardInfo {
     , card_brand  :: String
     , bank_name   :: String
   }
+}
+
+newtype FunnelLogs = FunnelLogs {
+  type :: String,
+  type_name :: String,
+  stage_level :: Int,
+  stage :: String,
+  variation :: String,
+  experiment_id :: String
 }
 
 newtype WalletSelected = WalletSelected {
@@ -1024,6 +1034,7 @@ derive instance genericCardFingerPrintInfo :: Generic CardFingerPrintInfo _
 derive instance genericSavedCardInfo :: Generic SavedCardInfo _
 derive instance genericGatewayRefIdError :: Generic GatewayRefIdError _
 derive instance genericQuickPayInfo :: Generic QuickPayInfo _
+derive instance genericFunnelLogs :: Generic FunnelLogs _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
@@ -1158,6 +1169,7 @@ instance encodeValues :: Encode Values where
   encode (Gateway_Reference_Id_Check a) = defaultEncode a
   encode (Txn_Details a) = a
   encode (Payment_Filter a) = encode a
+  encode (Funnel_Logs a) = defaultEncode a 
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
