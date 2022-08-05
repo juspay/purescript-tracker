@@ -30,9 +30,9 @@ exports["saveFunnel"] = function(funnelName) {
                                 return false;
                             }
                             funnels[funnelName] = {
-                                experimentId,
-                                variation,
-                                stages
+                                experimentId: experimentId,
+                                variation: variation,
+                                stages: stages
                             };
                             funnelJourney[funnelName] = "";
                             return true;
