@@ -156,6 +156,7 @@ data Values
   | Txn_Details Foreign
   | Payment_Filter String
   | Funnel_Logs FunnelLogs
+  | Separated_Wallets WalletTrackingData
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -432,8 +433,24 @@ newtype WalletSelected = WalletSelected {
   mandateSupport :: Maybe Boolean
 }
 
+newtype Wallet = Wallet {
+  paymentMethod :: String,
+  paymentMethodType :: String,
+  pmSubType :: Maybe String,
+  checkEligibility :: Maybe Boolean,
+  walletFlowType :: Maybe String,
+  directDebitSupport :: Maybe Boolean
+}
 
-
+newtype WalletTrackingData = WalletTrackingData {
+  storedWallets :: Array Wallet,
+  storedPayLaterWallets :: Array Wallet,
+  unlinkedWallets :: Array Wallet,
+  payLaterWallets :: Array Wallet,
+  separateSectionWallets :: Array Wallet,
+  sdkWallets :: Array Wallet,
+  isFeatureOn :: Boolean
+}
 
 type CardInfo = {
   "card_type" :: String,
@@ -1051,6 +1068,8 @@ derive instance genericSavedCardInfo :: Generic SavedCardInfo _
 derive instance genericGatewayRefIdError :: Generic GatewayRefIdError _
 derive instance genericQuickPayInfo :: Generic QuickPayInfo _
 derive instance genericFunnelLogs :: Generic FunnelLogs _
+derive instance genericWallet :: Generic Wallet _
+derive instance genericWalletTrackingData :: Generic WalletTrackingData _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
@@ -1187,6 +1206,7 @@ instance encodeValues :: Encode Values where
   encode (Txn_Details a) = a
   encode (Payment_Filter a) = encode a
   encode (Funnel_Logs a) = defaultEncode a 
+  encode (Separated_Wallets a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
@@ -1214,3 +1234,7 @@ derive instance genericUPIApp :: Generic UPIApp _
 instance encodeUPIApp :: Encode UPIApp where encode = defaultEncode
 
 instance encodePaymentSourceResponse :: Encode PaymentSourceResponse where encode = defaultEncode
+
+instance encodeWallet :: Encode Wallet where encode = defaultEncode
+
+instance encodeWalletTrackingData :: Encode WalletTrackingData where encode = defaultEncode
