@@ -825,7 +825,8 @@ newtype BankSelected
   = BankSelected
     {
       "bank_name" :: String,
-      "mandateSupport" :: Maybe Boolean
+      "mandateSupport" :: Maybe Boolean,
+      "bank_code" :: String
     }
 newtype UPIApp =
   UPIApp
