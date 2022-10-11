@@ -163,6 +163,8 @@ data Label
   | MANDATE_REVOKED
   | MANDATE_PAUSED
   | MANDATE_RESUMED
+  | OUTAGE_INFO
+  | PROCEED_TO_PAY_INFO
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -328,3 +330,5 @@ instance showLabel :: Show Label where
     MANDATE_REVOKED -> "MANDATE_REVOKED"
     MANDATE_PAUSED -> "MANDATE_PAUSED"
     MANDATE_RESUMED -> "MANDATE_RESUMED"
+    OUTAGE_INFO -> "outage_info"
+    PROCEED_TO_PAY_INFO -> "proceed_to_pay_info"

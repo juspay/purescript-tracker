@@ -40,7 +40,7 @@ data Values
   | Checkbox_Details CheckboxDetails
   | Config_Fetch ConfigFetch
   | Cred_Pay CredPay
-  | Custom_Tab_Payments CustomTabPayments 
+  | Custom_Tab_Payments CustomTabPayments
   | Cvv_Changed CvvChanged
   | Default_Option DefaultOption
   | Device_Type String
@@ -130,7 +130,7 @@ data Values
   | Sync_Status SyncStatus
   | Chrome_Version ChromeVersion
   | Core_De_Enroll_Card CoreDeEnrollCard
-  | De_Enroll_Card DeEnrollCard 
+  | De_Enroll_Card DeEnrollCard
   | Eligiiblity_Check_Flow EligibilityCheckFlow
   | Save_Card_Bank SaveCardBank
   | Update_Shared_Prefs UpdateSharedPrefs
@@ -157,6 +157,8 @@ data Values
   | Payment_Filter String
   | Funnel_Logs FunnelLogs
   | Separated_Wallets WalletTrackingData
+  | Outage_Config OutageConfig
+  | Payment_Info_Details PaymentInfoDetails
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -169,7 +171,7 @@ newtype SmsCount = SmsCount {
 newtype AuthStatus = AuthStatus {
   parameter :: String,
   status :: Boolean
-} 
+}
 
 newtype OTPStatus = OTPStatus {
   "otp_status" :: Boolean
@@ -227,7 +229,7 @@ type ConfigInfo = {
   "config_item_value" :: Foreign
 }
 
-newtype PriorityApps = PriorityApps { 
+newtype PriorityApps = PriorityApps {
   "priority_apps" :: Array String
 }
 newtype AppFilter = AppFilter {
@@ -270,7 +272,7 @@ newtype EndedType = EndedType {
   "ended" :: EndedResponse
 }
 
-type StartedRequest = 
+type StartedRequest =
   { requestId :: String
   , payload :: Foreign
   , service :: String
@@ -381,7 +383,7 @@ newtype MethodEligibility = MethodEligibility {
   eligibility :: Boolean
 }
 
-newtype Eligibility = Eligibility 
+newtype Eligibility = Eligibility
   { customerId :: String
   , response :: Array PaymentMethodsEligibility
   }
@@ -472,16 +474,32 @@ type DialogBox = {
 }
 
 
-newtype QuickPayInfo = QuickPayInfo { 
-  method_name :: String, 
+newtype QuickPayInfo = QuickPayInfo {
+  method_name :: String,
   payment_source :: PaymentSourceResponse
+}
+
+newtype OutageConfig = OutageConfig {
+    "restrictPayment" :: String,
+    "showOutage" :: String,
+    "message" :: String,
+    "color" :: String
+  }
+
+newtype PaymentInfoDetails = PaymentInfoDetails {
+    outageSeverity :: String,
+    paymentMethod :: String,
+    paymentMethodType :: String,
+    isLastUsed :: Boolean,
+    isSaved :: Boolean,
+    orderId :: String
 }
 
 ----------------------- HYPERPAY TYPES END --------------------
 
 ----------------------- EC TYPES STARTED ----------------------
-data AppLifeCycleValues =  Status AppStatus | Version AppVersion | Present AppPresent | SDK_Status SDKStatus | Token_SDK_Present TokenSDKPresent | Non_Token_SDK_Present NonTokenSDKPresent 
-data CredPayValues = Source_Eligibilty SourceEligibilty | User_Id_Update UserIdUpdate | User_Context UserContext | Flow_Status FlowStatus | Flow_Response FlowResponse 
+data AppLifeCycleValues =  Status AppStatus | Version AppVersion | Present AppPresent | SDK_Status SDKStatus | Token_SDK_Present TokenSDKPresent | Non_Token_SDK_Present NonTokenSDKPresent
+data CredPayValues = Source_Eligibilty SourceEligibilty | User_Id_Update UserIdUpdate | User_Context UserContext | Flow_Status FlowStatus | Flow_Response FlowResponse
 
 newtype CustomTabPayments = CustomTabPayments {
   "cct" :: Foreign
@@ -602,7 +620,7 @@ newtype InitEnrollment = InitEnrollment {
   "init_enrollment" :: String
 }
 
-type FlowLog = { 
+type FlowLog = {
   success :: Boolean
   , status :: String
   }
@@ -744,7 +762,7 @@ newtype DeEnrollCard = DeEnrollCard {
   "de_enroll_card" :: String
 }
 
-type EligiLog = { 
+type EligiLog = {
     success :: Boolean
   , status :: String
   , local :: Boolean
@@ -843,9 +861,9 @@ newtype UPIApps
     "upi_app_selected" :: UPIApp
   }
 
-newtype PaymentMethod 
+newtype PaymentMethod
   = PaymentMethod
-  { 
+  {
     "method_name" :: String
   }
 newtype OTPChanged
@@ -1071,10 +1089,12 @@ derive instance genericQuickPayInfo :: Generic QuickPayInfo _
 derive instance genericFunnelLogs :: Generic FunnelLogs _
 derive instance genericWallet :: Generic Wallet _
 derive instance genericWalletTrackingData :: Generic WalletTrackingData _
+derive instance genericOutageConfig :: Generic OutageConfig _
+derive instance genericPaymentInfoDetails :: Generic PaymentInfoDetails _
 
 derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
-  encode (Bank_Selected a) = defaultEncode a 
+  encode (Bank_Selected a) = defaultEncode a
   encode (Before_Filter a) = defaultEncode a
   encode (Browser_Type a) = encode a
   encode (Button_Click a) = defaultEncode a
@@ -1091,7 +1111,7 @@ instance encodeValues :: Encode Values where
   encode (Checkbox_Details a) = defaultEncode a
   encode (Config_Fetch a) = defaultEncode a
   encode (Cred_Pay a) = defaultEncode a
-  encode (Custom_Tab_Payments a) = defaultEncode a 
+  encode (Custom_Tab_Payments a) = defaultEncode a
   encode (Cvv_Changed a) = defaultEncode a
   encode (Default_Option a) = defaultEncode a
   encode (Device_Type a) = encode a
@@ -1119,7 +1139,7 @@ instance encodeValues :: Encode Values where
   encode (Payment_Attempt a) = defaultEncode a
   encode (Payment_Info a) = defaultEncode a
   encode (Payment_Source_Response a) = defaultEncode a
-  encode (Retry_Suggestion a) = defaultEncode a 
+  encode (Retry_Suggestion a) = defaultEncode a
   encode (Payment_Status a) = defaultEncode a
   encode (Pig_Name a) = defaultEncode a
   encode (Poll a) = defaultEncode a
@@ -1145,7 +1165,7 @@ instance encodeValues :: Encode Values where
   encode (Safetynet_Flow_Safetynet_Used a) = defaultEncode a
   encode (Safetynet_Resp_Time a) = defaultEncode a
   encode (Safetynet_Resp_Time_Diff a) = defaultEncode a
-  encode (Vies_Error_Response a) = defaultEncode a 
+  encode (Vies_Error_Response a) = defaultEncode a
   encode (Core_Initiate_Pay a) = defaultEncode a
   encode (Initiate_Pay a) = defaultEncode a
   encode (Re_Enroll a) = defaultEncode a
@@ -1175,7 +1195,7 @@ instance encodeValues :: Encode Values where
   encode (Auth_Code_Flow a) = defaultEncode a
   encode (Validate_Device a) = defaultEncode a
   encode (Submit_Pares a) = defaultEncode a
-  encode (Submit_Pares_Flow a) = defaultEncode a 
+  encode (Submit_Pares_Flow a) = defaultEncode a
   encode (Core_Device_Validation a) = defaultEncode a
   encode (Decrypt_Auth_Code a) = defaultEncode a
   encode (Sync_Status a) = defaultEncode a
@@ -1206,8 +1226,10 @@ instance encodeValues :: Encode Values where
   encode (Gateway_Reference_Id_Check a) = defaultEncode a
   encode (Txn_Details a) = a
   encode (Payment_Filter a) = encode a
-  encode (Funnel_Logs a) = defaultEncode a 
+  encode (Funnel_Logs a) = defaultEncode a
   encode (Separated_Wallets a) = defaultEncode a
+  encode (Outage_Config a) = defaultEncode a
+  encode (Payment_Info_Details a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
