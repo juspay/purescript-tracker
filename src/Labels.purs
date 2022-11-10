@@ -50,6 +50,8 @@ data Label
   | NB_SEARCH_CANCELLED
   | PAYMENT_SOURCE_RESPONSE
   | RETRY_SUGGESTION
+  | RETRY_TXN
+  | RETRY_CONFIG
   | CVV_CHANGED
   | EXPIRY_DATE_CHANGED
   | CARD_NUMBER_CHANGED
@@ -219,6 +221,8 @@ instance showLabel :: Show Label where
     NB_SEARCH_CANCELLED -> "nb_search_cancelled"
     PAYMENT_SOURCE_RESPONSE -> "payment_source_response"
     RETRY_SUGGESTION -> "retry_suggestion"
+    RETRY_TXN -> "retry_txn"
+    RETRY_CONFIG -> "retry_config"
     CVV_CHANGED -> "cvv_changed"
     EXPIRY_DATE_CHANGED -> "expiry_date_changed"
     CARD_NUMBER_CHANGED -> "card_number_changed"

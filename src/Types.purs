@@ -69,6 +69,8 @@ data Values
   | Payment_Info PaymentInfo
   | Payment_Source_Response PaymentSourceResponse
   | Retry_Suggestion RetrySuggestion
+  | Retry_Txn RetryTxn
+  | Retry_Config RetryConfig
   | Payment_Status PaymentStatus
   | Pig_Name PigName
   | Poll Polling
@@ -330,6 +332,19 @@ newtype PaymentSourceResponse = PaymentSourceResponse {
 }
 newtype RetrySuggestion = RetrySuggestion {
     response :: Array RetrySuggestionList
+}
+
+newtype RetryTxn = RetryTxn {
+    status :: String
+  , code :: String
+  , pig :: Maybe String
+  , hasFailed :: Boolean
+}
+
+newtype RetryConfig = RetryConfig {
+    enableRetry :: Boolean
+  , retryAttempts :: Int
+  , showLinkedMethodsOnly :: Boolean
 }
 
 newtype RetrySuggestionList = RetrySuggestionList {
@@ -1001,6 +1016,8 @@ derive instance genericPaymentAttempt :: Generic PaymentAttempt _
 derive instance genericPaymentInfo :: Generic PaymentInfo _
 derive instance genericPaymentSourceResponse :: Generic PaymentSourceResponse _
 derive instance genericRetrySuggestion :: Generic RetrySuggestion _
+derive instance genericRetryTxn :: Generic RetryTxn _
+derive instance genericRetryConfig :: Generic RetryConfig _
 derive instance genericRetrySuggestionList :: Generic RetrySuggestionList _
 derive instance genericPaymentStatus :: Generic PaymentStatus _
 derive instance genericPigName :: Generic PigName _
@@ -1140,6 +1157,8 @@ instance encodeValues :: Encode Values where
   encode (Payment_Info a) = defaultEncode a
   encode (Payment_Source_Response a) = defaultEncode a
   encode (Retry_Suggestion a) = defaultEncode a
+  encode (Retry_Txn a) = defaultEncode a
+  encode (Retry_Config a) = defaultEncode a
   encode (Payment_Status a) = defaultEncode a
   encode (Pig_Name a) = defaultEncode a
   encode (Poll a) = defaultEncode a
