@@ -507,7 +507,9 @@ newtype PaymentInfoDetails = PaymentInfoDetails {
     paymentMethodType :: String,
     isLastUsed :: Boolean,
     isSaved :: Boolean,
-    orderId :: String
+    orderId :: String,
+    txnType :: String,
+    usedCount :: Number
 }
 
 ----------------------- HYPERPAY TYPES END --------------------
