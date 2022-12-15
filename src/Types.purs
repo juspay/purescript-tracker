@@ -1111,7 +1111,6 @@ derive instance genericWalletTrackingData :: Generic WalletTrackingData _
 derive instance genericOutageConfig :: Generic OutageConfig _
 derive instance genericPaymentInfoDetails :: Generic PaymentInfoDetails _
 
-derive instance genericValues :: Generic Values _
 instance encodeValues :: Encode Values where
   encode (Bank_Selected a) = defaultEncode a
   encode (Before_Filter a) = defaultEncode a
