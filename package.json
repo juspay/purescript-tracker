@@ -5,8 +5,10 @@
   "description": "Library to interface types for JOS.tracker",
   "main": "index.js",
   "scripts": {
-    "start": "pulp --watch build",
-    "compile": "pulp build",
+    "start": "spago build -w --before 'npm run eslint'",
+    "eslint": "eslint src",
+    "spago:install": "spago install",
+    "compile": "eslint src && spago build",
     "prepare": "husky install"
   },
   "repository": {
@@ -28,54 +30,54 @@
       "jiraAppend": ":"
     }
   },
-    "commitlint": {
-      "plugins": [
-        "commitlint-plugin-jira-rules"
+  "commitlint": {
+    "plugins": [
+      "commitlint-plugin-jira-rules"
+    ],
+    "extends": [
+      "jira"
+    ],
+    "rules": {
+      "jira-task-id-max-length": [
+        0
       ],
-      "extends": [
-        "jira"
+      "jira-commit-message-separator": [
+        0
       ],
-      "rules": {
-        "jira-task-id-max-length": [
-          0
-        ],
-        "jira-commit-message-separator": [
-          0
-        ],
-        "jira-commit-status-case": [
-          0
-        ],
-        "jira-task-id-project-key": [
-          0
-        ],
-        "jira-task-id-separator": [
-          0
-        ],
-        "jira-task-id-case": [
-          0
-        ],
-        "jira-task-id-min-length": [
-          0
-        ]
-      }
-    },
-    "release": {
-      "branches": [
-        "main",
-        {
-          "name": "hotfix-[0-9]+",
-          "prerelease": true
-        }
+      "jira-commit-status-case": [
+        0
       ],
-      "repositoryUrl": "git@bitbucket.org:juspay/purescript-tracker.git",
-      "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        "@semantic-release/npm",
-        "@semantic-release/changelog",
-        "@semantic-release/git"
+      "jira-task-id-project-key": [
+        0
+      ],
+      "jira-task-id-separator": [
+        0
+      ],
+      "jira-task-id-case": [
+        0
+      ],
+      "jira-task-id-min-length": [
+        0
       ]
-    },
+    }
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "hotfix-[0-9]+",
+        "prerelease": true
+      }
+    ],
+    "repositoryUrl": "git@bitbucket.org:juspay/purescript-tracker.git",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/git"
+    ]
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
@@ -89,8 +91,10 @@
     "commitlint-plugin-jira-rules": "^1.6.4",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.2",
-    "pulp": "^15.0.0",
-    "purescript": "^0.13.8",
+    "pulp": "^16.0.2",
+    "purescript": "^0.15.6",
+    "eslint": "^8.29.0",
+    "spago": "^0.20.9",
     "semantic-release": "^19.0.5"
   }
 }

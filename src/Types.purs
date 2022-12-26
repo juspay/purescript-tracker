@@ -1,7 +1,7 @@
 module Tracker.Types where
 
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Data.Maybe (Maybe)
 import Data.String.Common (toLower)
 import Foreign (Foreign)

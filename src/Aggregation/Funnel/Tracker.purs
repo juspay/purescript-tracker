@@ -14,10 +14,10 @@ import Effect.Class (liftEffect)
 import Tracker.Types as Types
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Foreign.Object as Object
-import Debug.Trace(spy)
+import Debug (spy)
 
-foreign import saveFunnel :: String -> Foreign -> String -> String -> Effect Boolean 
-foreign import saveJourney :: String -> String -> Effect String 
+foreign import saveFunnel :: String -> Foreign -> String -> String -> Effect Boolean
+foreign import saveJourney :: String -> String -> Effect String
 foreign import getStageLevel :: String -> String -> Effect Int
 foreign import getVariation :: String -> Effect String
 foreign import getExperimentId :: String -> Effect String
@@ -36,7 +36,7 @@ createFunnelFlow :: forall a. String -> Foreign -> String -> String -> Flow a Bo
 createFunnelFlow name stages expId variation = doAff $ liftEffect $ saveFunnel name stages expId variation
 
 getFunnelLogValue :: String -> String -> Int -> String -> String -> Types.FunnelLogs
-getFunnelLogValue name stage stageLevel expId variation = 
+getFunnelLogValue name stage stageLevel expId variation =
     Types.FunnelLogs $
         {
           "type": "funnel",
