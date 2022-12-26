@@ -46,9 +46,6 @@ pipeline {
         script {
           if (isVersionBumpCandidateBranch(env.BRANCH_NAME)) {
             sh ("npx semantic-release --debug")
-          } else {
-            currentBuild.result = 'ABORTED'
-            error "This is not a candidate branch for version bump.  Aborting..."
           }
         }
       }
