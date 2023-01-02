@@ -6,15 +6,14 @@ module Aggregation.Funnel.Tracker
   )
   where
 
-import Prelude
-import Foreign
+import Prelude (Unit, bind, negate, not, pure, unit, ($), (&&), (/=), (<<<))
+import Foreign (Foreign)
 import Data.String(null)
 import Effect (Effect)
 import Effect.Class (liftEffect)
 import Tracker.Types as Types
 import Presto.Core.Types.Language.Flow (Flow, doAff, getLogFields)
 import Foreign.Object as Object
-import Debug (spy)
 
 foreign import saveFunnel :: String -> Foreign -> String -> String -> Effect Boolean
 foreign import saveJourney :: String -> String -> Effect String

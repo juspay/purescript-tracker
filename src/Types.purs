@@ -907,19 +907,19 @@ class Category a b where
   showCategory :: a -> b -> String
 
 instance catLifecycle :: Category LIFECYCLE' Lifecycle where
-  showCategory LIFECYCLE l = "lifecycle"
+  showCategory LIFECYCLE _ = "lifecycle"
 
 instance catAction :: Category ACTION' Action where
-  showCategory ACTION a = "action"
+  showCategory ACTION _ = "action"
 
 instance catApiCall :: Category API_CALL' ApiCall where
-  showCategory API_CALL ac = "api_call"
+  showCategory API_CALL _ = "api_call"
 
 instance catContext :: Category CONTEXT' Context where
-  showCategory CONTEXT c = "context"
+  showCategory CONTEXT _ = "context"
 
 instance catScreen :: Category SCREEN' Screen where
-  showCategory SCREEN s = "screen"
+  showCategory SCREEN _ = "screen"
 
 data Level
   = Info

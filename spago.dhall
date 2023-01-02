@@ -4,7 +4,6 @@
     , "prelude"
     , "presto"
     , "arrays"
-    , "debug"
     , "foldable-traversable"
     , "foreign"
     , "foreign-generic"
