@@ -1,3 +1,10 @@
+## [2.0.2](https://bitbucket.org/juspay/purescript-tracker/compare/v2.0.1...v2.0.2) (2023-01-03)
+
+
+### Bug Fixes
+
+* PICAF-18952: Updating es-lint rules and adding eslint:fix command ([53ee37d](https://bitbucket.org/juspay/purescript-tracker/commits/53ee37dee311a1aa251168b81dc633662fc06253))
+
 ## [2.0.1](https://bitbucket.org/juspay/purescript-tracker/compare/v2.0.0...v2.0.1) (2022-12-27)
 
 
