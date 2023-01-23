@@ -70,7 +70,7 @@
         "prerelease": true
       }
     ],
-    "repositoryUrl": "git@bitbucket.org:juspay/purescript-tracker.git",
+    "repositoryUrl": "git@ssh.bitbucket.juspay.net:picaf/purescript-tracker.git",
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
