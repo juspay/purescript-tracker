@@ -161,6 +161,61 @@ data Values
   | Separated_Wallets WalletTrackingData
   | Outage_Config OutageConfig
   | Payment_Info_Details PaymentInfoDetails
+  | Tenure_Card_Details TenureCard
+  | Gemi_Card_Details GemiCardDetails
+  | Gemi_Txn_Response GemiTxnResponse
+  | Gemi_Checkout_Details GemiCheckoutPayload
+  | Gemi_Eligibility_Called Boolean
+
+---------------------- GEMI TYPES START -----------------------
+
+newtype TenureCard = TenureCard
+  { tenure :: Int
+  , orderAmount :: String
+  , total :: String
+  , monthlyAmount :: String
+  , installmentPlanId :: String
+  , totalInterestAmount :: String
+  , totalAmountPayable :: String
+  , firstMonthAmount :: String
+  , lastMonthAmount :: String
+  , installmentsInfo :: Foreign
+  , termsAndConditions :: Foreign
+  , bankName :: String
+  , bankCode :: String
+  , ratePercentage :: String
+  }
+
+newtype GemiTxnResponse = GemiTxnResponse
+  { bankErrorCode :: Maybe String    
+  , bankErrorMessage :: Maybe String 
+  , installmentStatus :: Maybe String
+  , orderId :: String                
+  , status :: String  
+  }
+
+newtype GemiCardDetails = GemiCardDetails
+  { bankCode :: Maybe String
+  , bankName :: Maybe String
+  , cardHolderName :: Maybe String
+  , maskedCardNumber :: Maybe String
+  , expiryDate :: Maybe String
+  }
+
+newtype GemiCheckoutPayload = GemiCheckoutPayload
+  { action :: String
+  , amount :: String
+  , currency :: String
+  , merchantId :: String
+  , customerId :: String
+  , clientAuthToken :: Maybe String
+  , merchantKeyId :: Maybe String
+  , signature :: Maybe String
+  , orderDetails :: String
+  , autoCapture :: Maybe Boolean
+  }
+
+---------------------- GEMI TYPES END -------------------------
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -1110,6 +1165,10 @@ derive instance genericWallet :: Generic Wallet _
 derive instance genericWalletTrackingData :: Generic WalletTrackingData _
 derive instance genericOutageConfig :: Generic OutageConfig _
 derive instance genericPaymentInfoDetails :: Generic PaymentInfoDetails _
+derive instance genericTenureDetails :: Generic TenureCard _
+derive instance genericGemiCardDetails :: Generic GemiCardDetails _
+derive instance genericGemiTxnResponse :: Generic GemiTxnResponse _
+derive instance genericGemiCheckoutPayload :: Generic GemiCheckoutPayload _
 
 instance encodeValues :: Encode Values where
   encode (Bank_Selected a) = defaultEncode a
@@ -1250,6 +1309,11 @@ instance encodeValues :: Encode Values where
   encode (Separated_Wallets a) = defaultEncode a
   encode (Outage_Config a) = defaultEncode a
   encode (Payment_Info_Details a) = defaultEncode a
+  encode (Tenure_Card_Details a) = defaultEncode a
+  encode (Gemi_Card_Details a) = defaultEncode a
+  encode (Gemi_Txn_Response a) = defaultEncode a
+  encode (Gemi_Checkout_Details a) = defaultEncode a
+  encode (Gemi_Eligibility_Called a) = encode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _

@@ -168,6 +168,10 @@ data Label
   | OUTAGE_INFO
   | PROCEED_TO_PAY_INFO
   | DOWNLOAD_STATUS
+  | CARD_DETAILS_ENTERED
+  | PAY_FULL_AMOUNT
+  | TENURE_SELECTED
+
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -338,3 +342,6 @@ instance showLabel :: Show Label where
     OUTAGE_INFO -> "outage_info"
     PROCEED_TO_PAY_INFO -> "proceed_to_pay_info"
     DOWNLOAD_STATUS -> "DOWNLOAD_STATUS"
+    PAY_FULL_AMOUNT -> "pay_full_amount_rendered"
+    CARD_DETAILS_ENTERED -> "card_details_entered"
+    TENURE_SELECTED -> "tenure_selected"
