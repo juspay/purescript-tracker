@@ -51,6 +51,7 @@ data Label
   | PAYMENT_SOURCE_RESPONSE
   | RETRY_SUGGESTION
   | RETRY_TXN
+  | RETRY_TXN_NETWORK
   | RETRY_CONFIG
   | CVV_CHANGED
   | EXPIRY_DATE_CHANGED
@@ -182,6 +183,7 @@ data Label
   | SCAN_QR
   | GATEWAY_SELECTED
   | GATEWAY_OPTIONS
+  | NETWORK_RETRY_SUCCESS
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -237,6 +239,7 @@ instance showLabel :: Show Label where
     PAYMENT_SOURCE_RESPONSE -> "payment_source_response"
     RETRY_SUGGESTION -> "retry_suggestion"
     RETRY_TXN -> "retry_txn"
+    RETRY_TXN_NETWORK -> "retry_txn_for_network_code"
     RETRY_CONFIG -> "retry_config"
     CVV_CHANGED -> "cvv_changed"
     EXPIRY_DATE_CHANGED -> "expiry_date_changed"
@@ -366,3 +369,4 @@ instance showLabel :: Show Label where
     SCAN_QR -> "SCAN_QR"
     GATEWAY_SELECTED -> "gateway_selected"
     GATEWAY_OPTIONS -> "gateway_options"
+    NETWORK_RETRY_SUCCESS -> "network_retry_success"

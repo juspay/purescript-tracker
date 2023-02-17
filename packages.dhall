@@ -27,8 +27,8 @@ in  upstream
         , "tuples"
         , "unsafe-coerce"
         ]
-    , repo = "ssh://git@bitbucket.org/juspay/purescript-presto.git"
-    , version = "v2.0.0"
+    , repo = "ssh://git@ssh.bitbucket.juspay.net/picaf/purescript-presto.git"
+    , version = "v2.1.0"
     }
   with foreign-generic =
     { dependencies =

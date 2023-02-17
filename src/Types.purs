@@ -172,6 +172,7 @@ data Values
   | Auto_Submit_Canceled AutoSubmitCanceled
   | Overlay_Clicked OverlayClicked
   | Manual_Otp_Entered ManualOtpEntered
+  | Network_Retry_Success RetryCount
 
 ---------------------- GEMI TYPES START -----------------------
 
@@ -989,6 +990,11 @@ newtype LatencyValue
     "latency" :: String
   }
 
+newtype RetryCount = RetryCount
+  {
+    retry_count :: Int
+  }
+
 ------------------------ COMMON TYPES END --------------------
 
 class Category a b where
@@ -1208,6 +1214,7 @@ derive instance genericTenureDetails :: Generic TenureCard _
 derive instance genericGemiCardDetails :: Generic GemiCardDetails _
 derive instance genericGemiTxnResponse :: Generic GemiTxnResponse _
 derive instance genericGemiCheckoutPayload :: Generic GemiCheckoutPayload _
+derive instance genericRetryCount :: Generic RetryCount _
 
 instance encodeValues :: Encode Values where
   encode (Bank_Selected a) = defaultEncode a
@@ -1359,6 +1366,7 @@ instance encodeValues :: Encode Values where
   encode (Auto_Submit_Canceled v) = defaultEncode v
   encode (Overlay_Clicked v) = defaultEncode v
   encode (Manual_Otp_Entered v) = defaultEncode v
+  encode (Network_Retry_Success a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
@@ -1394,3 +1402,5 @@ instance encodeAllGatewayOptions :: Encode AllGatewayOptions where encode = defa
 instance encodeGatewayOptions :: Encode GatewayOptions where encode = defaultEncode
 
 instance encodeWalletTrackingData :: Encode WalletTrackingData where encode = defaultEncode
+
+instance encodeRetryCount :: Encode RetryCount where encode = defaultEncode
