@@ -171,7 +171,15 @@ data Label
   | CARD_DETAILS_ENTERED
   | PAY_FULL_AMOUNT
   | TENURE_SELECTED
-
+  | ADD_BANK_ACCOUNT
+  | CHECK_BALANCE
+  | MAKE_PRIMARY
+  | ADD_SECONDARY_VPA
+  | DELETE_VPA
+  | BLOCK_USER
+  | SPAM_USER
+  | UNBLOCK_VPA
+  | SCAN_QR
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -345,3 +353,12 @@ instance showLabel :: Show Label where
     PAY_FULL_AMOUNT -> "pay_full_amount_rendered"
     CARD_DETAILS_ENTERED -> "card_details_entered"
     TENURE_SELECTED -> "tenure_selected"
+    ADD_BANK_ACCOUNT -> "ADD_BANK_ACCOUNT"
+    CHECK_BALANCE -> "CHECK_BALANCE"
+    MAKE_PRIMARY -> "MAKE_PRIMARY"
+    ADD_SECONDARY_VPA -> "ADD_SECONDARY_VPA"
+    DELETE_VPA -> "DELETE_VPA"
+    BLOCK_USER -> "BLOCK_USER"
+    SPAM_USER -> "SPAM_USER"
+    UNBLOCK_VPA -> "UNBLOCK_VPA"
+    SCAN_QR -> "SCAN_QR"
