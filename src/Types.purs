@@ -45,6 +45,7 @@ data Values
   | Default_Option DefaultOption
   | Device_Type String
   | Dialog_Rendered DialogRendered
+  | QR_Dialog_Rendered QRDialogRendered
   | Disable_Popup DisablePopup
   | Ended EndedType
   | Expiry_Date_Changed ExpiryDateChanged
@@ -187,11 +188,11 @@ newtype TenureCard = TenureCard
   }
 
 newtype GemiTxnResponse = GemiTxnResponse
-  { bankErrorCode :: Maybe String    
-  , bankErrorMessage :: Maybe String 
+  { bankErrorCode :: Maybe String
+  , bankErrorMessage :: Maybe String
   , installmentStatus :: Maybe String
-  , orderId :: String                
-  , status :: String  
+  , orderId :: String
+  , status :: String
   }
 
 newtype GemiCardDetails = GemiCardDetails
@@ -426,6 +427,9 @@ newtype DisablePopup = DisablePopup {
 }
 newtype DialogRendered = DialogRendered {
   "upi_collect" :: DialogBox
+}
+newtype QRDialogRendered = QRDialogRendered {
+  "upi_qr" :: DialogBox
 }
 newtype CheckboxDetails = CheckboxDetails {
   "checkbox_details" :: CheckboxTypes
@@ -1050,6 +1054,7 @@ derive instance genericCustomTabPayments :: Generic CustomTabPayments _
 derive instance genericCvvChanged :: Generic CvvChanged _
 derive instance genericDefaultOption :: Generic DefaultOption _
 derive instance genericDialogRendered :: Generic DialogRendered _
+derive instance genericQRDialogRendered :: Generic QRDialogRendered _
 derive instance genericDisablePopup :: Generic DisablePopup _
 derive instance genericEndedType :: Generic EndedType _
 derive instance genericExpiryDateChanged :: Generic ExpiryDateChanged _
@@ -1193,6 +1198,7 @@ instance encodeValues :: Encode Values where
   encode (Default_Option a) = defaultEncode a
   encode (Device_Type a) = encode a
   encode (Dialog_Rendered a) = defaultEncode a
+  encode (QR_Dialog_Rendered a) = defaultEncode a
   encode (Disable_Popup a) = defaultEncode a
   encode (Ended a) = defaultEncode a
   encode (Expiry_Date_Changed a) = defaultEncode a
