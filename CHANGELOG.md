@@ -1,3 +1,10 @@
+## [2.0.3](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.2...v2.0.3) (2023-02-27)
+
+
+### Bug Fixes
+
+* PICAF-20357: added labels for upi in-app clickstream events ([2d0a946](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/2d0a946e0ea9f67587be3f1b36d36d8d30d8e54b))
+
 ## [2.0.2](https://bitbucket.org/juspay/purescript-tracker/compare/v2.0.1...v2.0.2) (2023-01-03)
 
 
