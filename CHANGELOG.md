@@ -1,3 +1,10 @@
+## [2.0.4](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.3...v2.0.4) (2023-03-01)
+
+
+### Bug Fixes
+
+* PICAF-20739-adding-value-for-qrDialog ([2118bc2](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/2118bc275f1a37911f992dcf412d462f1d900dc2))
+
 ## [2.0.3](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.2...v2.0.3) (2023-02-27)
 
 
