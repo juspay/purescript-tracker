@@ -167,7 +167,8 @@ data Values
   | Gemi_Txn_Response GemiTxnResponse
   | Gemi_Checkout_Details GemiCheckoutPayload
   | Gemi_Eligibility_Called Boolean
-  | Gateway_Selected GatewaySelected
+  | Gateway_Selected GatewayOptions
+  | Gateway_Options AllGatewayOptions
 
 ---------------------- GEMI TYPES START -----------------------
 
@@ -923,11 +924,16 @@ newtype BankSelected
       "mandateSupport" :: Maybe Boolean,
       "bank_code" :: String
     }
-newtype GatewaySelected
-  = GatewaySelected
-    { gateway_id:: String
-    , gateway_name :: String
-    , juspay_enable_flag :: String
+newtype GatewayOptions
+  = GatewayOptions
+    { bankId:: String
+    , bankName :: String
+    , juspayEnableFlag :: String
+    }
+
+newtype AllGatewayOptions
+  = AllGatewayOptions
+    { value :: Array GatewayOptions
     }
 
 newtype UPIApp =
@@ -1044,7 +1050,8 @@ instance showLevel :: Show Level where
 
 
 derive instance genericBankSelected :: Generic BankSelected _
-derive instance genericGatewaySelected :: Generic GatewaySelected _
+derive instance genericAllGatewayOptions :: Generic AllGatewayOptions _
+derive instance genericGatewayOptions :: Generic GatewayOptions _
 derive instance genericBeforeFiltering :: Generic BeforeFiltering _
 derive instance genericButtonClick :: Generic ButtonClick _
 derive instance genericPaymentMethod :: Generic PaymentMethod _
@@ -1330,6 +1337,7 @@ instance encodeValues :: Encode Values where
   encode (Gemi_Checkout_Details a) = defaultEncode a
   encode (Gemi_Eligibility_Called a) = encode a
   encode (Gateway_Selected a) = defaultEncode a
+  encode (Gateway_Options a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
@@ -1359,5 +1367,9 @@ instance encodeUPIApp :: Encode UPIApp where encode = defaultEncode
 instance encodePaymentSourceResponse :: Encode PaymentSourceResponse where encode = defaultEncode
 
 instance encodeWallet :: Encode Wallet where encode = defaultEncode
+
+instance encodeAllGatewayOptions :: Encode AllGatewayOptions where encode = defaultEncode
+
+instance encodeGatewayOptions :: Encode GatewayOptions where encode = defaultEncode
 
 instance encodeWalletTrackingData :: Encode WalletTrackingData where encode = defaultEncode

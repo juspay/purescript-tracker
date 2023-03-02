@@ -181,6 +181,7 @@ data Label
   | UNBLOCK_VPA
   | SCAN_QR
   | GATEWAY_SELECTED
+  | GATEWAY_OPTIONS
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -364,3 +365,4 @@ instance showLabel :: Show Label where
     UNBLOCK_VPA -> "UNBLOCK_VPA"
     SCAN_QR -> "SCAN_QR"
     GATEWAY_SELECTED -> "gateway_selected"
+    GATEWAY_OPTIONS -> "gateway_options"
