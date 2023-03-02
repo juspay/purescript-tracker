@@ -1,3 +1,10 @@
+## [2.0.6](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.5...v2.0.6) (2023-03-02)
+
+
+### Bug Fixes
+
+* PICAF-16631: added gateway type ([723a32f](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/723a32fa627f45c562ca8a88d2c6661249bcaab1))
+
 ## [2.0.5](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.4...v2.0.5) (2023-03-02)
 
 
