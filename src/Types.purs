@@ -169,6 +169,9 @@ data Values
   | Gemi_Eligibility_Called Boolean
   | Gateway_Selected GatewayOptions
   | Gateway_Options AllGatewayOptions
+  | Auto_Submit_Canceled AutoSubmitCanceled
+  | Overlay_Clicked OverlayClicked
+  | Manual_Otp_Entered ManualOtpEntered
 
 ---------------------- GEMI TYPES START -----------------------
 
@@ -235,6 +238,18 @@ newtype AuthStatus = AuthStatus {
 
 newtype OTPStatus = OTPStatus {
   "otp_status" :: Boolean
+}
+
+newtype AutoSubmitCanceled = AutoSubmitCanceled {
+  "auto_submit_canceled" :: Boolean
+}
+
+newtype OverlayClicked = OverlayClicked {
+  "overlay_clicked" :: Boolean
+}
+
+newtype ManualOtpEntered = ManualOtpEntered {
+  "manual_otp_entered" :: Boolean
 }
 
 newtype PaymentInfo = PaymentInfo {
@@ -1087,6 +1102,9 @@ derive instance genericOTPPopulated :: Generic OTPPopulated _
 derive instance genericOTPAutoSubmit :: Generic OTPAutoSubmit _
 derive instance genericOTPChanged :: Generic OTPChanged _
 derive instance genericOTPStatus :: Generic OTPStatus _
+derive instance genericAutoSubmitCanceled :: Generic AutoSubmitCanceled _
+derive instance genericOverlayClicked :: Generic OverlayClicked _
+derive instance genericManualOtpEntered :: Generic ManualOtpEntered _
 derive instance genericOTPSubmit :: Generic OTPSubmit _
 derive instance genericOTPLength :: Generic OTPLength _
 derive instance genericOutageMessage :: Generic OutageMessage _
@@ -1338,6 +1356,9 @@ instance encodeValues :: Encode Values where
   encode (Gemi_Eligibility_Called a) = encode a
   encode (Gateway_Selected a) = defaultEncode a
   encode (Gateway_Options a) = defaultEncode a
+  encode (Auto_Submit_Canceled v) = defaultEncode v
+  encode (Overlay_Clicked v) = defaultEncode v
+  encode (Manual_Otp_Entered v) = defaultEncode v
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
