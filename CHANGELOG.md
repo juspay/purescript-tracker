@@ -1,3 +1,10 @@
+## [2.0.7](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.6...v2.0.7) (2023-03-08)
+
+
+### Bug Fixes
+
+* PICAF-18701: added logs types for DOTP ([1ad5a4f](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/1ad5a4f0064428f224b9ba1d3bf5971deaf14d3b))
+
 ## [2.0.6](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.5...v2.0.6) (2023-03-02)
 
 
