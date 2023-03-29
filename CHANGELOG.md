@@ -1,3 +1,10 @@
+## [2.0.8](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.7...v2.0.8) (2023-03-29)
+
+
+### Bug Fixes
+
+* PICAF-20205: Txn retry labels ([cf7d18d](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/cf7d18da07e1d7b87dbd39a898a1136b7d49b782))
+
 ## [2.0.7](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.6...v2.0.7) (2023-03-08)
 
 
