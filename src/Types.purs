@@ -419,6 +419,8 @@ newtype RetryConfig = RetryConfig {
     enableRetry :: Boolean
   , retryAttempts :: Int
   , showLinkedMethodsOnly :: Boolean
+  , mustUseGivenOrderIdForTxn :: Boolean
+  , retryConfigEnable :: Boolean
 }
 
 newtype RetrySuggestionList = RetrySuggestionList {
