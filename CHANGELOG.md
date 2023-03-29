@@ -1,3 +1,10 @@
+## [2.0.9](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.8...v2.0.9) (2023-03-29)
+
+
+### Bug Fixes
+
+* PICAF-21403: adding new logs for pp retry ([44967d2](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/44967d2af2c10c8281403e215240808113455fc3))
+
 ## [2.0.8](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.7...v2.0.8) (2023-03-29)
 
 
