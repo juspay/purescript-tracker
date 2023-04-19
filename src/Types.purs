@@ -1,7 +1,7 @@
 module Tracker.Types where
 
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Data.Maybe (Maybe)
 import Data.String.Common (toLower)
 import Foreign (Foreign)
@@ -45,6 +45,7 @@ data Values
   | Default_Option DefaultOption
   | Device_Type String
   | Dialog_Rendered DialogRendered
+  | QR_Dialog_Rendered QRDialogRendered
   | Disable_Popup DisablePopup
   | Ended EndedType
   | Expiry_Date_Changed ExpiryDateChanged
@@ -161,6 +162,67 @@ data Values
   | Separated_Wallets WalletTrackingData
   | Outage_Config OutageConfig
   | Payment_Info_Details PaymentInfoDetails
+  | Tenure_Card_Details TenureCard
+  | Gemi_Card_Details GemiCardDetails
+  | Gemi_Txn_Response GemiTxnResponse
+  | Gemi_Checkout_Details GemiCheckoutPayload
+  | Gemi_Eligibility_Called Boolean
+  | Gateway_Selected GatewayOptions
+  | Gateway_Options AllGatewayOptions
+  | Auto_Submit_Canceled AutoSubmitCanceled
+  | Overlay_Clicked OverlayClicked
+  | Manual_Otp_Entered ManualOtpEntered
+  | Network_Retry_Success RetryCount
+
+---------------------- GEMI TYPES START -----------------------
+
+newtype TenureCard = TenureCard
+  { tenure :: Int
+  , orderAmount :: String
+  , total :: String
+  , monthlyAmount :: String
+  , installmentPlanId :: String
+  , totalInterestAmount :: String
+  , totalAmountPayable :: String
+  , firstMonthAmount :: String
+  , lastMonthAmount :: String
+  , installmentsInfo :: Foreign
+  , termsAndConditions :: Foreign
+  , bankName :: String
+  , bankCode :: String
+  , ratePercentage :: String
+  }
+
+newtype GemiTxnResponse = GemiTxnResponse
+  { bankErrorCode :: Maybe String
+  , bankErrorMessage :: Maybe String
+  , installmentStatus :: Maybe String
+  , orderId :: String
+  , status :: String
+  }
+
+newtype GemiCardDetails = GemiCardDetails
+  { bankCode :: Maybe String
+  , bankName :: Maybe String
+  , cardHolderName :: Maybe String
+  , maskedCardNumber :: Maybe String
+  , expiryDate :: Maybe String
+  }
+
+newtype GemiCheckoutPayload = GemiCheckoutPayload
+  { action :: String
+  , amount :: String
+  , currency :: String
+  , merchantId :: String
+  , customerId :: String
+  , clientAuthToken :: Maybe String
+  , merchantKeyId :: Maybe String
+  , signature :: Maybe String
+  , orderDetails :: String
+  , autoCapture :: Maybe Boolean
+  }
+
+---------------------- GEMI TYPES END -------------------------
 
 ---------------------- DOTP TYPES START -----------------------
 newtype SmsReceived = SmsReceived {
@@ -177,6 +239,18 @@ newtype AuthStatus = AuthStatus {
 
 newtype OTPStatus = OTPStatus {
   "otp_status" :: Boolean
+}
+
+newtype AutoSubmitCanceled = AutoSubmitCanceled {
+  "auto_submit_canceled" :: Boolean
+}
+
+newtype OverlayClicked = OverlayClicked {
+  "overlay_clicked" :: Boolean
+}
+
+newtype ManualOtpEntered = ManualOtpEntered {
+  "manual_otp_entered" :: Boolean
 }
 
 newtype PaymentInfo = PaymentInfo {
@@ -345,6 +419,8 @@ newtype RetryConfig = RetryConfig {
     enableRetry :: Boolean
   , retryAttempts :: Int
   , showLinkedMethodsOnly :: Boolean
+  , mustUseGivenOrderIdForTxn :: Boolean
+  , retryConfigEnable :: Boolean
 }
 
 newtype RetrySuggestionList = RetrySuggestionList {
@@ -371,6 +447,9 @@ newtype DisablePopup = DisablePopup {
 }
 newtype DialogRendered = DialogRendered {
   "upi_collect" :: DialogBox
+}
+newtype QRDialogRendered = QRDialogRendered {
+  "upi_qr" :: DialogBox
 }
 newtype CheckboxDetails = CheckboxDetails {
   "checkbox_details" :: CheckboxTypes
@@ -863,6 +942,18 @@ newtype BankSelected
       "mandateSupport" :: Maybe Boolean,
       "bank_code" :: String
     }
+newtype GatewayOptions
+  = GatewayOptions
+    { bankId:: String
+    , bankName :: String
+    , juspayEnableFlag :: String
+    }
+
+newtype AllGatewayOptions
+  = AllGatewayOptions
+    { value :: Array GatewayOptions
+    }
+
 newtype UPIApp =
   UPIApp
     { packageName :: String
@@ -901,25 +992,30 @@ newtype LatencyValue
     "latency" :: String
   }
 
+newtype RetryCount = RetryCount
+  { retry_count :: Int
+  , message :: Maybe String
+  }
+
 ------------------------ COMMON TYPES END --------------------
 
 class Category a b where
   showCategory :: a -> b -> String
 
 instance catLifecycle :: Category LIFECYCLE' Lifecycle where
-  showCategory LIFECYCLE l = "lifecycle"
+  showCategory LIFECYCLE _ = "lifecycle"
 
 instance catAction :: Category ACTION' Action where
-  showCategory ACTION a = "action"
+  showCategory ACTION _ = "action"
 
 instance catApiCall :: Category API_CALL' ApiCall where
-  showCategory API_CALL ac = "api_call"
+  showCategory API_CALL _ = "api_call"
 
 instance catContext :: Category CONTEXT' Context where
-  showCategory CONTEXT c = "context"
+  showCategory CONTEXT _ = "context"
 
 instance catScreen :: Category SCREEN' Screen where
-  showCategory SCREEN s = "screen"
+  showCategory SCREEN _ = "screen"
 
 data Level
   = Info
@@ -977,6 +1073,8 @@ instance showLevel :: Show Level where
 
 
 derive instance genericBankSelected :: Generic BankSelected _
+derive instance genericAllGatewayOptions :: Generic AllGatewayOptions _
+derive instance genericGatewayOptions :: Generic GatewayOptions _
 derive instance genericBeforeFiltering :: Generic BeforeFiltering _
 derive instance genericButtonClick :: Generic ButtonClick _
 derive instance genericPaymentMethod :: Generic PaymentMethod _
@@ -995,6 +1093,7 @@ derive instance genericCustomTabPayments :: Generic CustomTabPayments _
 derive instance genericCvvChanged :: Generic CvvChanged _
 derive instance genericDefaultOption :: Generic DefaultOption _
 derive instance genericDialogRendered :: Generic DialogRendered _
+derive instance genericQRDialogRendered :: Generic QRDialogRendered _
 derive instance genericDisablePopup :: Generic DisablePopup _
 derive instance genericEndedType :: Generic EndedType _
 derive instance genericExpiryDateChanged :: Generic ExpiryDateChanged _
@@ -1011,6 +1110,9 @@ derive instance genericOTPPopulated :: Generic OTPPopulated _
 derive instance genericOTPAutoSubmit :: Generic OTPAutoSubmit _
 derive instance genericOTPChanged :: Generic OTPChanged _
 derive instance genericOTPStatus :: Generic OTPStatus _
+derive instance genericAutoSubmitCanceled :: Generic AutoSubmitCanceled _
+derive instance genericOverlayClicked :: Generic OverlayClicked _
+derive instance genericManualOtpEntered :: Generic ManualOtpEntered _
 derive instance genericOTPSubmit :: Generic OTPSubmit _
 derive instance genericOTPLength :: Generic OTPLength _
 derive instance genericOutageMessage :: Generic OutageMessage _
@@ -1110,6 +1212,11 @@ derive instance genericWallet :: Generic Wallet _
 derive instance genericWalletTrackingData :: Generic WalletTrackingData _
 derive instance genericOutageConfig :: Generic OutageConfig _
 derive instance genericPaymentInfoDetails :: Generic PaymentInfoDetails _
+derive instance genericTenureDetails :: Generic TenureCard _
+derive instance genericGemiCardDetails :: Generic GemiCardDetails _
+derive instance genericGemiTxnResponse :: Generic GemiTxnResponse _
+derive instance genericGemiCheckoutPayload :: Generic GemiCheckoutPayload _
+derive instance genericRetryCount :: Generic RetryCount _
 
 instance encodeValues :: Encode Values where
   encode (Bank_Selected a) = defaultEncode a
@@ -1134,6 +1241,7 @@ instance encodeValues :: Encode Values where
   encode (Default_Option a) = defaultEncode a
   encode (Device_Type a) = encode a
   encode (Dialog_Rendered a) = defaultEncode a
+  encode (QR_Dialog_Rendered a) = defaultEncode a
   encode (Disable_Popup a) = defaultEncode a
   encode (Ended a) = defaultEncode a
   encode (Expiry_Date_Changed a) = defaultEncode a
@@ -1250,6 +1358,17 @@ instance encodeValues :: Encode Values where
   encode (Separated_Wallets a) = defaultEncode a
   encode (Outage_Config a) = defaultEncode a
   encode (Payment_Info_Details a) = defaultEncode a
+  encode (Tenure_Card_Details a) = defaultEncode a
+  encode (Gemi_Card_Details a) = defaultEncode a
+  encode (Gemi_Txn_Response a) = defaultEncode a
+  encode (Gemi_Checkout_Details a) = defaultEncode a
+  encode (Gemi_Eligibility_Called a) = encode a
+  encode (Gateway_Selected a) = defaultEncode a
+  encode (Gateway_Options a) = defaultEncode a
+  encode (Auto_Submit_Canceled v) = defaultEncode v
+  encode (Overlay_Clicked v) = defaultEncode v
+  encode (Manual_Otp_Entered v) = defaultEncode v
+  encode (Network_Retry_Success a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
@@ -1280,4 +1399,10 @@ instance encodePaymentSourceResponse :: Encode PaymentSourceResponse where encod
 
 instance encodeWallet :: Encode Wallet where encode = defaultEncode
 
+instance encodeAllGatewayOptions :: Encode AllGatewayOptions where encode = defaultEncode
+
+instance encodeGatewayOptions :: Encode GatewayOptions where encode = defaultEncode
+
 instance encodeWalletTrackingData :: Encode WalletTrackingData where encode = defaultEncode
+
+instance encodeRetryCount :: Encode RetryCount where encode = defaultEncode

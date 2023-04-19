@@ -1,10 +1,16 @@
 {
   "name": "purescript-tracker",
-  "version": "1.0.0",
+  "version": "2.0.10",
+  "private": true,
   "description": "Library to interface types for JOS.tracker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "spago build -w --before 'npm run eslint' --purs-args '--censor-lib --strict'",
+    "eslint": "eslint src",
+    "spago:install": "spago install",
+    "compile": "eslint src && spago build --purs-args '--censor-lib --strict'",
+    "prepare": "husky install",
+    "eslint:fix": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -17,8 +23,80 @@
   "author": "George James",
   "license": "ISC",
   "homepage": "https://bitbucket.org/juspay/purescript-tracker#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@digitalroute/cz-conventional-changelog-for-jira",
+      "jiraPrefix": "PICAF",
+      "jiraLocation": "post-type",
+      "jiraAppend": ":"
+    }
+  },
+  "commitlint": {
+    "plugins": [
+      "commitlint-plugin-jira-rules"
+    ],
+    "extends": [
+      "jira"
+    ],
+    "rules": {
+      "jira-task-id-max-length": [
+        0
+      ],
+      "jira-commit-message-separator": [
+        0
+      ],
+      "jira-commit-status-case": [
+        0
+      ],
+      "jira-task-id-project-key": [
+        0
+      ],
+      "jira-task-id-separator": [
+        0
+      ],
+      "jira-task-id-case": [
+        0
+      ],
+      "jira-task-id-min-length": [
+        0
+      ]
+    }
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "hotfix-[0-9]+",
+        "prerelease": true
+      }
+    ],
+    "repositoryUrl": "git@ssh.bitbucket.juspay.net:picaf/purescript-tracker.git",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/git"
+    ]
+  },
   "devDependencies": {
-    "pulp": "^15.0.0",
-    "purescript": "^0.13.8"
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.0",
+    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "commitlint-config-jira": "^1.6.4",
+    "commitlint-plugin-jira-rules": "^1.6.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.2",
+    "pulp": "^16.0.2",
+    "purescript": "^0.15.6",
+    "eslint": "^8.29.0",
+    "spago": "^0.20.9",
+    "semantic-release": "^19.0.5",
+    "purescript-psa": "0.8.2"
   }
 }

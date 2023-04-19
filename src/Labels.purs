@@ -51,6 +51,7 @@ data Label
   | PAYMENT_SOURCE_RESPONSE
   | RETRY_SUGGESTION
   | RETRY_TXN
+  | RETRY_TXN_NETWORK
   | RETRY_CONFIG
   | CVV_CHANGED
   | EXPIRY_DATE_CHANGED
@@ -168,6 +169,21 @@ data Label
   | OUTAGE_INFO
   | PROCEED_TO_PAY_INFO
   | DOWNLOAD_STATUS
+  | CARD_DETAILS_ENTERED
+  | PAY_FULL_AMOUNT
+  | TENURE_SELECTED
+  | ADD_BANK_ACCOUNT
+  | CHECK_BALANCE
+  | MAKE_PRIMARY
+  | ADD_SECONDARY_VPA
+  | DELETE_VPA
+  | BLOCK_USER
+  | SPAM_USER
+  | UNBLOCK_VPA
+  | SCAN_QR
+  | GATEWAY_SELECTED
+  | GATEWAY_OPTIONS
+  | NETWORK_RETRY_SUCCESS
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -223,6 +239,7 @@ instance showLabel :: Show Label where
     PAYMENT_SOURCE_RESPONSE -> "payment_source_response"
     RETRY_SUGGESTION -> "retry_suggestion"
     RETRY_TXN -> "retry_txn"
+    RETRY_TXN_NETWORK -> "retry_txn_for_network_code"
     RETRY_CONFIG -> "retry_config"
     CVV_CHANGED -> "cvv_changed"
     EXPIRY_DATE_CHANGED -> "expiry_date_changed"
@@ -338,3 +355,18 @@ instance showLabel :: Show Label where
     OUTAGE_INFO -> "outage_info"
     PROCEED_TO_PAY_INFO -> "proceed_to_pay_info"
     DOWNLOAD_STATUS -> "DOWNLOAD_STATUS"
+    PAY_FULL_AMOUNT -> "pay_full_amount_rendered"
+    CARD_DETAILS_ENTERED -> "card_details_entered"
+    TENURE_SELECTED -> "tenure_selected"
+    ADD_BANK_ACCOUNT -> "ADD_BANK_ACCOUNT"
+    CHECK_BALANCE -> "CHECK_BALANCE"
+    MAKE_PRIMARY -> "MAKE_PRIMARY"
+    ADD_SECONDARY_VPA -> "ADD_SECONDARY_VPA"
+    DELETE_VPA -> "DELETE_VPA"
+    BLOCK_USER -> "BLOCK_USER"
+    SPAM_USER -> "SPAM_USER"
+    UNBLOCK_VPA -> "UNBLOCK_VPA"
+    SCAN_QR -> "SCAN_QR"
+    GATEWAY_SELECTED -> "gateway_selected"
+    GATEWAY_OPTIONS -> "gateway_options"
+    NETWORK_RETRY_SUCCESS -> "network_retry_success"

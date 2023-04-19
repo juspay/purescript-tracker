@@ -199,7 +199,7 @@ trackActionEvent sub level label value oldLabel oldValue json = _trackActionEven
 
 trackActionEventFlow :: forall a. Action -> Level -> Label -> Values -> String -> String -> Flow a Unit
 trackActionEventFlow sub level label value oldLabel oldValue = do
-    json <- getLogFields 
+    json <- getLogFields
     effectToFlow $ trackActionEvent sub level label value oldLabel oldValue json
 
 -- | trackContextEvent args: subcategory, level, label, value, oldLabel, oldValue
@@ -264,6 +264,3 @@ getMask len =
     if len <= 0
         then ""
         else "X" <> (getMask $ len - 1)
-
-main :: Effect Unit
-main = pure unit
