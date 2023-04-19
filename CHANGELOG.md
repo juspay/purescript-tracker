@@ -1,3 +1,10 @@
+## [2.0.10](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.9...v2.0.10) (2023-04-19)
+
+
+### Bug Fixes
+
+* PICAF-21838: added message for retry ([8673267](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/867326710f372fc45193307c510d87de42355641))
+
 ## [2.0.9](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.8...v2.0.9) (2023-03-29)
 
 

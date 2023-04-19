@@ -1,6 +1,6 @@
 {
   "name": "purescript-tracker",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "private": true,
   "description": "Library to interface types for JOS.tracker",
   "main": "index.js",
