@@ -993,8 +993,8 @@ newtype LatencyValue
   }
 
 newtype RetryCount = RetryCount
-  {
-    retry_count :: Int
+  { retry_count :: Int
+  , message :: Maybe String
   }
 
 ------------------------ COMMON TYPES END --------------------
