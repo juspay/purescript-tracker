@@ -20,6 +20,7 @@ module Tracker
   , trackProcessStartV2, trackProcessEndV2
   , trackLoaderShowFlow , trackLoaderHideFlow
   , trackScreenEnd, trackScreenEndFlow
+  , getMask
   ) where
 
 import Prelude
