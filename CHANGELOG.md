@@ -1,3 +1,10 @@
+## [2.0.11](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.10...v2.0.11) (2023-05-19)
+
+
+### Bug Fixes
+
+* QR-2086: getMask fn exported ([99e642f](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/99e642f5a4d691c2ae79b2ab2f0465cd0e019c3c))
+
 ## [2.0.10](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.9...v2.0.10) (2023-04-19)
 
 
