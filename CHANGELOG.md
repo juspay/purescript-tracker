@@ -1,3 +1,10 @@
+## [2.0.12](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.11...v2.0.12) (2023-05-30)
+
+
+### Bug Fixes
+
+* PICAF-20595: added logs for threeds 2.0 third party SDKs ([25de34c](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/commit/25de34c2f50871af929443023560b08f45da5b9e))
+
 ## [2.0.11](https://ssh.bitbucket.juspay.net/picaf/purescript-tracker/compare/v2.0.10...v2.0.11) (2023-05-19)
 
 
