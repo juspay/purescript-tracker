@@ -184,6 +184,7 @@ data Label
   | GATEWAY_SELECTED
   | GATEWAY_OPTIONS
   | NETWORK_RETRY_SUCCESS
+  | THREE_DS2_SDK
 
 instance encodeLabel :: Encode Label where
   encode = encode <<< show
@@ -370,3 +371,4 @@ instance showLabel :: Show Label where
     GATEWAY_SELECTED -> "gateway_selected"
     GATEWAY_OPTIONS -> "gateway_options"
     NETWORK_RETRY_SUCCESS -> "network_retry_success"
+    THREE_DS2_SDK -> "three_ds2_sdk"

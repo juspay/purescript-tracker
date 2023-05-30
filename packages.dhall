@@ -56,6 +56,6 @@ in  upstream
         , "typelevel-prelude"
         , "unsafe-coerce"
         ]
-    , repo = "ssh://git@bitbucket.org/juspay/purescript-foreign-generic.git"
+    , repo = "ssh://git@ssh.bitbucket.juspay.net/fram/purescript-foreign-generic.git"
     , version = "v12.0.0"
     }

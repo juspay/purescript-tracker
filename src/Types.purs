@@ -173,6 +173,7 @@ data Values
   | Overlay_Clicked OverlayClicked
   | Manual_Otp_Entered ManualOtpEntered
   | Network_Retry_Success RetryCount
+  | Three_DS2_Sdk_Lifecycle ThreeDS2SdkLifeCycle
 
 ---------------------- GEMI TYPES START -----------------------
 
@@ -596,6 +597,7 @@ newtype PaymentInfoDetails = PaymentInfoDetails {
 ----------------------- EC TYPES STARTED ----------------------
 data AppLifeCycleValues =  Status AppStatus | Version AppVersion | Present AppPresent | SDK_Status SDKStatus | Token_SDK_Present TokenSDKPresent | Non_Token_SDK_Present NonTokenSDKPresent
 data CredPayValues = Source_Eligibilty SourceEligibilty | User_Id_Update UserIdUpdate | User_Context UserContext | Flow_Status FlowStatus | Flow_Response FlowResponse
+data ThreeDS2SdkLifeCycleValues = Challenge_Resp ChallengeResponse | Action_Status ActionStatus
 
 newtype CustomTabPayments = CustomTabPayments {
   "cct" :: Foreign
@@ -603,6 +605,20 @@ newtype CustomTabPayments = CustomTabPayments {
 newtype AppLifeCycle = AppLifeCycle {
   appName :: String,
   value :: AppLifeCycleValues
+}
+
+type ActionStatus = {
+  action :: String,
+  value :: String
+}
+
+type ChallengeResponse = {
+  "challenge_response" :: String
+}
+
+newtype ThreeDS2SdkLifeCycle = ThreeDS2SdkLifeCycle {
+  sdkName :: String,
+  value :: ThreeDS2SdkLifeCycleValues
 }
 
 newtype CredPay = CredPay {
@@ -1217,6 +1233,7 @@ derive instance genericGemiCardDetails :: Generic GemiCardDetails _
 derive instance genericGemiTxnResponse :: Generic GemiTxnResponse _
 derive instance genericGemiCheckoutPayload :: Generic GemiCheckoutPayload _
 derive instance genericRetryCount :: Generic RetryCount _
+derive instance genericThreeDS2SdkLifeCycle :: Generic ThreeDS2SdkLifeCycle _
 
 instance encodeValues :: Encode Values where
   encode (Bank_Selected a) = defaultEncode a
@@ -1369,10 +1386,14 @@ instance encodeValues :: Encode Values where
   encode (Overlay_Clicked v) = defaultEncode v
   encode (Manual_Otp_Entered v) = defaultEncode v
   encode (Network_Retry_Success a) = defaultEncode a
+  encode (Three_DS2_Sdk_Lifecycle a) = defaultEncode a
 
 
 derive instance genericAppLifeCycleValues :: Generic AppLifeCycleValues _
 instance encodeAppLifeCycleValues :: Encode AppLifeCycleValues where encode = defaultEncode
+
+derive instance genericThreeDS2SdkLifeCycleValues :: Generic ThreeDS2SdkLifeCycleValues _
+instance encodeThreeDS2SdkLifeCycleValues :: Encode ThreeDS2SdkLifeCycleValues where encode = defaultEncode
 
 instance encodePaymentMethodsEligibility :: Encode PaymentMethodsEligibility where encode = defaultEncode
 instance encodeRetrySuggestionList :: Encode RetrySuggestionList where encode = defaultEncode
