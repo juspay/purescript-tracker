@@ -20,6 +20,7 @@ module Tracker
   , trackProcessStartV2, trackProcessEndV2
   , trackLoaderShowFlow , trackLoaderHideFlow
   , trackScreenEnd, trackScreenEndFlow
+  , getMask
   ) where
 
 import Prelude
@@ -200,7 +201,7 @@ trackActionEvent sub level label key value oldLabel oldValue json = _trackAction
 
 trackActionEventFlow :: forall a.  Action -> Level -> Label -> String -> Foreign -> String -> String -> Flow a Unit
 trackActionEventFlow sub level label key value oldLabel oldValue = do
-    json <- getLogFields 
+    json <- getLogFields
     effectToFlow $ trackActionEvent sub level label key value oldLabel oldValue json
 
 -- | trackContextEvent args: subcategory, level, label, value, oldLabel, oldValue
@@ -245,7 +246,7 @@ trackScreenEndFlow :: forall a. String -> Flow a Unit
 trackScreenEndFlow screen_name = do
     json <- getLogFields
     effectToFlow $ trackScreenEnd screen_name json
-    
+
 -- Masking Functions
 
 maskCardNumber :: String -> String
@@ -274,6 +275,3 @@ getMask len =
     if len <= 0
         then ""
         else "X" <> (getMask $ len - 1)
-
-main :: Effect Unit
-main = pure unit
