@@ -19,6 +19,6 @@
   "homepage": "https://bitbucket.org/juspay/purescript-tracker#readme",
   "devDependencies": {
     "pulp": "^15.0.0",
-    "purescript": "^0.13.8"
+    "purescript": "^0.15.9"
   }
 }
